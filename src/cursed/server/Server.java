@@ -25,11 +25,11 @@ public class Server {
 
 	public static void main(String[] args) throws Exception {
 		File logFolder = new File("log");
-		logFolder.mkdir();
+		//logFolder.mkdir();
 
 		// DatabaseFactory初期設定
-		DatabaseFactory.setDatabaseSettings(DB_DRIVER, DB_URL, DB_LOGIN,DB_PASSWORD);
-		DatabaseFactory.getInstance();
+		//DatabaseFactory.setDatabaseSettings(DB_DRIVER, DB_URL, DB_LOGIN,DB_PASSWORD);
+		//DatabaseFactory.getInstance();
 
 		/** 初始化並啟動Game Server */
 		GameServer.getInstance().initialize();
