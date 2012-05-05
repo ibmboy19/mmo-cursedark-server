@@ -1,10 +1,8 @@
 package cursed.server.server.model;
 
-import java.io.Serializable;
-
 import cursed.server.server.utils.IntRange;
 
-public class Character implements Serializable{
+public class Character extends Object{
 	private static final long serialVersionUID = 1L;
 	private int _currentHp;
 	public int getCurrentHp() {
