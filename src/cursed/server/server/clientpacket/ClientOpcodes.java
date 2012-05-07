@@ -15,6 +15,9 @@ public class ClientOpcodes {
 	public static final int C_npc_spawn = 8;
 	public static final int C_npc_monster_spawn = 9;
 	public static final int C_npc_monster_action = 10;
+	
+	public static final int C_char_loadInventory = 30;//讀取角色背包(from server)
+	public static final int C_char_saveInventory = 31;//寫入角色背包(write back in server)
 
 	public static final int C_chat = 128;
 	public static final int C_chat_channel_global = 0;			// 伺服器頻道
