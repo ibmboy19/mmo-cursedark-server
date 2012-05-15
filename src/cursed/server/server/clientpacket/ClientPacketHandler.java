@@ -2,6 +2,8 @@ package cursed.server.server.clientpacket;
 
 import java.net.SocketException;
 
+import cursed.server.LoginController;
+import cursed.server.server.Account;
 import cursed.server.server.ClientProcess;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_chat;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_login;
@@ -19,13 +21,32 @@ public class ClientPacketHandler {
 		try {
 			switch (op) {
 			case C_login:
-				String d = _client.getBr().readLine();
-				System.out.println("帳密:" + d);
+				String accountName = _client.getBr().readLine();
+				String password = _client.getBr().readLine();
+				String ip = _client.get_ip();
+				Account account = Account.load(accountName);
+				
+				if (account == null) {
+						account = Account.create(accountName, password, ip);
+				}
+				if (!account.validatePassword(password)) {
+					_client.getWr().println("密碼錯誤");
+					return;
+				}
+				try {
+					LoginController.getInstance().login(_client, account);
+					//Account.updateLastActive(account, ip); // 更新最後一次登入的時間與IP
+					_client.setAccount(account);
+					// TODO 傳送登入ok封包
+				}catch (Exception e) {
+					e.getStackTrace();
+					return;
+				}
 				break;
 			case C_chat:
 				String id = null;
 				id  = _client.getBr().readLine();
-				d = _client.getBr().readLine();
+				String d = _client.getBr().readLine();
 				System.out.println(id+ ": " + d);
 				// To Client
 				_client.getWr().println("128");
@@ -38,6 +59,7 @@ public class ClientPacketHandler {
 				break;
 			case C_logout:
 				System.out.println(_client.getAccountName()+" 離線");
+				LoginController.getInstance().logout(_client);
 				_client.quite();
 				break;
 

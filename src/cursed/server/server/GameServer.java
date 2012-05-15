@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import cursed.server.LoginController;
+
 /**
  * 遊戲伺服器
  */
@@ -11,6 +13,7 @@ public class GameServer extends Thread {
 	private static GameServer _instance;
 	private ServerSocket _serverSocket;
 	private int _port = 1200; // 端口
+	private LoginController _loginController;
 
 	public static GameServer getInstance() {
 		if (_instance == null) {
@@ -56,6 +59,11 @@ public class GameServer extends Thread {
 		System.out.println("│     " + "Cursed Ark Server" + "\t" + "│");
 		System.out.println("└────────────────┘" + "\n");
 		System.out.println();
+		
+		
+		_loginController = LoginController.getInstance();
+		
+		
 		System.out.println("Server初始化完成。");
 		this.start();
 	}

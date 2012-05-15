@@ -13,5 +13,12 @@ public class CursedWorld {
 	private CursedWorld(){
 		_allPlayers = Maps.newConcurrentMap();
 	}
+	
+	public static CursedWorld getInstance() {
+		if (_instance == null) {
+			_instance = new CursedWorld();
+		}
+		return _instance;
+	}
 
 }

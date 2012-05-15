@@ -8,7 +8,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.logging.Logger;
 
 import cursed.server.server.clientpacket.ClientPacketHandler;
@@ -35,7 +34,7 @@ public class ClientProcess implements Runnable {
 
 	private Socket _csocket;
 
-	private int _loginStatus = 0;
+	//private int _loginStatus = 0;
 
 	protected ClientProcess() {
 
@@ -123,6 +122,14 @@ public class ClientProcess implements Runnable {
 
 	public void setWr(PrintWriter wr) {
 		this.wr = wr;
+	}
+	
+	public String get_ip() {
+		return _ip;
+	}
+
+	public void set_ip(String _ip) {
+		this._ip = _ip;
 	}
 
 }

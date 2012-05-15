@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,8 +46,7 @@ public class Account {
 	 * @throws NoSuchAlgorithmException
 	 * @throws UnsupportedEncodingException
 	 */
-	public static Account create(final String name, final String rawPassword,
-			final String ip, final String host)
+	public static Account create(final String name, final String rawPassword, final String ip)
 			throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -72,6 +72,48 @@ public class Account {
 		}
 		return null;
 	}
+	
+	/**
+	 * 從資料庫中取得指定帳號的資料
+	 * 
+	 * @param name
+	 *            帳號名稱
+	 * @return Account
+	 */
+	public static Account load(final String name) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+
+		Account account = null;
+		try {
+			con = DatabaseFactory.getInstance().getConnection();
+			String sqlstr = "SELECT * FROM accounts WHERE login=? LIMIT 1";
+			pstm = con.prepareStatement(sqlstr);
+			pstm.setString(1, name);
+			rs = pstm.executeQuery();
+			if (!rs.next()) {
+				return null;
+			}
+			account = new Account();
+			account._name = rs.getString("login");
+			account._password = rs.getString("password");
+			//account._lastActive = rs.getTimestamp("lastactive");
+			//account._accessLevel = rs.getInt("access_level");
+			account._ip = rs.getString("ip");
+
+			_log.fine("account exists");
+		} catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+
+		return account;
+	}
+
 
 	/**
 	 * 驗證密碼
