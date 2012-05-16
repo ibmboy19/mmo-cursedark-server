@@ -56,7 +56,7 @@ public class Account {
 			account._password = rawPassword;
 			account._ip = ip;
 			con = DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "INSERT INTO accounts SET login=?,password=?,ip=?";
+			String sqlstr = "INSERT INTO accounts SET account_id=?,password=?,host=?";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setString(1, account._name);
 			pstm.setString(2, account._password);
@@ -88,7 +88,7 @@ public class Account {
 		Account account = null;
 		try {
 			con = DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "SELECT * FROM accounts WHERE login=? LIMIT 1";
+			String sqlstr = "SELECT * FROM accounts WHERE account_id=? LIMIT 1";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setString(1, name);
 			rs = pstm.executeQuery();
@@ -96,11 +96,11 @@ public class Account {
 				return null;
 			}
 			account = new Account();
-			account._name = rs.getString("login");
+			account._name = rs.getString("account_id");
 			account._password = rs.getString("password");
 			//account._lastActive = rs.getTimestamp("lastactive");
 			//account._accessLevel = rs.getInt("access_level");
-			account._ip = rs.getString("ip");
+			account._ip = rs.getString("host");
 
 			_log.fine("account exists");
 		} catch (SQLException e) {

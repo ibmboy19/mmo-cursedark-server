@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import cursed.server.LoginController;
+import cursed.server.server.model.CursedWorld;
 
 /**
  * 遊戲伺服器
@@ -62,6 +63,8 @@ public class GameServer extends Thread {
 		
 		
 		_loginController = LoginController.getInstance();
+		
+		CursedWorld.getInstance();
 		
 		
 		System.out.println("Server初始化完成。");

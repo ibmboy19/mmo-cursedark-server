@@ -5,6 +5,8 @@ import java.net.SocketException;
 import cursed.server.LoginController;
 import cursed.server.server.Account;
 import cursed.server.server.ClientProcess;
+import cursed.server.server.model.CursedWorld;
+import cursed.server.server.model.instance.PcInstance;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_chat;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_login;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_logout;
@@ -39,6 +41,12 @@ public class ClientPacketHandler {
 					_client.setAccount(account);
 					_client.getWr().println("true");
 					// TODO 傳送登入ok封包
+					
+					/** 角色部分*/
+					String charName = null; // TODO讀取腳色
+					PcInstance pc = PcInstance.load(charName);
+					
+					CursedWorld.getInstance().storeObject(pc);
 				}catch (Exception e) {
 					e.getStackTrace();
 					return;

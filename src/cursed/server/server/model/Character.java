@@ -4,13 +4,28 @@ import cursed.server.server.utils.IntRange;
 
 public class Character extends Object{
 	private static final long serialVersionUID = 1L;
+	
+	private String _name; 
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String s) {
+		_name = s;
+	}
+
+
 /////////---------HP  MP  Region-----------------------////////
 	private int _level;
-	public int getLevel(){
+	public synchronized int getLevel() {
 		return _level;
 	}
 	public void LevelUp(){
 		_level++;
+	}
+	public synchronized void setLevel(long level) {
+		_level = (int) level;
 	}
 	public boolean CalcIsLevelUp(int exp){
 		if(exp>getMaxExp()){//若經驗值大於最大值

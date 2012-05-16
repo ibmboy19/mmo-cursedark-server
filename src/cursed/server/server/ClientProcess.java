@@ -11,6 +11,7 @@ import java.net.Socket;
 import java.util.logging.Logger;
 
 import cursed.server.server.clientpacket.ClientPacketHandler;
+import cursed.server.server.model.instance.PcInstance;
 import cursed.server.server.utils.StreamUtil;
 
 public class ClientProcess implements Runnable {
@@ -21,6 +22,8 @@ public class ClientProcess implements Runnable {
 	private OutputStream _out;
 
 	private Account _account;
+	
+	private PcInstance _activeChar;
 
 	private ClientPacketHandler _handler;
 	
