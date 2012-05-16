@@ -30,13 +30,14 @@ public class ClientPacketHandler {
 						account = Account.create(accountName, password, ip);
 				}
 				if (!account.validatePassword(password)) {
-					_client.getWr().println("密碼錯誤");
+					_client.getWr().println("false");
 					return;
 				}
 				try {
 					LoginController.getInstance().login(_client, account);
 					//Account.updateLastActive(account, ip); // 更新最後一次登入的時間與IP
 					_client.setAccount(account);
+					_client.getWr().println("true");
 					// TODO 傳送登入ok封包
 				}catch (Exception e) {
 					e.getStackTrace();

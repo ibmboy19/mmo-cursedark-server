@@ -64,7 +64,7 @@ public class ClientProcess implements Runnable {
 		System.out.println("等待客戶端連接...");
 		
 		// 背景封包作業
-		while (_csocket.isConnected()) {
+		while (!_csocket.isClosed()) {
 			int op = 0;
 			try {
 				op = Integer.valueOf(br.readLine());
