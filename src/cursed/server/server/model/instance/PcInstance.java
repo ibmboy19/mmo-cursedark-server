@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import cursed.server.server.ClientProcess;
 import cursed.server.server.database.CharacterTable;
 import cursed.server.server.model.Character;
+import cursed.server.server.model.CursedWorld;
 
 public class PcInstance extends Character{
 	private static final long serialVersionUID = 1L;
@@ -23,6 +24,12 @@ public class PcInstance extends Character{
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	public void logout() {
+		CursedWorld world = CursedWorld.getInstance();
+		world.removeObject(this);
+		setNetConnection(null);
 	}
 	
 	public String getAccountName() {

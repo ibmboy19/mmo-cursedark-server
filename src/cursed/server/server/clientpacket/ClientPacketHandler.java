@@ -5,6 +5,7 @@ import java.net.SocketException;
 import cursed.server.LoginController;
 import cursed.server.server.Account;
 import cursed.server.server.ClientProcess;
+import cursed.server.server.database.CharacterTable;
 import cursed.server.server.model.CursedWorld;
 import cursed.server.server.model.instance.PcInstance;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_chat;
@@ -27,9 +28,12 @@ public class ClientPacketHandler {
 				String password = _client.getBr().readLine();
 				String ip = _client.get_ip();
 				Account account = Account.load(accountName);
+				CharacterTable Ct = CharacterTable.getInstance();
 				
 				if (account == null) {
 						account = Account.create(accountName, password, ip);
+						PcInstance pc = new PcInstance();
+						Ct.storeNewCharacter(pc);
 				}
 				if (!account.validatePassword(password)) {
 					_client.getWr().println("false");
@@ -43,10 +47,13 @@ public class ClientPacketHandler {
 					// TODO 傳送登入ok封包
 					
 					/** 角色部分*/
-					String charName = null; // TODO讀取腳色
-					PcInstance pc = PcInstance.load(charName);
+					String charName = account.getName(); // TODO讀取腳色
 					
+					PcInstance pc = PcInstance.load(charName);
 					CursedWorld.getInstance().storeObject(pc);
+
+					pc.setNetConnection(_client);
+					_client.setActiveChar(pc);
 				}catch (Exception e) {
 					e.getStackTrace();
 					return;
@@ -57,10 +64,10 @@ public class ClientPacketHandler {
 				id  = _client.getBr().readLine();
 				String d = _client.getBr().readLine();
 				System.out.println(id+ ": " + d);
-				// To Client
-				_client.getWr().println("128");
-				_client.getWr().println(id);
-				_client.getWr().println(d);
+				
+				CursedWorld.getInstance().broadcastPacketToAll("128");
+				CursedWorld.getInstance().broadcastPacketToAll(id);
+				CursedWorld.getInstance().broadcastPacketToAll(d);
 				break;
 			case C_position:
 				d = _client.getBr().readLine();

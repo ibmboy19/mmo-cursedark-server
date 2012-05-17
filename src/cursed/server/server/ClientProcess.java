@@ -134,5 +134,13 @@ public class ClientProcess implements Runnable {
 	public void set_ip(String _ip) {
 		this._ip = _ip;
 	}
+	
+	public void setActiveChar(PcInstance pc) {
+		_activeChar = pc;
+	}
+
+	public PcInstance getActiveChar() {
+		return _activeChar;
+	}
 
 }

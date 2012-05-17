@@ -65,6 +65,7 @@ public class CursedWorld {
 	
 	public void broadcastPacketToAll(String message) {
 		for (PcInstance pc : getAllPlayers()) {
+			
 			pc.sendpackets(message);
 		}
 	}

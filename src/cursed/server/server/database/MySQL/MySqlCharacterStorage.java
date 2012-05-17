@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import cursed.server.DatabaseFactory;
+import cursed.server.server.Account;
 import cursed.server.server.model.instance.PcInstance;
 import cursed.server.server.utils.SQLUtil;
 
@@ -23,7 +24,7 @@ public class MySqlCharacterStorage {
 
 			con = DatabaseFactory.getInstance().getConnection();
 			pstm = con
-					.prepareStatement("SELECT * FROM characters WHERE char_name=?");
+					.prepareStatement("SELECT * FROM char_info WHERE char_id=?");
 			pstm.setString(1, charName);
 
 			rs = pstm.executeQuery();
@@ -33,12 +34,8 @@ public class MySqlCharacterStorage {
 			pc = new PcInstance();
 			pc.setAccountName(rs.getString("account_name"));
 			//pc.setId(rs.getInt("objid"));
-			pc.setName(rs.getString("char_name"));
+			pc.setName(rs.getString("char_id"));
 			//pc.setExp(rs.getInt("Exp"));
-			short currentHp = rs.getShort("CurHp");
-			if (currentHp < 1) {
-				currentHp = 1;
-			}
 			
 			//pc.setX(rs.getInt("locX"));
 			//pc.setY(rs.getInt("locY"));
@@ -61,12 +58,11 @@ public class MySqlCharacterStorage {
 		try {
 			int i = 0;
 			con = DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO characters SET account_name=?,objid=?,char_name=?,birthday=?,level=?,HighLevel=?,Exp=?,MaxHp=?,CurHp=?,MaxMp=?,CurMp=?,Ac=?,Str=?,Con=?,Dex=?,Cha=?,Intel=?,Wis=?,Status=?,Class=?,Sex=?,Type=?,Heading=?,LocX=?,LocY=?,MapID=?,Food=?,Lawful=?,Title=?,ClanID=?,Clanname=?,ClanRank=?,BonusStatus=?,ElixirStatus=?,ElfAttr=?,PKcount=?,PkCountForElf=?,ExpRes=?,PartnerID=?,AccessLevel=?,OnlineStatus=?,HomeTownID=?,Contribution=?,Pay=?,HellTime=?,Banned=?,Karma=?,LastPk=?,LastPkForElf=?,DeleteTime=?");
-			pstm.setString(++i, pc.getAccountName());
-		
+			pstm = con.prepareStatement("INSERT INTO char_info SET char_id=?");
+			pstm.setString(++i, pc.getName());
 			pstm.execute();
 
-			_log.finest("stored char data: " + pc.getName());
+			_log.finest("stored char data: " + pc.getAccountName());
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		} finally {
