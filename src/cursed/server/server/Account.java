@@ -56,7 +56,7 @@ public class Account {
 			account._password = rawPassword;
 			account._ip = ip;
 			con = DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "INSERT INTO accounts SET account_id=?,password=?,host=?";
+			String sqlstr = "INSERT INTO account SET account_id=?,password=?,host=?";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setString(1, account._name);
 			pstm.setString(2, account._password);
@@ -88,7 +88,7 @@ public class Account {
 		Account account = null;
 		try {
 			con = DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "SELECT * FROM accounts WHERE account_id=? LIMIT 1";
+			String sqlstr = "SELECT * FROM account WHERE account_id=? LIMIT 1";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setString(1, name);
 			rs = pstm.executeQuery();

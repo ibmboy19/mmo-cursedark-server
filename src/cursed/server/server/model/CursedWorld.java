@@ -2,8 +2,10 @@ package cursed.server.server.model;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
+import cursed.server.server.ClientProcess;
 import cursed.server.server.model.instance.PcInstance;
 import cursed.server.server.utils.collections.Maps;
 
@@ -11,11 +13,13 @@ public class CursedWorld {
 	private static CursedWorld _instance;
 	private final Map<String, PcInstance> _allPlayers;
 	private final Map<String, Object> _allObjects;
+	private final Map<String, ClientProcess> _allClient;
 	private boolean _worldChatEnabled = true;
 	
 	private CursedWorld(){
 		_allPlayers = Maps.newConcurrentMap();
-		_allObjects = Maps.newConcurrentMap(); 
+		_allObjects = Maps.newConcurrentMap();
+		_allClient = Maps.newConcurrentMap();
 	}
 	
 	public static CursedWorld getInstance() {
@@ -23,6 +27,9 @@ public class CursedWorld {
 			_instance = new CursedWorld();
 		}
 		return _instance;
+	}
+	public void addClient(ClientProcess cp){
+		_allClient.put(cp.get_ip(), cp);
 	}
 	public void storeObject(Object object) {
 		if (object == null) {
@@ -63,10 +70,25 @@ public class CursedWorld {
 		return (vs != null) ? vs : (_allPlayerValues = Collections.unmodifiableCollection(_allPlayers.values()));
 	}
 	
+private Collection<ClientProcess> _allClientValues;
+	
+	public Collection<ClientProcess> getAllClient() {
+		Collection<ClientProcess> vs = _allClientValues;
+		return (vs != null) ? vs : (_allClientValues = Collections.unmodifiableCollection(_allClient.values()));
+	}
+	
 	public void broadcastPacketToAll(String message) {
 		for (PcInstance pc : getAllPlayers()) {
 			
 			pc.sendpackets(message);
+		}
+	}
+	
+	public void broadcastPacketToAllClient(String id ,String message) {
+		for (ClientProcess cp : getAllClient()) {
+			cp.getWr().println("128");
+			cp.getWr().println(id);
+			cp.getWr().println(message);
 		}
 	}
 

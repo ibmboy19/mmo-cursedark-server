@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import cursed.server.ConsoleProcess;
 import cursed.server.LoginController;
 import cursed.server.server.model.CursedWorld;
 
@@ -68,6 +69,9 @@ public class GameServer extends Thread {
 		
 		
 		System.out.println("Server初始化完成。");
+		// cmd互動指令
+		Thread cp = new ConsoleProcess();
+		cp.start();
 		this.start();
 	}
 

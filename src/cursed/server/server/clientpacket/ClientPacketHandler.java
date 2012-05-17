@@ -40,6 +40,7 @@ public class ClientPacketHandler {
 					return;
 				}
 				try {
+					CursedWorld.getInstance().addClient(_client);
 					LoginController.getInstance().login(_client, account);
 					//Account.updateLastActive(account, ip); // 更新最後一次登入的時間與IP
 					_client.setAccount(account);
@@ -50,6 +51,7 @@ public class ClientPacketHandler {
 					String charName = account.getName(); // TODO讀取腳色
 					
 					PcInstance pc = PcInstance.load(charName);
+					pc.setName(account.getName());
 					CursedWorld.getInstance().storeObject(pc);
 
 					pc.setNetConnection(_client);
@@ -65,9 +67,7 @@ public class ClientPacketHandler {
 				String d = _client.getBr().readLine();
 				System.out.println(id+ ": " + d);
 				
-				CursedWorld.getInstance().broadcastPacketToAll("128");
-				CursedWorld.getInstance().broadcastPacketToAll(id);
-				CursedWorld.getInstance().broadcastPacketToAll(d);
+				CursedWorld.getInstance().broadcastPacketToAllClient(id, d);
 				break;
 			case C_position:
 				d = _client.getBr().readLine();
