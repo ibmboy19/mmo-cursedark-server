@@ -17,7 +17,7 @@ public class Server {
 	/** 資料庫驅動*/
 	private static String DB_DRIVER = "com.mysql.jdbc.Driver"; 
 	/** 資料庫位址*/
-	private static String DB_URL = "jdbc:mysql://120.127.14.39/cursedark?useUnicode=true&characterEncoding=utf8";
+	private static String DB_URL = "jdbc:mysql://127.0.0.1/cursedark?useUnicode=true&characterEncoding=utf8";
 	/** 資料庫帳號*/
 	private static String DB_LOGIN = "root";
 	/** 資料庫密碼*/

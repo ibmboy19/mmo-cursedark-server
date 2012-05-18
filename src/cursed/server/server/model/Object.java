@@ -64,6 +64,10 @@ public class Object implements Serializable{
 		_location.setY(y);
 	}
 
+	public void setZ(float z) {
+		_location.setZ(z);
+	}
+	
 	/**
 	 * 對象存在在地圖上的L1Location
 	 * 
