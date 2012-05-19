@@ -85,7 +85,13 @@ public class ClientProcess implements Runnable {
 	 */
 	public void quite(){
 		StreamUtil.close(_in, _out);
+		try {
+			_csocket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally{
 		_csocket = null;
+		}
 	}
 
 	public void setAccount(Account account) {

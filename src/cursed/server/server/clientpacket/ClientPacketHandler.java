@@ -1,5 +1,6 @@
 package cursed.server.server.clientpacket;
 
+import java.io.IOException;
 import java.net.SocketException;
 
 import cursed.server.LoginController;
@@ -83,6 +84,11 @@ public class ClientPacketHandler {
 		} catch (NumberFormatException nf) {
 			System.out.println("接收到一個null.");
 		} catch (SocketException se) {
+			try {
+				_client.get_csocket().close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			System.out.println("登出...");
 		} catch (Exception e) {
 			System.out.println(e);
