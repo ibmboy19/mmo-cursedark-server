@@ -57,18 +57,18 @@ public class MySqlCharacterStorage {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
-			int i = 0;
 			con = DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("INSERT INTO char_info SET char_id=? location_x=? location_y=? location_z=? cur_lv=1 cur_exp=0 cur_hp=1 max_hp=1 cur_mp=1 max_mp=1 inventory=? inventory_shortcut=? bank=? sp_str=0 sp_dex=0 sp_wis=0 sp_con=0 sp_remain=0 account_id=? scene_id=? guild=0");
-			pstm.setString(++i, pc.getName());
-			pstm.setString(++i, String.valueOf(6.97));
-			pstm.setString(++i, String.valueOf(0.97));
-			pstm.setString(++i, String.valueOf(-5.73));
-			pstm.setString(++i, null);
-			pstm.setString(++i, null);
-			pstm.setString(++i, null);
-			pstm.setString(++i, pc.getAccountName());
-			pstm.setString(++i, String.valueOf(0)); // sceneid
+			pstm.setString(0, pc.getAccountName());
+			pstm.setString(1, String.valueOf(0.0));
+			pstm.setString(2, String.valueOf(0.0));
+			pstm.setString(3, String.valueOf(0.0));
+			pstm.setString(4, null);
+			pstm.setString(5, null);
+			pstm.setString(6, null);
+			pstm.setString(7, pc.getAccountName());
+			pstm.setString(8, String.valueOf(0)); // sceneid
+			
 			
 			pstm.execute();
 
