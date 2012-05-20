@@ -84,6 +84,11 @@ private Collection<ClientProcess> _allClientValues;
 		}
 	}
 	
+	/**
+	 * 世界廣播
+	 * @param id
+	 * @param message
+	 */
 	public void broadcastPacketToAllClient(String id ,String message) {
 		for (ClientProcess cp : getAllClient()) {
 			cp.getWr().println("128");

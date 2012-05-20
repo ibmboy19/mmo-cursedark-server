@@ -34,6 +34,7 @@ public class ClientPacketHandler {
 				if (account == null) {
 						account = Account.create(accountName, password, ip);
 						PcInstance pc = new PcInstance();
+						pc.setAccountName(accountName);
 						Ct.storeNewCharacter(pc);
 				}
 				if (!account.validatePassword(password)) {
@@ -46,12 +47,10 @@ public class ClientPacketHandler {
 					//Account.updateLastActive(account, ip); // 更新最後一次登入的時間與IP
 					_client.setAccount(account);
 					_client.getWr().println("true");
-					// TODO 傳送登入ok封包
 					
-					/** 角色部分*/
-					String charName = account.getName(); // TODO讀取腳色
+					System.out.format("帳號: %s 已經登入\n", accountName);
 					
-					PcInstance pc = PcInstance.load(charName);
+					PcInstance pc = PcInstance.load(accountName);
 					pc.setName(account.getName());
 					CursedWorld.getInstance().storeObject(pc);
 
