@@ -71,6 +71,8 @@ public class ClientProcess implements Runnable {
 			int op = 0;
 			try {
 				op = Integer.valueOf(br.readLine());
+			} catch (NumberFormatException ne){
+				continue;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
