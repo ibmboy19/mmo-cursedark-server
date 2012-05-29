@@ -16,6 +16,7 @@ import static cursed.server.server.clientpacket.ClientOpcodes.C_position;
 
 public class ClientPacketHandler {
 	private final ClientProcess _client;
+	private PcInstance pc = null;
 
 	public ClientPacketHandler(ClientProcess client) {
 		_client = client;
@@ -33,7 +34,7 @@ public class ClientPacketHandler {
 				
 				if (account == null) {
 						account = Account.create(accountName, password, ip);
-						PcInstance pc = new PcInstance();
+						pc = new PcInstance();
 						pc.setAccountName(accountName);
 						Ct.storeNewCharacter(pc);
 				}
@@ -50,7 +51,7 @@ public class ClientPacketHandler {
 					
 					System.out.format("帳號: %s 已經登入\n", accountName);
 					
-					PcInstance pc = PcInstance.load(accountName);
+					pc = PcInstance.load(accountName);
 					pc.setName(account.getName());
 					CursedWorld.getInstance().storeObject(pc);
 
@@ -74,7 +75,17 @@ public class ClientPacketHandler {
 				String char_id =  _client.getBr().readLine();
 				String Location = _client.getBr().readLine();
 				String State = _client.getBr().readLine();
+				
+				String loc[] = Location.split(" ");
+				pc.setScene_id(Integer.valueOf(scine_id));
+				pc.setX(Float.parseFloat(loc[0]));
+				pc.setY(Float.parseFloat(loc[1]));
+				pc.setZ(Float.parseFloat(loc[2]));
+				
 				// TODO 儲存角色狀態到DB
+				CharacterTable.saveCharStatus(pc);
+				
+				CursedWorld.getInstance().broadcastLocationPacketToAllClient(scine_id,char_id,Location,State);
 				break;
 			case C_logout:
 				System.out.println(_client.getAccountName()+" 離線");

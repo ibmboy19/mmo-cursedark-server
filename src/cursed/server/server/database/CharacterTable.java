@@ -71,6 +71,7 @@ public class CharacterTable {
 			pstm.setFloat(3, pc.getZ());
 			pstm.setInt(4, pc.getScene_id()); // Scene id 
 			pstm.setInt(5, pc.getState()); // state
+			pstm.setString(6, pc.getId());
 			pstm.execute();
 		}
 		catch (Exception e) {

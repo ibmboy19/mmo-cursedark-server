@@ -96,5 +96,19 @@ private Collection<ClientProcess> _allClientValues;
 			cp.getWr().println(message);
 		}
 	}
+	
+	/**
+	 * 世界廣播
+	 * @param id
+	 * @param message
+	 */
+	public void broadcastLocationPacketToAllClient(String Scene_id ,String id , String location , String state) {
+		for (ClientProcess cp : getAllClient()) {
+			cp.getWr().println("7");
+			cp.getWr().println(id);
+			cp.getWr().println(location);
+			cp.getWr().println(state);
+		}
+	}
 
 }
