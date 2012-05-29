@@ -70,8 +70,11 @@ public class ClientPacketHandler {
 				CursedWorld.getInstance().broadcastPacketToAllClient(id, d);
 				break;
 			case C_position:
-				d = _client.getBr().readLine();
-				System.out.println("座標" + d);
+				String scine_id = _client.getBr().readLine();
+				String char_id =  _client.getBr().readLine();
+				String Location = _client.getBr().readLine();
+				String State = _client.getBr().readLine();
+				// TODO 儲存角色狀態到DB
 				break;
 			case C_logout:
 				System.out.println(_client.getAccountName()+" 離線");

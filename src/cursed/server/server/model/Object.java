@@ -12,6 +12,16 @@ public class Object implements Serializable{
 	
 	private String _id = null;
 	
+	private int state = 0;
+	
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
 	public String getId() {
 		return _id;
 	}
@@ -64,8 +74,19 @@ public class Object implements Serializable{
 		_location.setY(y);
 	}
 
+	public float getZ() {
+		return _location.getZ();
+	}
+
 	public void setZ(float z) {
 		_location.setZ(z);
+	}
+	
+	public int getScene_id() {
+		return _location.scene_id;
+	}
+	public void setScene_id(int scene_id) {
+		_location.scene_id = scene_id;
 	}
 	
 	/**

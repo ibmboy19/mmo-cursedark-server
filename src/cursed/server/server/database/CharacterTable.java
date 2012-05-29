@@ -65,12 +65,12 @@ public class CharacterTable {
 		PreparedStatement pstm = null;
 		try {
 			con = DatabaseFactory.getInstance().getConnection();
-			//pstm = con.prepareStatement("UPDATE characters SET OriginalStr= ?" + ", OriginalCon= ?, OriginalDex= ?, OriginalCha= ?"
-			//		+ ", OriginalInt= ?, OriginalWis= ?" + " WHERE objid=?");
-			//pstm.setInt(1, pc.getBaseStr());
-			//pstm.setInt(2, pc.getBaseCon());
-			//pstm.setInt(3, pc.getBaseDex());
-			//pstm.setInt(7, pc.getId());
+			pstm = con.prepareStatement("UPDATE char_info SET location_x= ?, location_y= ?, location_z= ?, scene_id= ?, state= ? WHERE char_id=?");
+			pstm.setFloat(1, pc.getX());
+			pstm.setFloat(2, pc.getY());
+			pstm.setFloat(3, pc.getZ());
+			pstm.setInt(4, pc.getScene_id()); // Scene id 
+			pstm.setInt(5, pc.getState()); // state
 			pstm.execute();
 		}
 		catch (Exception e) {
@@ -80,6 +80,37 @@ public class CharacterTable {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
+	}
+	
+	public static PcInstance loadCharStatus(PcInstance pc) {
+		ResultSet rs = null;
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("SELECT * FROM char_info WHERE char_id=?");
+			pstm.setString(1, pc.getName());
+			
+			rs = pstm.executeQuery();
+			if (!rs.next()) {
+				return null;
+			}
+			pc = new PcInstance();
+			pc.setX(Float.valueOf(rs.getString("location_x")));
+			pc.setY(Float.valueOf(rs.getString("location_y")));
+			pc.setZ(Float.valueOf(rs.getString("location_z")));
+			pc.setScene_id(Integer.valueOf(rs.getString("scene_id")));
+			pc.setState(Integer.valueOf(rs.getString("state")));
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+			return null;
+		}
+		finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+		return pc;
 	}
 	
 	public static boolean doesCharNameExist(String name) {
