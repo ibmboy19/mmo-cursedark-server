@@ -65,7 +65,7 @@ public class CharacterTable {
 		PreparedStatement pstm = null;
 		try {
 			con = DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE char_info SET location_x= ?, location_y= ?, location_z= ?, scene_id= ?, state= ? WHERE char_id=?");
+			pstm = con.prepareStatement("UPDATE char_info SET location_x= ?, location_y= ?, location_z= ?, scene_id= ?, state= ? WHERE id=?");
 			pstm.setFloat(1, pc.getX());
 			pstm.setFloat(2, pc.getY());
 			pstm.setFloat(3, pc.getZ());
@@ -89,7 +89,7 @@ public class CharacterTable {
 		PreparedStatement pstm = null;
 		try {
 			con = DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM char_info WHERE char_id=?");
+			pstm = con.prepareStatement("SELECT * FROM char_info WHERE id=?");
 			pstm.setString(1, pc.getName());
 			
 			rs = pstm.executeQuery();

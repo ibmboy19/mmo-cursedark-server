@@ -23,7 +23,7 @@ public class MySqlCharacterStorage {
 		try {
 
 			con = DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM char_info WHERE char_id=?");
+			pstm = con.prepareStatement("SELECT * FROM char_info WHERE id=?");
 			pstm.setString(1, charName);
 
 			rs = pstm.executeQuery();
@@ -58,7 +58,7 @@ public class MySqlCharacterStorage {
 		PreparedStatement pstm = null;
 		try {
 			con = DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO char_info SET char_id=? ,location_x=? ,location_y=? ,location_z=? ,cur_lv=1 ,cur_exp=0 ,cur_hp=1 ,max_hp=1 ,cur_mp=1 ,max_mp=1 ,inventory=? ,inventory_shortcut=? ,bank=? ,sp_str=0 ,sp_dex=0 ,sp_wis=0 ,sp_con=0 ,sp_remain=0 ,account_id=? ,scene_id=? ,guild=0");
+			pstm = con.prepareStatement("INSERT INTO char_info SET id=? ,location_x=? ,location_y=? ,location_z=? ,cur_lv=1 ,cur_exp=0 ,cur_hp=1 ,max_hp=1 ,cur_mp=1 ,max_mp=1 ,inventory=? ,inventory_shortcut=? ,bank=? ,sp_str=0 ,sp_dex=0 ,sp_wis=0 ,sp_con=0 ,sp_remain=0 ,account_id=? ,scene_id=? ,guild=0");
 			pstm.setString(1, pc.getAccountName());
 			pstm.setFloat(2, 0.0f);
 			pstm.setFloat(3, 0.0f);

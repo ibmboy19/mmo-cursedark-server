@@ -69,7 +69,7 @@ public class ClientProcess implements Runnable {
 		// 背景封包作業
 		while (!_csocket.isClosed()) {
 			int op = 0;
-			try {
+			try {				
 				op = Integer.valueOf(br.readLine());
 			} catch (NumberFormatException ne){
 				continue;

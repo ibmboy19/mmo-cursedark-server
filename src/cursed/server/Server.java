@@ -21,7 +21,7 @@ public class Server {
 	/** 資料庫帳號*/
 	private static String DB_LOGIN = "root";
 	/** 資料庫密碼*/
-	private static String DB_PASSWORD = "root";
+	private static String DB_PASSWORD = "1234";
 
 	public static void main(String[] args) throws Exception {
 		File logFolder = new File("log");

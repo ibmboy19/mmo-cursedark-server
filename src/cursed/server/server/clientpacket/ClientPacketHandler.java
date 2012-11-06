@@ -20,6 +20,7 @@ public class ClientPacketHandler {
 	}
 
 	public void handlePacket(final int op) {
+		
 		try {
 			switch (op) {
 			case C_login:
@@ -45,6 +46,7 @@ public class ClientPacketHandler {
 					LoginController.getInstance().login(_client, account);
 					//Account.updateLastActive(account, ip); // 更新最後一次登入的時間與IP
 					_client.setAccount(account);
+					_client.getWr().println(C_login);
 					_client.getWr().println("true");
 					
 					System.out.format("帳號: %s 已經登入\n", accountName);
@@ -73,7 +75,7 @@ public class ClientPacketHandler {
 				// TODO 處理座標 
 				
 				// TODO 儲存角色狀態到DB
-				CharacterTable.saveCharStatus(pc);
+				//CharacterTable.saveCharStatus(pc);
 				break;
 			case C_KeyBoardWalk:
 				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_KeyBoardWalk), _client.getAccountName(), _client.getBr().readLine(),_client.getBr().readLine());
