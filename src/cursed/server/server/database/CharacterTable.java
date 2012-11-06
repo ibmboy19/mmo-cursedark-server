@@ -92,7 +92,7 @@ public class CharacterTable {
 			pstm = con.prepareStatement("SELECT * FROM char_info WHERE id=?");
 			pstm.setString(1, pc.getName());
 			
-			rs = pstm.executeQuery();
+			rs = pstm.executeQuery();			
 			if (!rs.next()) {
 				return null;
 			}
@@ -122,7 +122,7 @@ public class CharacterTable {
 		try {
 			con = DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT account_name FROM characters WHERE char_name=?");
-			pstm.setString(1, name);
+			pstm.setString(1, name);			
 			rs = pstm.executeQuery();
 			result = rs.next();
 		}

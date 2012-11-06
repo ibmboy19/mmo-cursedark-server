@@ -16,7 +16,9 @@ package cursed.server;
 
 import java.util.Scanner;
 
+import cursed.server.server.database.ItemTable;
 import cursed.server.server.model.CursedWorld;
+import static cursed.server.server.clientpacket.ClientOpcodes.*;
 
 /**
  * cmd 互動命令 處理程序
@@ -50,7 +52,7 @@ public class ConsoleProcess extends Thread {
 		if (cmd == null || line == null) {
 			System.out.println("error, please input cmd words or args.");
 			return;
-		}
+		}		
 		if (cmd.equalsIgnoreCase("chat")) {// cmd與遊戲內對話功能
 			CursedWorld.getInstance().broadcastPacketToAllClient("系統管理員", line);
 			System.out.println("[系統管理員]" + line);
@@ -74,7 +76,11 @@ public class ConsoleProcess extends Thread {
 		}
 		if (cmd.equalsIgnoreCase("lookup")) {// cmd查看遊戲內對話功能
 			// TODO 開啟另一個視窗並顯示遊戲內對話
-		} else {
+		} 
+		//暫用 - 測試資料庫物品編碼
+		else if(cmd.equalsIgnoreCase("dbtestall")){
+			CursedWorld.getInstance().broadcastPacketToAllClient(String.valueOf(C_NewItem), ItemTable.CreateItemAll());
+		}else {
 			System.out.println("error, doesn't have the command.");
 			return;
 		}

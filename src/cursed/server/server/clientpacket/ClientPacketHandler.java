@@ -96,11 +96,11 @@ public class ClientPacketHandler {
                 index = _client.getBr().readLine();	
                 CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_ChangeTexture), _client.getAccountName(),type ,index);
                 break;
-            case C_ChangeWeapon:
+            case C_ChangeModel:
             	type = _client.getBr().readLine();
                 index = _client.getBr().readLine();
-                CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_ChangeWeapon), _client.getAccountName(),type ,index);
-                break;
+                CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_ChangeModel), _client.getAccountName(),type ,index);
+                break;            
 			case C_Logout:
 				CursedWorld.getInstance().broadcastPacketToAllClient(_client.getAccountName(), Integer.toString(C_DeleteChar));
 				System.out.println(_client.getAccountName()+" 離線");

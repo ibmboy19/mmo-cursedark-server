@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.logging.Logger;
 
 import cursed.server.server.GameServer;
+import cursed.server.server.utils.Vector3;
 
 
 /**
@@ -32,7 +33,6 @@ public class Server {
 		DatabaseFactory.getInstance();
 
 		/** 初始化並啟動Game Server */
-		GameServer.getInstance().initialize();
-
+		GameServer.getInstance().initialize();		
 	}
 }
