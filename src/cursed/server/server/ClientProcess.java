@@ -51,8 +51,8 @@ public class ClientProcess implements Runnable {
 			_in = _csocket.getInputStream();
 			_out = _csocket.getOutputStream();
 			// 輸出入串流
-			br = new BufferedReader(new InputStreamReader(_in, "UTF-8"));
-			wr = new PrintWriter(new OutputStreamWriter(_out, "UTF-8"), true);
+			br = new BufferedReader(new InputStreamReader(_in, "UTF-16"));
+			wr = new PrintWriter(new OutputStreamWriter(_out, "UTF-16"), true);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
