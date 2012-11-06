@@ -14,7 +14,7 @@ import cursed.server.server.model.CursedWorld;
 public class GameServer extends Thread {
 	private static GameServer _instance;
 	private ServerSocket _serverSocket;
-	private int _port = 1200; // 端口
+	private int _port = 6001; // 端口
 	private LoginController _loginController;
 
 	public static GameServer getInstance() {

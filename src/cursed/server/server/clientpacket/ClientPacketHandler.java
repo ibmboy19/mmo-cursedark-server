@@ -9,10 +9,7 @@ import cursed.server.server.ClientProcess;
 import cursed.server.server.database.CharacterTable;
 import cursed.server.server.model.CursedWorld;
 import cursed.server.server.model.instance.PcInstance;
-import static cursed.server.server.clientpacket.ClientOpcodes.C_chat;
-import static cursed.server.server.clientpacket.ClientOpcodes.C_login;
-import static cursed.server.server.clientpacket.ClientOpcodes.C_logout;
-import static cursed.server.server.clientpacket.ClientOpcodes.C_position;
+import static cursed.server.server.clientpacket.ClientOpcodes.*;
 
 public class ClientPacketHandler {
 	private final ClientProcess _client;
@@ -39,6 +36,7 @@ public class ClientPacketHandler {
 						Ct.storeNewCharacter(pc);
 				}
 				if (!account.validatePassword(password)) {
+					_client.getWr().println(C_login);
 					_client.getWr().println("false");
 					return;
 				}
@@ -62,32 +60,47 @@ public class ClientPacketHandler {
 					return;
 				}
 				break;
-			case C_chat:
-				String id = null;
-				id  = _client.getBr().readLine();
-				String d = _client.getBr().readLine();
-				System.out.println(id+ ": " + d);
-				
-				CursedWorld.getInstance().broadcastPacketToAllClient(id, d);
+			case C_Chat:
+				String msg = null;
+				msg  = _client.getBr().readLine();
+				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_Chat), _client.getAccountName(), msg);
+				System.out.println(_client.getAccountName()+ ": " + msg);
 				break;
-			case C_position:
-				String scine_id = _client.getBr().readLine();
-				String char_id =  _client.getBr().readLine();
-				String Location = _client.getBr().readLine();
-				String State = _client.getBr().readLine();
+			case C_Walk:
+				String Positoon = _client.getBr().readLine();
+				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_Walk), _client.getAccountName(), Positoon);
 				
-				String loc[] = Location.split(" ");
-				pc.setScene_id(Integer.valueOf(scine_id));
-				pc.setX(Float.parseFloat(loc[0]));
-				pc.setY(Float.parseFloat(loc[1]));
-				pc.setZ(Float.parseFloat(loc[2]));
+				// TODO 處理座標 
 				
 				// TODO 儲存角色狀態到DB
 				CharacterTable.saveCharStatus(pc);
-				
-				CursedWorld.getInstance().broadcastLocationPacketToAllClient(scine_id,char_id,Location,State);
 				break;
-			case C_logout:
+			case C_KeyBoardWalk:
+				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_KeyBoardWalk), _client.getAccountName(), _client.getBr().readLine(),_client.getBr().readLine());
+				break;
+			case C_Party: //id request
+				CursedWorld.getInstance().broadcastPacketToClient(_client.getAccountName(), Integer.toString(C_Party), _client.getBr().readLine(), _client.getBr().readLine());
+                break;
+			case C_PartyApply:
+				String toId  = _client.getBr().readLine();
+				msg = _client.getBr().readLine();
+				CursedWorld.getInstance().broadcastPacketToClient(_client.getAccountName(), Integer.toString(C_PartyApply), toId, msg);
+                break;
+            case C_RequestInventory:
+                break;
+            case C_ChangeTexture:
+                String type, index;
+                type = _client.getBr().readLine();
+                index = _client.getBr().readLine();	
+                CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_ChangeTexture), _client.getAccountName(),type ,index);
+                break;
+            case C_ChangeWeapon:
+            	type = _client.getBr().readLine();
+                index = _client.getBr().readLine();
+                CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_ChangeWeapon), _client.getAccountName(),type ,index);
+                break;
+			case C_Logout:
+				CursedWorld.getInstance().broadcastPacketToAllClient(_client.getAccountName(), Integer.toString(C_DeleteChar));
 				System.out.println(_client.getAccountName()+" 離線");
 				LoginController.getInstance().logout(_client);
 				_client.quite();

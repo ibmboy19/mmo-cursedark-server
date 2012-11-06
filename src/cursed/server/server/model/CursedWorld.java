@@ -84,16 +84,10 @@ private Collection<ClientProcess> _allClientValues;
 		}
 	}
 	
-	/**
-	 * 世界廣播
-	 * @param id
-	 * @param message
-	 */
-	public void broadcastPacketToAllClient(String id ,String message) {
+	public void broadcastPacketToAllClient(String op, String id) {
 		for (ClientProcess cp : getAllClient()) {
-			cp.getWr().println("128");
+			cp.getWr().println(op);
 			cp.getWr().println(id);
-			cp.getWr().println(message);
 		}
 	}
 	
@@ -102,13 +96,38 @@ private Collection<ClientProcess> _allClientValues;
 	 * @param id
 	 * @param message
 	 */
-	public void broadcastLocationPacketToAllClient(String Scene_id ,String id , String location , String state) {
+	public void broadcastPacketToAllClient(String op, String id ,String message) {
 		for (ClientProcess cp : getAllClient()) {
-			cp.getWr().println("7");
+			cp.getWr().println(op);
 			cp.getWr().println(id);
-			cp.getWr().println(location);
-			cp.getWr().println(state);
+			cp.getWr().println(message);
+		}
+	}
+	
+	public void broadcastPacketToAllClient(String op, String id ,String type, String index) {
+		for (ClientProcess cp : getAllClient()) {
+			cp.getWr().println(op);
+			cp.getWr().println(id);
+			cp.getWr().println(type);
+			cp.getWr().println(index);
 		}
 	}
 
+	public void broadcastPacketToAllClient(String op, String id ,String type, String index, String pos) {
+		for (ClientProcess cp : getAllClient()) {
+			cp.getWr().println(op);
+			cp.getWr().println(id);
+			cp.getWr().println(type);
+			cp.getWr().println(index);
+			cp.getWr().println(pos);
+		}
+	}
+	
+	public void broadcastPacketToClient(String from, String op, String id ,String message) {
+		for (ClientProcess cp : getAllClient()) {
+			cp.getWr().println(op);
+			cp.getWr().println(from);
+			cp.getWr().println(message);
+		}
+	}
 }
