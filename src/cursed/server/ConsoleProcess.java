@@ -79,6 +79,7 @@ public class ConsoleProcess extends Thread {
 		} 
 		//暫用 - 測試資料庫物品編碼
 		else if(cmd.equalsIgnoreCase("dbtestall")){
+			
 			CursedWorld.getInstance().broadcastPacketToAllClient(String.valueOf(C_NewItem), ItemTable.CreateItemAll());
 		}else {
 			System.out.println("error, doesn't have the command.");

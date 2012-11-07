@@ -77,8 +77,8 @@ public class ClientPacketHandler {
 				// TODO 儲存角色狀態到DB
 				//CharacterTable.saveCharStatus(pc);
 				break;
-			case C_KeyBoardWalk:
-				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_KeyBoardWalk), _client.getAccountName(), _client.getBr().readLine(),_client.getBr().readLine());
+			case C_KeyBoardWalk://op,id,direction,look-direction,position
+				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_KeyBoardWalk), _client.getAccountName(), _client.getBr().readLine(),_client.getBr().readLine(),_client.getBr().readLine());
 				break;
 			case C_Party: //id request
 				CursedWorld.getInstance().broadcastPacketToClient(_client.getAccountName(), Integer.toString(C_Party), _client.getBr().readLine(), _client.getBr().readLine());

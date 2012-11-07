@@ -43,6 +43,7 @@ public class ItemTable {
 			
 		}
 		finally {
+			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 			
