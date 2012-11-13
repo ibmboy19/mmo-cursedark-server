@@ -102,7 +102,7 @@ public class ClientPacketHandler {
                 CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_ChangeModel), _client.getAccountName(),type ,index);
                 break;            
 			case C_Logout:
-				CursedWorld.getInstance().broadcastPacketToAllClient(_client.getAccountName(), Integer.toString(C_DeleteChar));
+				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_Logout),_client.getAccountName());
 				System.out.println(_client.getAccountName()+" 離線");
 				LoginController.getInstance().logout(_client);
 				_client.close();
