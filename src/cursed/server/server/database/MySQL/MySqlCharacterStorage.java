@@ -40,10 +40,11 @@ public class MySqlCharacterStorage {
 			pc.setLevel(Integer.valueOf(rs.getString("cur_lv")));
 			pc.setCurrentHp(Integer.valueOf(rs.getString("cur_hp")));
 			pc.setName(rs.getString("account_id"));
-
+			
 			_log.finest("restored char data: ");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+			
 			return null;
 		} finally {
 			SQLUtil.close(rs);

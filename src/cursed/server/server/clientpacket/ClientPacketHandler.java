@@ -62,6 +62,16 @@ public class ClientPacketHandler {
 					return;
 				}
 				break;
+			case C_CreateCharacter:
+				//收到 id , str, con,dex,luck,wis,ws,color_r,color_g,color_b
+				
+				
+				//存進資料庫
+				
+				
+				//回傳給client 創造成功或失敗 - true / false
+				
+				break;
 			case C_Chat:
 				String msg = null;
 				msg  = _client.getBr().readLine();
