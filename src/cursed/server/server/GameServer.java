@@ -65,9 +65,12 @@ public class GameServer extends Thread {
 		
 		_loginController = LoginController.getInstance();
 		
+		// 初始化遊戲世界
 		CursedWorld.getInstance();
 		
-		
+		// 初始化遊戲循環公告
+	    AnnouncementsCycle.getInstance();
+	
 		System.out.println("Server初始化完成。");
 		// cmd互動指令
 		Thread cp = new ConsoleProcess();

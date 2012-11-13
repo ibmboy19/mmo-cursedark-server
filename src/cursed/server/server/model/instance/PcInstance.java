@@ -48,6 +48,10 @@ public class PcInstance extends Character{
 		_netConnection = Clientprocess;
 	}
 	
+	public void sendpackets(int s){
+		_netConnection.getWr().println(s);
+	}
+	
 	public void sendpackets(String s){
 		_netConnection.getWr().println(s);
 	}

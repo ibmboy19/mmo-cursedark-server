@@ -85,9 +85,11 @@ private Collection<ClientProcess> _allClientValues;
 	}
 	
 	public void broadcastPacketToAllClient(String op, String id) {
-		for (ClientProcess cp : getAllClient()) {
-			cp.getWr().println(op);
-			cp.getWr().println(id);
+		for (PcInstance pc : getAllPlayers()) {
+			pc.sendpackets(op);
+			pc.sendpackets(id);
+			//cp.getWr().println(op);
+			//cp.getWr().println(id);
 		}
 	}
 	
@@ -97,37 +99,40 @@ private Collection<ClientProcess> _allClientValues;
 	 * @param message
 	 */
 	public void broadcastPacketToAllClient(String op, String id ,String message) {
-		for (ClientProcess cp : getAllClient()) {
-			cp.getWr().println(op);
-			cp.getWr().println(id);
-			cp.getWr().println(message);
+		for (PcInstance pc : getAllPlayers()) {
+			pc.sendpackets(op);
+			pc.sendpackets(id);
+			pc.sendpackets(message);
+			//cp.getWr().println(op);
+			//cp.getWr().println(id);
+			//cp.getWr().println(message);
 		}
 	}
 	
 	public void broadcastPacketToAllClient(String op, String id ,String type, String index) {
-		for (ClientProcess cp : getAllClient()) {
-			cp.getWr().println(op);
-			cp.getWr().println(id);
-			cp.getWr().println(type);
-			cp.getWr().println(index);
+		for (PcInstance pc : getAllPlayers()) {
+			pc.sendpackets(op);
+			pc.sendpackets(id);
+			pc.sendpackets(type);
+			pc.sendpackets(index);
 		}
 	}
 
 	public void broadcastPacketToAllClient(String op, String id ,String type, String index, String pos) {
-		for (ClientProcess cp : getAllClient()) {
-			cp.getWr().println(op);
-			cp.getWr().println(id);
-			cp.getWr().println(type);
-			cp.getWr().println(index);
-			cp.getWr().println(pos);
+		for (PcInstance pc : getAllPlayers()) {
+			pc.sendpackets(op);
+			pc.sendpackets(id);
+			pc.sendpackets(type);
+			pc.sendpackets(index);
+			pc.sendpackets(pos);
 		}
 	}
 	
 	public void broadcastPacketToClient(String from, String op, String id ,String message) {
-		for (ClientProcess cp : getAllClient()) {
-			cp.getWr().println(op);
-			cp.getWr().println(from);
-			cp.getWr().println(message);
+		for (PcInstance pc : getAllPlayers()) {
+			pc.sendpackets(op);
+			pc.sendpackets(from);
+			pc.sendpackets(message);
 		}
 	}
 }
