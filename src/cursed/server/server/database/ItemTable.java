@@ -32,7 +32,7 @@ public class ItemTable {
 				return null;
 			}
 			
-			return ItemEncoder.EncodingResourceItem(rs.getInt("id"), rs.getInt("type"), rs.getInt("icon"),
+			return ItemEncoder.EncodingResourceItem(rs.getInt("id"),rs.getString("name"), rs.getInt("type"), rs.getInt("icon"),
 					 rs.getInt("values"),  rs.getInt("weight"),  rs.getInt("durability"), 
 					 rs.getInt("max_durability"),  rs.getInt("request_lv"), rs.getInt("request_class"), 
 					 rs.getInt("request_str"), rs.getInt("request_con"), rs.getInt("request_dex"), 
