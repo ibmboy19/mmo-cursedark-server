@@ -70,8 +70,11 @@ public class ClientPacketHandler {
 				
 				
 				//回傳給client 創造成功或失敗 - true / false
-				
+				//若client 收到true，將會送一次OP_RequestCharacterList；false則不做事
 				break;
+			case C_RequestCharacterList:
+				//client要求該帳號的角色清單
+			break;
 			case C_Chat:
 				String msg = null;
 				msg  = _client.getBr().readLine();
