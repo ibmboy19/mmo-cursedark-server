@@ -58,6 +58,7 @@ public class MySqlCharacterStorage {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
+			// TODO 角色創建
 			con = DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("INSERT INTO char_info SET id=? ," +
 					"location_x=? ,location_y=? ,location_z=? ,cur_lv=1 ,cur_exp=0 ," +
@@ -95,7 +96,7 @@ public class MySqlCharacterStorage {
 		ResultSet rs = null;
 		try {
 			con = DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM characters WHERE account_name=? AND char_name=?");
+			pstm = con.prepareStatement("SELECT * FROM char_info WHERE account_id=? AND id=?");
 			pstm.setString(1, accountName);
 			pstm.setString(2, charName);
 			rs = pstm.executeQuery();
@@ -105,7 +106,7 @@ public class MySqlCharacterStorage {
 				throw new RuntimeException("could not delete character");
 			}
 
-			pstm = con.prepareStatement("DELETE FROM characters WHERE char_name=?");
+			pstm = con.prepareStatement("DELETE FROM char_info WHERE id=?");
 			pstm.setString(1, charName);
 			pstm.execute();
 

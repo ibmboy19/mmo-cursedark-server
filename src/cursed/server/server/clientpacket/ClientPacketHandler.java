@@ -65,14 +65,9 @@ public class ClientPacketHandler {
 				break;
 			case C_CreateCharacter:
 				//收到 id , str, con,dex,luck,wis,ws,color_r,color_g,color_b
-				
-				Ct = CharacterTable.getInstance();
-				Ct.storeNewCharacter(pc);
-				
-				//存進資料庫
+				//TODO Insert to 資料庫 若success 回傳true 否則傳false
 				
 				
-				//回傳給client 創造成功或失敗 - true / false
 				//若client 收到true，將會送一次OP_RequestCharacterList；false則不做事
 				break;
 			case C_RequestCharacterList:

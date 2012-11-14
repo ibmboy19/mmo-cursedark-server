@@ -5,6 +5,10 @@ import cursed.server.server.utils.Calculator;
 public class Character extends Object{
 	private static final long serialVersionUID = 1L;
 	
+	public Character(){
+		
+	}
+	
 	
 	private String _name; 
 
@@ -15,8 +19,10 @@ public class Character extends Object{
 	public void setName(String s) {
 		_name = s;
 	}
+	//character color
+	private float _colorR,_colorG,_colorB;
 	
-
+	
 	private int _level;
 	public synchronized int getLevel() {
 		return _level;
