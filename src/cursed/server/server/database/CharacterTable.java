@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import cursed.server.DatabaseFactory;
 import cursed.server.server.database.MySQL.MySqlCharacterStorage;
+import cursed.server.server.model.CharacterObject;
 import cursed.server.server.model.instance.PcInstance;
 import cursed.server.server.utils.SQLUtil;
 import cursed.server.server.utils.collections.Maps;
@@ -32,10 +33,14 @@ public class CharacterTable {
 	private CharacterTable() {
 		_charStorage = new MySqlCharacterStorage();
 	}
-
 	public void storeNewCharacter(PcInstance pc) throws Exception {
 		synchronized (pc) {
 			_charStorage.createCharacter(pc);
+		}
+	}
+	public void storeNewCharacter(String accountID,CharacterObject _char) throws Exception {
+		synchronized (_char) {
+			_charStorage.createCharacter(accountID,_char);
 		}
 	}
 
@@ -90,7 +95,7 @@ public class CharacterTable {
 		try {
 			con = DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM char_info WHERE id=?");
-			pstm.setString(1, pc.getName());
+			pstm.setString(1, pc.getID());
 			
 			rs = pstm.executeQuery();			
 			if (!rs.next()) {

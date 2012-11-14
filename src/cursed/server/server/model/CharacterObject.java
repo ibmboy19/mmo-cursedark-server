@@ -1,27 +1,40 @@
 package cursed.server.server.model;
 
 import cursed.server.server.utils.Calculator;
-
-public class Character extends Object{
+//原Character，與java的Character衝突所以Rename
+public class CharacterObject extends Object{
 	private static final long serialVersionUID = 1L;
 	
-	public Character(){
+	public CharacterObject(){
+		
+	}
+	public CharacterObject(String _id,String _str,String _con,String _dex, String _luck,String _wis,String _ws,
+			String _colorR,String _colorG,String _colorB){
+		this._id = _id;
+		this._str = Integer.valueOf(_str);
+		this._con = Integer.valueOf(_con);
+		this._dex = Integer.valueOf(_dex);
+		this._luck = Integer.valueOf(_luck);
+		this._wis = Integer.valueOf(_wis);
+		this._ws = Integer.valueOf(_ws);
+		this._colorR = Float.valueOf(_colorR);
+		this._colorG = Float.valueOf(_colorG);
+		this._colorB = Float.valueOf(_colorB);
 		
 	}
 	
+	private String _id; 
+
+	public String getID() {
+		return _id;
+	}
+
 	
-	private String _name; 
-
-	public String getName() {
-		return _name;
-	}
-
-	public void setName(String s) {
-		_name = s;
-	}
 	//character color
 	private float _colorR,_colorG,_colorB;
-	
+	public float getColorR(){return _colorR;}
+	public float getColorG(){return _colorG;}
+	public float getColorB(){return _colorB;}
 	
 	private int _level;
 	public synchronized int getLevel() {

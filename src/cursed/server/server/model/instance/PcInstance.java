@@ -2,10 +2,10 @@ package cursed.server.server.model.instance;
 
 import cursed.server.server.ClientProcess;
 import cursed.server.server.database.CharacterTable;
-import cursed.server.server.model.Character;
+import cursed.server.server.model.CharacterObject;
 import cursed.server.server.model.CursedWorld;
 
-public class PcInstance extends Character{
+public class PcInstance extends CharacterObject{
 	private static final long serialVersionUID = 1L;
 	private ClientProcess _netConnection;
 	private String _accountName;

@@ -1,5 +1,18 @@
 package cursed.server.server.clientpacket;
 
+import static cursed.server.server.clientpacket.ClientOpcodes.C_ChangeModel;
+import static cursed.server.server.clientpacket.ClientOpcodes.C_ChangeTexture;
+import static cursed.server.server.clientpacket.ClientOpcodes.C_Chat;
+import static cursed.server.server.clientpacket.ClientOpcodes.C_CreateCharacter;
+import static cursed.server.server.clientpacket.ClientOpcodes.C_KeyBoardWalk;
+import static cursed.server.server.clientpacket.ClientOpcodes.C_Logout;
+import static cursed.server.server.clientpacket.ClientOpcodes.C_Party;
+import static cursed.server.server.clientpacket.ClientOpcodes.C_PartyApply;
+import static cursed.server.server.clientpacket.ClientOpcodes.C_RequestCharacterList;
+import static cursed.server.server.clientpacket.ClientOpcodes.C_RequestInventory;
+import static cursed.server.server.clientpacket.ClientOpcodes.C_Walk;
+import static cursed.server.server.clientpacket.ClientOpcodes.C_login;
+
 import java.io.IOException;
 import java.net.SocketException;
 
@@ -7,9 +20,9 @@ import cursed.server.LoginController;
 import cursed.server.server.Account;
 import cursed.server.server.ClientProcess;
 import cursed.server.server.database.CharacterTable;
+import cursed.server.server.model.CharacterObject;
 import cursed.server.server.model.CursedWorld;
 import cursed.server.server.model.instance.PcInstance;
-import static cursed.server.server.clientpacket.ClientOpcodes.*;
 
 public class ClientPacketHandler {
 	private final ClientProcess _client;
@@ -35,6 +48,9 @@ public class ClientPacketHandler {
 						pc = new PcInstance();
 						pc.setAccountName(accountName);
 						Ct.storeNewCharacter(pc);
+				}else {
+					pc = new PcInstance();
+					pc.setAccountName(accountName);
 				}
 				if (!account.validatePassword(password)) {
 					_client.getWr().println(C_login);
@@ -49,8 +65,7 @@ public class ClientPacketHandler {
 					_client.getWr().println(C_login);
 					_client.getWr().println("true");
 					
-					System.out.format("帳號: %s 已經登入\n", accountName);
-					
+					System.out.format("帳號: %s 已經登入\n", accountName);					
 					//進入世界用
 					/*pc = PcInstance.load(accountName);
 					pc.setName(account.getName());
@@ -66,7 +81,13 @@ public class ClientPacketHandler {
 			case C_CreateCharacter:
 				//收到 id , str, con,dex,luck,wis,ws,color_r,color_g,color_b
 				//TODO Insert to 資料庫 若success 回傳true 否則傳false
+				CharacterObject _char = new CharacterObject(
+						_client.getBr().readLine(),_client.getBr().readLine(),_client.getBr().readLine(),_client.getBr().readLine(),
+						_client.getBr().readLine(),_client.getBr().readLine(),_client.getBr().readLine(),_client.getBr().readLine(),
+						_client.getBr().readLine(),_client.getBr().readLine());		
 				
+				Ct = CharacterTable.getInstance();
+				Ct.storeNewCharacter(pc.getAccountName(),_char);
 				
 				//若client 收到true，將會送一次OP_RequestCharacterList；false則不做事
 				break;
