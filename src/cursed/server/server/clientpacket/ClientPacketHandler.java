@@ -51,9 +51,10 @@ public class ClientPacketHandler {
 					
 					System.out.format("帳號: %s 已經登入\n", accountName);
 					
-					pc = PcInstance.load(accountName);
+					//進入世界用
+					/*pc = PcInstance.load(accountName);
 					pc.setName(account.getName());
-					CursedWorld.getInstance().storeObject(pc);
+					CursedWorld.getInstance().storeObject(pc);*/
 
 					pc.setNetConnection(_client);
 					_client.setActiveChar(pc);
@@ -65,6 +66,8 @@ public class ClientPacketHandler {
 			case C_CreateCharacter:
 				//收到 id , str, con,dex,luck,wis,ws,color_r,color_g,color_b
 				
+				Ct = CharacterTable.getInstance();
+				Ct.storeNewCharacter(pc);
 				
 				//存進資料庫
 				

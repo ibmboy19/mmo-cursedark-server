@@ -59,17 +59,25 @@ public class MySqlCharacterStorage {
 		PreparedStatement pstm = null;
 		try {
 			con = DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO char_info SET id=? ,location_x=? ,location_y=? ,location_z=? ,cur_lv=1 ,cur_exp=0 ,cur_hp=1 ,max_hp=1 ,cur_mp=1 ,max_mp=1 ,inventory=? ,inventory_shortcut=? ,bank=? ,sp_str=0 ,sp_dex=0 ,sp_wis=0 ,sp_con=0 ,sp_remain=0 ,account_id=? ,scene_id=? ,guild=0");
-			pstm.setString(1, pc.getAccountName());
-			pstm.setFloat(2, 0.0f);
-			pstm.setFloat(3, 0.0f);
-			pstm.setFloat(4, 0.0f);
-			pstm.setString(5, null);
-			pstm.setString(6, null);
-			pstm.setString(7, null);
-			pstm.setString(8, pc.getAccountName());
-			pstm.setInt(9, 0); // sceneid
-			
+			pstm = con.prepareStatement("INSERT INTO char_info SET id=? ," +
+					"location_x=? ,location_y=? ,location_z=? ,cur_lv=1 ,cur_exp=0 ," +
+					"cur_hp=1,cur_mp=1 ,color_r=?color_g=?color_b=?,inventory=? ," +
+					"inventory_shortcut=? ,bank=? ,fame=0,str=0 ,con=0 ,dex=0 ,luck=0 ," +
+					"wis=0 ,ws = 0,remain =0,account_id=? ,class_id = ?,scene_id=? ,guild=?");
+			pstm.setString(1, pc.getAccountName());//id
+			pstm.setFloat(2, 0.0f);//loc x
+			pstm.setFloat(3, 0.0f);//loc y
+			pstm.setFloat(4, 0.0f);//loc z
+			pstm.setFloat(5, 0.0f);//color r
+			pstm.setFloat(6, 0.0f);//color g
+			pstm.setFloat(7, 0.0f);//color b
+			pstm.setString(8, null);//inventory
+			pstm.setString(9, null);//shortcut
+			pstm.setString(10, null);//bank
+			pstm.setString(11, pc.getAccountName());//account id
+			pstm.setInt(12, 1);//class id
+			pstm.setInt(13, 1); // scene id
+			pstm.setString(14, null); // guild id
 			pstm.execute();
 			_log.finest("stored char data: " + pc.getAccountName());
 		} catch (SQLException e) {
@@ -117,7 +125,9 @@ public class MySqlCharacterStorage {
 		try {
 			int i = 0;
 			con = DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE characters SET level=?,HighLevel=?,Exp=?,MaxHp=?,CurHp=?,MaxMp=?,CurMp=?,Ac=?,Str=?,Con=?,Dex=?,Cha=?,Intel=?,Wis=?,Status=?,Class=?,Sex=?,Type=?,Heading=?,LocX=?,LocY=?,MapID=?,Food=?,Lawful=?,Title=?,ClanID=?,Clanname=?,ClanRank=?,BonusStatus=?,ElixirStatus=?,ElfAttr=?,PKcount=?,PkCountForElf=?,ExpRes=?,PartnerID=?,AccessLevel=?,OnlineStatus=?,HomeTownID=?,Contribution=?,HellTime=?,Banned=?,Karma=?,LastPk=?,LastPkForElf=?,DeleteTime=? WHERE objid=?");
+			pstm = con.prepareStatement("UPDATE char_info SET location_x=?,location_y=?,location_z=?,cur_lv=?,cur_exp=?,cur_hp=?," +
+					"cur_mp=?,color_r=?,color_g=?,color_b=?,inventory=?,inventory_shortcut=?,back=?,fame=?,str =?,con=?,dex=?,luck=?," +
+					"wis=?,ws=?,remain=?,scene_id=?, WHERE id=?");
 			pstm.setInt(++i, pc.getLevel());
 			pstm.execute();
 			_log.finest("stored char data:" + pc.getName());
