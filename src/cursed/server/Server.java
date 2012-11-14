@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.logging.Logger;
 
 import cursed.server.server.GameServer;
-import cursed.server.server.utils.Vector3;
 
 
 /**
