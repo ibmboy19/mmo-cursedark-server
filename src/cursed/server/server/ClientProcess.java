@@ -1,6 +1,7 @@
 package cursed.server.server;
 
 import java.io.BufferedReader;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -36,11 +37,11 @@ public class ClientProcess implements Runnable {
 	private String _hostname;
 
 	private Socket _csocket;
+	private Character _char;
 
 	//private int _loginStatus = 0;
 
 	protected ClientProcess() {
-
 	}
 
 	public ClientProcess(Socket socket) {

@@ -69,7 +69,7 @@ public class GameServer extends Thread {
 		CursedWorld.getInstance();
 		
 		// 初始化遊戲循環公告
-	    //AnnouncementsCycle.getInstance();
+	    AnnouncementsCycle.getInstance();
 	
 		System.out.println("Server初始化完成。");
 		// cmd互動指令

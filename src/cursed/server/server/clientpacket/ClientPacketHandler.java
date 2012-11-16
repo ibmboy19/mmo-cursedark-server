@@ -54,7 +54,7 @@ public class ClientPacketHandler {
 					_client.getWr().println(C_Login);
 					_client.getWr().println("true");
 					
-					System.out.format("帳號: %s 已經登入\n", accountName);					
+					System.out.format("帳號: %s 已經登入\n", accountName);
 					//進入世界用
 					/*pc = PcInstance.load(accountName);
 					pc.setName(account.getName());
@@ -103,12 +103,14 @@ public class ClientPacketHandler {
 				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_KeyBoardWalk), _client.getAccountName(), _client.getBr().readLine(),_client.getBr().readLine(),_client.getBr().readLine());
 				break;
 			case C_Party: //id request
-				CursedWorld.getInstance().broadcastPacketToClient(_client.getAccountName(), Integer.toString(C_Party), _client.getBr().readLine(), _client.getBr().readLine());
+				//broadcast error
+				CursedWorld.getInstance().broadcastPacketToClient(Integer.toString(C_Party),_client.getAccountName(),  _client.getBr().readLine(), _client.getBr().readLine());
                 break;
 			case C_PartyApply:
+				//broadcast error
 				String toId  = _client.getBr().readLine();
 				msg = _client.getBr().readLine();
-				CursedWorld.getInstance().broadcastPacketToClient(_client.getAccountName(), Integer.toString(C_PartyApply), toId, msg);
+				CursedWorld.getInstance().broadcastPacketToClient(Integer.toString(C_PartyApply),_client.getAccountName(),  toId, msg);
                 break;
             case C_RequestInventory:
                 break;

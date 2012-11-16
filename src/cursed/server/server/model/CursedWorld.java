@@ -2,7 +2,6 @@ package cursed.server.server.model;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import cursed.server.server.ClientProcess;
@@ -129,12 +128,10 @@ private Collection<ClientProcess> _allClientValues;
 			pc.sendpackets(pos);
 		}
 	}
-	
-	public void broadcastPacketToClient(String from, String op, String id ,String message) {
-		for (PcInstance pc : getAllPlayers()) {
-			pc.sendpackets(op);
-			pc.sendpackets(from);
-			pc.sendpackets(message);
-		}
+	//error function
+	public void broadcastPacketToClient(String op,String fromID,String toID,String message) {
+		_allPlayers.get(fromID).sendpackets(op);
+		_allPlayers.get(fromID).sendpackets(toID);
+		_allPlayers.get(fromID).sendpackets(message);
 	}
 }
