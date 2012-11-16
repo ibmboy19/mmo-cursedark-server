@@ -53,7 +53,7 @@ public class ClientPacketHandler {
 					_client.setAccount(account);
 					_client.getWr().println(C_Login);
 					_client.getWr().println("true");
-					
+					pc.setStr(10);
 					System.out.format("帳號: %s 已經登入\n", accountName);
 					//進入世界用
 					/*pc = PcInstance.load(accountName);
@@ -70,13 +70,14 @@ public class ClientPacketHandler {
 			case C_CreateCharacter:
 				//收到 id , str, con,dex,luck,wis,ws,color_r,color_g,color_b
 				//TODO Insert to 資料庫 若success 回傳true 否則傳false
-				CharacterObject _char = new CharacterObject(
+				pc.SetAllData(_client.getBr().readLine(),_client.getBr().readLine(),_client.getBr().readLine(),_client.getBr().readLine(),
 						_client.getBr().readLine(),_client.getBr().readLine(),_client.getBr().readLine(),_client.getBr().readLine(),
-						_client.getBr().readLine(),_client.getBr().readLine(),_client.getBr().readLine(),_client.getBr().readLine(),
-						_client.getBr().readLine(),_client.getBr().readLine());		
+						_client.getBr().readLine(),_client.getBr().readLine());
+				
+				
 				
 				Ct = CharacterTable.getInstance();
-				Ct.storeNewCharacter(pc.getAccountName(),_char);
+				Ct.storeCharacter(pc);
 				
 				//若client 收到true，將會送一次OP_RequestCharacterList；false則不做事
 				break;

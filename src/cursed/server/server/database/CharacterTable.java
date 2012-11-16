@@ -38,12 +38,7 @@ public class CharacterTable {
 			_charStorage.createCharacter(pc);
 		}
 	}
-	public void storeNewCharacter(String accountID,CharacterObject _char) throws Exception {
-		synchronized (_char) {
-			_charStorage.createCharacter(accountID,_char);
-		}
-	}
-
+	
 	public void storeCharacter(PcInstance pc) throws Exception {
 		synchronized (pc) {
 			_charStorage.storeCharacter(pc);

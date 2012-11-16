@@ -8,20 +8,7 @@ public class CharacterObject extends Object{
 	public CharacterObject(){
 		
 	}
-	public CharacterObject(String _id,String _str,String _con,String _dex, String _luck,String _wis,String _ws,
-			String _colorR,String _colorG,String _colorB){
-		this._id = _id;
-		this._str = Integer.valueOf(_str);
-		this._con = Integer.valueOf(_con);
-		this._dex = Integer.valueOf(_dex);
-		this._luck = Integer.valueOf(_luck);
-		this._wis = Integer.valueOf(_wis);
-		this._ws = Integer.valueOf(_ws);
-		this._colorR = Float.valueOf(_colorR);
-		this._colorG = Float.valueOf(_colorG);
-		this._colorB = Float.valueOf(_colorB);
-		
-	}
+
 	
 	private String _id; 
 
@@ -217,6 +204,20 @@ public class CharacterObject extends Object{
 	public void setMDef(int value){
 		_mdef = value;
 	}
+	public void SetAllData(String _id,String _str,String _con,String _dex,String _luck,String _wis,
+			String _ws,String _colorR,String _colorG,String _colorB){
+		this._id = _id;
+		this._str = Integer.valueOf(_str);
+		this._con = Integer.valueOf(_con);
+		this._dex = Integer.valueOf(_dex);
+		this._luck = Integer.valueOf(_luck);
+		this._wis = Integer.valueOf(_wis);
+		this._ws = Integer.valueOf(_ws);
+		this._colorR = Float.valueOf(_colorR);
+		this._colorG = Float.valueOf(_colorG);
+		this._colorB = Float.valueOf(_colorB);
+	}
+	
 	/////////---------Calculate  Region-----------------------////////
 	//使用於角色能力變化Assign後
 	public void CalcAllAttribite(){
