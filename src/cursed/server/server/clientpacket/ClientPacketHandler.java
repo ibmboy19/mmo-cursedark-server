@@ -52,13 +52,10 @@ public class ClientPacketHandler {
 					_client.getWr().println("true");
 					System.out.format("帳號: %s 已經登入\n", accountName);
 					// 進入世界用
-					/*
-					 * pc = PcInstance.load(accountName);
-					 * pc.setName(account.getName());
-					 * CursedWorld.getInstance().storeObject(pc);
-					 */
-
-					pc.setNetConnection(_client);
+					
+					pc = new PcInstance();//new pc
+					pc.setAccountName(accountName);//設定pc的帳號
+					pc.setNetConnection(_client);//設定pc 的connection
 					_client.setActiveChar(pc);
 				} catch (Exception e) {
 					e.getStackTrace();
@@ -66,27 +63,28 @@ public class ClientPacketHandler {
 				}
 				break;
 			case C_CreateCharacter:
-				String NewName = _client.getBr().readLine();
-				//////應該增加另一個比對資料用封包 op_compare , type, msg 以後創建公會也會有用
+				// 收到 id , str, con,dex,luck,wis,ws,color_r,color_g,color_b
+				//暫用client省麻煩寫法
+				String NewName = _client.getBr().readLine();				
+				pc.SetAllData(NewName, _client.getBr().readLine(), 
+					      _client.getBr().readLine(), _client.getBr().readLine(), 
+					      _client.getBr().readLine(), _client.getBr().readLine(), 
+					      _client.getBr().readLine(), _client.getBr().readLine(), 
+					      _client.getBr().readLine(), _client.getBr().readLine());
+				
 				if(CharacterTable.doesCharNameExist(NewName)){
 					// TODO 名稱已存在
+					// TODO Insert to 資料庫 若success 回傳true 否則傳false
 					_client.getWr().println(C_CreateCharacter);
 					_client.getWr().println("false");
+					pc.setId(null);
 					return;
 				} else{
-					// 腳色名稱可用
+					// 角色名稱可用
 					CharacterTable.getInstance().storeNewCharacter(pc);
+					_client.getWr().println(C_CreateCharacter);
+					_client.getWr().println("true");
 				}
-				// 收到 id , str, con,dex,luck,wis,ws,color_r,color_g,color_b
-				// TODO Insert to 資料庫 若success 回傳true 否則傳false
-				pc.SetAllData(NewName, _client.getBr().readLine(), 
-						      _client.getBr().readLine(), _client.getBr().readLine(), 
-						      _client.getBr().readLine(), _client.getBr().readLine(), 
-						      _client.getBr().readLine(), _client.getBr().readLine(), 
-						      _client.getBr().readLine(), _client.getBr().readLine());
-				
-				Ct = CharacterTable.getInstance();
-				Ct.storeCharacter(pc);
 				// 若client 收到true，將會送一次OP_RequestCharacterList；false則不做事
 				break;
 			case C_RequestCharacterList: // op count (id class lv guild)

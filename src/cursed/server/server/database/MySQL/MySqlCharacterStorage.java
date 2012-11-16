@@ -63,25 +63,33 @@ public class MySqlCharacterStorage {
 		try {
 			// 角色創建
 			con = DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO char_info SET id=? ," +
-					"location_x=? ,location_y=? ,location_z=? ,cur_lv=1 ,cur_exp=0 ," +
-					"cur_hp=1,cur_mp=1 ,color_r=?color_g=?color_b=?,inventory=? ," +
-					"inventory_shortcut=? ,bank=? ,fame=0,str=0 ,con=0 ,dex=0 ,luck=0 ," +
-					"wis=0 ,ws = 0,remain =0,account_id=? ,class_id = ?,scene_id=? ,guild=?");
-			pstm.setString(1, pc.getAccountName());//id // TODO 更新為腳色名稱
-			pstm.setFloat(2, 0.0f);//loc x
-			pstm.setFloat(3, 0.0f);//loc y
-			pstm.setFloat(4, 0.0f);//loc z
-			pstm.setFloat(5, 0.0f);//color r
-			pstm.setFloat(6, 0.0f);//color g
-			pstm.setFloat(7, 0.0f);//color b
-			pstm.setString(8, null);//inventory
-			pstm.setString(9, null);//shortcut
-			pstm.setString(10, null);//bank
-			pstm.setString(11, pc.getAccountName());//account id
-			pstm.setInt(12, 1);//class id
-			pstm.setInt(13, 1); // scene id
-			pstm.setString(14, null); // guild id
+			pstm = con.prepareStatement("INSERT INTO char_info SET id=?,account_id=?,scene_id=?,location_x=?,location_y=?,location_z=?,cur_lv=?,cur_exp=?,cur_hp=?,cur_mp=?,color_r=?,color_g=?,color_b=?,inventory=?,inventory_shortcut=?,bank=?,fame=?,class_id=?,str=?,con=?,dex=?,luck=?,wis=?,ws=?,remain=?,guild=?");
+			pstm.setString(1, pc.getID());//id
+			pstm.setString(2, pc.getAccountName());//account id
+			pstm.setInt(3, 1); // scene id
+			pstm.setFloat(4, 0.0f);//loc x
+			pstm.setFloat(5, 0.0f);//loc y
+			pstm.setFloat(6, 0.0f);//loc z
+			pstm.setInt(7,1);//lv
+			pstm.setInt(8,0);//exp
+			pstm.setInt(9,1);//hp
+			pstm.setInt(10,1);//mp
+			pstm.setFloat(11, pc.getColorR());//color r
+			pstm.setFloat(12, pc.getColorG());//color g
+			pstm.setFloat(13, pc.getColorB());//color b
+			pstm.setString(14, null);//inventory
+			pstm.setString(15, null);//shortcut
+			pstm.setString(16, null);//bank
+			pstm.setInt(17,0);//fame
+			pstm.setInt(18,1);//class
+			pstm.setInt(19, pc.getStr());//str
+			pstm.setInt(20, pc.getCon());//con
+			pstm.setInt(21, pc.getDex());//dex
+			pstm.setInt(22, pc.getLuck());//luck
+			pstm.setInt(23, pc.getWis());//wis
+			pstm.setInt(24, pc.getWs());//ws
+			pstm.setInt(25, 20);//remain
+			pstm.setString(26, null);//guild
 			pstm.execute();
 			_log.finest("stored char data: " + pc.getAccountName());
 		} catch (SQLException e) {
@@ -91,50 +99,7 @@ public class MySqlCharacterStorage {
 			SQLUtil.close(con);
 		}
 	}
-	public void createCharacter(String accountID,CharacterObject  _char) {
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			// 角色創建
-			con = DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO char_info SET id=?,account_id=?,scene_id=?,location_x=?,location_y=?,location_z=?,cur_lv=?,cur_exp=?,cur_hp=?,cur_mp=?,color_r=?,color_g=?,color_b=?,inventory=?,inventory_shortcut=?,bank=?,fame=?,class_id=?,str=?,con=?,dex=?,luck=?,wis=?,ws=?,remain=?,guild=?");
-			pstm.setString(1, _char.getID());//id
-			pstm.setString(2, accountID);//account id
-			pstm.setInt(3, 1); // scene id
-			pstm.setFloat(4, 0.0f);//loc x
-			pstm.setFloat(5, 0.0f);//loc y
-			pstm.setFloat(6, 0.0f);//loc z
-			pstm.setInt(7,1);//lv
-			pstm.setInt(8,0);//exp
-			pstm.setInt(9,1);//hp
-			pstm.setInt(10,1);//mp
-			pstm.setFloat(11, _char.getColorR());//color r
-			pstm.setFloat(12, _char.getColorG());//color g
-			pstm.setFloat(13, _char.getColorB());//color b
-			pstm.setString(14, null);//inventory
-			pstm.setString(15, null);//shortcut
-			pstm.setString(16, null);//bank
-			pstm.setInt(17,0);//fame
-			pstm.setInt(18,1);//class
-			pstm.setInt(19, _char.getStr());//str
-			pstm.setInt(20, _char.getCon());//con
-			pstm.setInt(21, _char.getDex());//dex
-			pstm.setInt(22, _char.getLuck());//luck
-			pstm.setInt(23, _char.getWis());//wis
-			pstm.setInt(24, _char.getWs());//ws
-			pstm.setInt(25, 20);//remain
-			pstm.setString(26, null);//guild
-			
-			pstm.execute();
-		
-			//_log.finest("stored char data: " + _char.getAccountName());
-		} catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-	}
+	
 
 	public void deleteCharacter(String accountName, String charName)
 			throws Exception {
