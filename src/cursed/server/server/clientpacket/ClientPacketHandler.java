@@ -67,6 +67,7 @@ public class ClientPacketHandler {
 				break;
 			case C_CreateCharacter:
 				String NewName = _client.getBr().readLine();
+				//////應該增加另一個比對資料用封包 op_compare , type, msg 以後創建公會也會有用
 				if(CharacterTable.doesCharNameExist(NewName)){
 					// TODO 名稱已存在
 					_client.getWr().println(C_CreateCharacter);
@@ -78,7 +79,7 @@ public class ClientPacketHandler {
 				}
 				// 收到 id , str, con,dex,luck,wis,ws,color_r,color_g,color_b
 				// TODO Insert to 資料庫 若success 回傳true 否則傳false
-				pc.SetAllData(_client.getBr().readLine(), _client.getBr().readLine(), 
+				pc.SetAllData(NewName, _client.getBr().readLine(), 
 						      _client.getBr().readLine(), _client.getBr().readLine(), 
 						      _client.getBr().readLine(), _client.getBr().readLine(), 
 						      _client.getBr().readLine(), _client.getBr().readLine(), 

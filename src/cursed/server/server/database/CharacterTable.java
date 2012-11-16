@@ -123,7 +123,8 @@ public class CharacterTable {
 		ResultSet rs = null;
 		try {
 			con = DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT account_name FROM characters WHERE char_name=?");
+			///更正錯誤>>> 應改成比對所有char_info裡面是否有與name 相同的id 
+			pstm = con.prepareStatement("SELECT account_id FROM char_info WHERE id=?");
 			pstm.setString(1, name);			
 			rs = pstm.executeQuery();
 			result = rs.next();
