@@ -16,8 +16,7 @@ import cursed.server.server.utils.SQLUtil;
 import cursed.server.server.utils.collections.Maps;
 
 public class CharacterTable {
-	private static Logger _log = Logger.getLogger(CharacterTable.class
-			.getName());
+	private static Logger _log = Logger.getLogger(CharacterTable.class.getName());
 	private final Map<String, String> _charNameList = Maps.newConcurrentMap();
 
 	private static CharacterTable _instance;
@@ -65,13 +64,12 @@ public class CharacterTable {
 		PreparedStatement pstm = null;
 		try {
 			con = DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE char_info SET location_x= ?, location_y= ?, location_z= ?, scene_id= ?, state= ? WHERE id=?");
+			pstm = con.prepareStatement("UPDATE char_info SET location_x= ?, location_y= ?, location_z= ?, scene_id= ? WHERE id=?");
 			pstm.setFloat(1, pc.getX());
 			pstm.setFloat(2, pc.getY());
 			pstm.setFloat(3, pc.getZ());
 			pstm.setInt(4, pc.getScene_id()); // Scene id 
-			pstm.setInt(5, pc.getState()); // state
-			pstm.setString(6, pc.getId());
+			pstm.setString(5, pc.getId());
 			pstm.execute();
 		}
 		catch (Exception e) {
@@ -101,7 +99,11 @@ public class CharacterTable {
 			pc.setY(Float.valueOf(rs.getString("location_y")));
 			pc.setZ(Float.valueOf(rs.getString("location_z")));
 			pc.setScene_id(Integer.valueOf(rs.getString("scene_id")));
-			pc.setState(Integer.valueOf(rs.getString("state")));
+			pc.SetAllData(rs.getString("id"), rs.getString("str"), rs.getString("con"), rs.getString("dex"), rs.getString("luck"), rs.getString("wis"), rs.getString("ws"), rs.getString("color_r"), rs.getString("color_g"), rs.getString("color_b"));
+			pc.setCurrentExp(rs.getInt("cur_exp"));
+			pc.setLevel(rs.getInt("cur_lv"));
+			pc.setCurrentHp(rs.getInt("cur_hp"));
+			
 		}
 		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

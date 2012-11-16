@@ -11,16 +11,6 @@ public class Object implements Serializable{
 	public Vector3 _location = new Vector3();
 	
 	private String _id = null;
-	
-	private int state = 0;
-	
-	public int getState() {
-		return state;
-	}
-
-	public void setState(int state) {
-		this.state = state;
-	}
 
 	public String getId() {
 		return _id;

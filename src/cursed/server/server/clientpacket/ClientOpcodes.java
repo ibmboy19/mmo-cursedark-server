@@ -14,6 +14,7 @@ public class ClientOpcodes {
 	public static final int C_ChangeTexture = 11;					// client  傳 op, armor type, armor index;	change cloth texture
 	public static final int C_ChangeModel = 12;					//client   傳 op, weapon type, weapon index ;change weapon model
 	public static final int C_RequestCharacterList = 15;		//client  傳 op
+	public static final int C_RequestCharacterLogin = 16;       //
 	public static final int C_Logout = 999;								// client  傳 op
 
 }

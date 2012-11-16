@@ -41,6 +41,12 @@ public class CharacterObject extends Object{
 		return false;
 	}
 	private int _currentExp,_maxExp;
+	public int get_currentExp() {
+		return _currentExp;
+	}
+	public void setCurrentExp(int _currentExp) {
+		this._currentExp = _currentExp;
+	}
 	public int getCurrentExp(){
 		return _currentExp;
 	}

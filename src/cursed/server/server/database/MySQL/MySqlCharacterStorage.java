@@ -53,18 +53,22 @@ public class MySqlCharacterStorage {
 		}
 		return pc;
 	}
+	/**
+	 * 建立新腳色資料庫資料
+	 * @param pc
+	 */
 	public void createCharacter(PcInstance pc) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
-			// TODO 角色創建
+			// 角色創建
 			con = DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("INSERT INTO char_info SET id=? ," +
 					"location_x=? ,location_y=? ,location_z=? ,cur_lv=1 ,cur_exp=0 ," +
 					"cur_hp=1,cur_mp=1 ,color_r=?color_g=?color_b=?,inventory=? ," +
 					"inventory_shortcut=? ,bank=? ,fame=0,str=0 ,con=0 ,dex=0 ,luck=0 ," +
 					"wis=0 ,ws = 0,remain =0,account_id=? ,class_id = ?,scene_id=? ,guild=?");
-			pstm.setString(1, pc.getAccountName());//id
+			pstm.setString(1, pc.getAccountName());//id // TODO 更新為腳色名稱
 			pstm.setFloat(2, 0.0f);//loc x
 			pstm.setFloat(3, 0.0f);//loc y
 			pstm.setFloat(4, 0.0f);//loc z
@@ -91,7 +95,7 @@ public class MySqlCharacterStorage {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
-			// TODO 角色創建
+			// 角色創建
 			con = DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("INSERT INTO char_info SET id=?,account_id=?,scene_id=?,location_x=?,location_y=?,location_z=?,cur_lv=?,cur_exp=?,cur_hp=?,cur_mp=?,color_r=?,color_g=?,color_b=?,inventory=?,inventory_shortcut=?,bank=?,fame=?,class_id=?,str=?,con=?,dex=?,luck=?,wis=?,ws=?,remain=?,guild=?");
 			pstm.setString(1, _char.getID());//id
