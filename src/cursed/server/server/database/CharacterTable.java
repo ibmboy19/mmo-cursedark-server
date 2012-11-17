@@ -69,7 +69,7 @@ public class CharacterTable {
 			pstm.setFloat(2, pc.getY());
 			pstm.setFloat(3, pc.getZ());
 			pstm.setInt(4, pc.getScene_id()); // Scene id 
-			pstm.setString(5, pc.getId());
+			pstm.setString(5, pc.getCharID());
 			pstm.execute();
 		}
 		catch (Exception e) {
@@ -88,7 +88,7 @@ public class CharacterTable {
 		try {
 			con = DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("SELECT * FROM char_info WHERE id=?");
-			pstm.setString(1, pc.getID());
+			pstm.setString(1, pc.getCharID());
 			
 			rs = pstm.executeQuery();			
 			if (!rs.next()) {

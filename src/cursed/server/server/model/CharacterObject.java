@@ -10,12 +10,14 @@ public class CharacterObject extends Object{
 	}
 
 	
-	private String _id; 
+	private String _charID; 
 
-	public String getID() {
-		return _id;
+	public String getCharID() {
+		return _charID;
 	}
-	
+	public void setCharID(String _charID) {
+		this._charID = _charID;
+	}
 	//class
 	private CharacterClass _characterClass;
 	public CharacterClass getCharacterClass(){
@@ -217,7 +219,7 @@ public class CharacterObject extends Object{
 	}
 	public void SetAllData(String _id,String _str,String _con,String _dex,String _luck,String _wis,
 			String _ws,String _colorR,String _colorG,String _colorB){
-		this._id = _id;
+		this._charID = _id;
 		this._str = Integer.valueOf(_str);
 		this._con = Integer.valueOf(_con);
 		this._dex = Integer.valueOf(_dex);

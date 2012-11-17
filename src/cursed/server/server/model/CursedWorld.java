@@ -36,7 +36,7 @@ public class CursedWorld {
 		}
 		_allObjects.put(object.getId(), object);
 		if (object instanceof PcInstance) {
-			_allPlayers.put(((PcInstance) object).getID(), (PcInstance) object);			
+			_allPlayers.put(((PcInstance) object).getCharID(), (PcInstance) object);			
 		}
 	}
 
@@ -47,7 +47,7 @@ public class CursedWorld {
 
 		_allObjects.remove(object.getId());
 		if (object instanceof PcInstance) {
-			_allPlayers.remove(((PcInstance) object).getID());
+			_allPlayers.remove(((PcInstance) object).getCharID());
 		}
 	}
 

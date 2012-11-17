@@ -15,16 +15,16 @@ public class Object implements Serializable{
 	public String getId() {
 		return _id;
 	}
-
+	public void setId(String id) {
+		_id = id;
+	}
 	/**
 	 * 設定對象在世界中唯一的ID
 	 * 
 	 * @param id
 	 *            唯一的ID
 	 */
-	public void setId(String id) {
-		_id = id;
-	}
+	
 	
 	/**
 	 * 取得對象在地圖上的X軸值

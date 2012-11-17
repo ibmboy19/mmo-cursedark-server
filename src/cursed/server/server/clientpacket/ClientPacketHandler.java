@@ -64,25 +64,29 @@ public class ClientPacketHandler {
 					return;
 				}
 				break;
-			case C_CreateCharacter:
-				// 收到 id , str, con,dex,luck,wis,ws,color_r,color_g,color_b
-				//暫用client省麻煩寫法
-				String NewName = _client.getBr().readLine();				
-				pc.SetAllData(NewName, _client.getBr().readLine(), 
+			case C_RequestCreateCharacter:
+				//收到  str, con,dex,luck,wis,ws,color_r,color_g,color_b
+				pc.SetAllData(pc.getCharID(), _client.getBr().readLine(), 
 					      _client.getBr().readLine(), _client.getBr().readLine(), 
 					      _client.getBr().readLine(), _client.getBr().readLine(), 
 					      _client.getBr().readLine(), _client.getBr().readLine(), 
 					      _client.getBr().readLine(), _client.getBr().readLine());
+				_client.getWr().println(C_RequestCreateCharacter);
+				_client.getWr().println("true");
+				break;
+			case C_CreateCharacter:
+				// 收到 id
+				String NewName = _client.getBr().readLine();			
 				
 				if(CharacterTable.doesCharNameExist(NewName)){
 					// TODO 名稱已存在
 					// TODO Insert to 資料庫 若success 回傳true 否則傳false
 					_client.getWr().println(C_CreateCharacter);
-					_client.getWr().println("false");
-					pc.setId(null);
+					_client.getWr().println("false");					
 					return;
 				} else{
 					// 角色名稱可用
+					pc.setCharID(NewName);
 					CharacterTable.getInstance().storeNewCharacter(pc);
 					_client.getWr().println(C_CreateCharacter);
 					_client.getWr().println("true");

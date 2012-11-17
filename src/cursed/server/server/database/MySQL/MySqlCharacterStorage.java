@@ -64,7 +64,7 @@ public class MySqlCharacterStorage {
 			// 角色創建
 			con = DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("INSERT INTO char_info SET id=?,account_id=?,scene_id=?,location_x=?,location_y=?,location_z=?,cur_lv=?,cur_exp=?,cur_hp=?,cur_mp=?,color_r=?,color_g=?,color_b=?,inventory=?,inventory_shortcut=?,bank=?,fame=?,class_id=?,str=?,con=?,dex=?,luck=?,wis=?,ws=?,remain=?,guild=?");
-			pstm.setString(1, pc.getID());//id
+			pstm.setString(1, pc.getCharID());//id
 			pstm.setString(2, pc.getAccountName());//account id
 			pstm.setInt(3, 1); // scene id
 			pstm.setFloat(4, 0.0f);//loc x
