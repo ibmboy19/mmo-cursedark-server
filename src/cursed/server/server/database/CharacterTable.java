@@ -138,6 +138,33 @@ public class CharacterTable {
 		}
 		return result;
 	}
-
+	public static String loadCharacterList(String accountID){
+		int count = 0;
+		String result = "";
+		java.sql.Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		try {
+			con = DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("SELECT *FROM char_info WHERE account_id=?");
+			pstm.setString(1, accountID);			
+			rs = pstm.executeQuery();
+			
+			while(rs.next()){// (id class lv )
+				 result += rs.getString("id")+"\n"+ rs.getInt("class_id")+"\n"+ rs.getInt("cur_lv")+"\n"+rs.getString("guild")+"\n";
+				count++;
+			}
+			return String.valueOf(count)+"\n"+result;
+		}
+		catch (SQLException e) {
+			_log.warning("could not check existing charname:" + e.getMessage());
+		}
+		finally {
+			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+		return String.valueOf(count)+"\n"+result;
+	}
 
 }

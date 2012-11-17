@@ -48,15 +48,17 @@ public class ClientPacketHandler {
 					LoginController.getInstance().login(_client, account);
 					//Account.updateLastActive(account, ip); // 更新最後一次登入的時間與IP
 					_client.setAccount(account);
-					_client.getWr().println(C_Login);
-					_client.getWr().println("true");
-					System.out.format("帳號: %s 已經登入\n", accountName);
-					// 進入世界用
 					
 					pc = new PcInstance();//new pc
 					pc.setAccountName(accountName);//設定pc的帳號
 					pc.setNetConnection(_client);//設定pc 的connection
 					_client.setActiveChar(pc);
+					
+					_client.getWr().println(C_Login);
+					_client.getWr().println("true");
+					System.out.format("帳號: %s 已經登入\n", accountName);
+					
+					
 				} catch (Exception e) {
 					e.getStackTrace();
 					return;
@@ -88,15 +90,19 @@ public class ClientPacketHandler {
 				// 若client 收到true，將會送一次OP_RequestCharacterList；false則不做事
 				break;
 			case C_RequestCharacterList: // op count (id class lv guild)
-				
+				_client.getWr().println(C_RequestCharacterList);//op
+				String msg = CharacterTable.loadCharacterList(pc.getAccountName());
+				for(int cnt = 0;cnt<msg.split("\n").length;cnt++){
+					_client.getWr().println(msg.split("\n")[cnt]);
+				}
 				// TODO client要求該帳號的角色清單
-				// 回傳給client角色的清單 op, character_id , character_lv,guild_name
+				// 回傳給client角色的清單 op, character_id ,character_class, character_lv,guild_name
 				break;
 			case C_RequestCharacterLogin:
 				
 				break;
 			case C_Chat:
-				String msg = null;
+				//String msg = null;				
 				msg = _client.getBr().readLine();
 				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_Chat),_client.getAccountName(), msg);
 				System.out.println(_client.getAccountName() + ": " + msg);

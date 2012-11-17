@@ -15,14 +15,19 @@ public class CharacterObject extends Object{
 	public String getID() {
 		return _id;
 	}
-
+	
+	//class
+	private CharacterClass _characterClass;
+	public CharacterClass getCharacterClass(){
+		return _characterClass;
+	}
 	
 	//character color
 	private float _colorR,_colorG,_colorB;
 	public float getColorR(){return _colorR;}
 	public float getColorG(){return _colorG;}
 	public float getColorB(){return _colorB;}
-	
+	//level exp...
 	private int _level;
 	public synchronized int getLevel() {
 		return _level;
