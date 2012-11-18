@@ -44,10 +44,15 @@ public class CharacterTable {
 		}
 	}
 	
+	public PcInstance restoreCharacter(String charName) throws Exception {
+		PcInstance pc = _charStorage.loadCharacter(charName);
+		return pc;
+	}
+	
 	public PcInstance loadCharacter(String charName) throws Exception {
 		PcInstance pc = null;
 		try {
-			pc = _charStorage.loadCharacter(charName);
+			pc = restoreCharacter(charName);// _charStorage.loadCharacter(charName);
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
@@ -110,7 +115,10 @@ public class CharacterTable {
 		}
 		return pc;
 	}
-	//Check out 
+
+	/**
+	 * 檢查名稱是否存在
+	 */
 	public static boolean doesCharNameExist(String name) {
 		boolean result = true;
 		java.sql.Connection con = null;
@@ -133,7 +141,13 @@ public class CharacterTable {
 		}
 		return result;
 	}
-	//Load All Character From Account
+	
+	/**
+	 * 暫時取得角色清單函式
+	 * 未來使用模組處理
+	 * @param accountID 帳號
+	 * @return [腳色數量][(id class lv )...]
+	 */
 	public static String loadCharacterList(String accountID){
 		int count = 0;
 		String result = "";
@@ -142,10 +156,9 @@ public class CharacterTable {
 		ResultSet rs = null;
 		try {
 			con = DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT *FROM char_info WHERE account_id=?");
+			pstm = con.prepareStatement("SELECT * FROM char_info WHERE account_id=?");
 			pstm.setString(1, accountID);			
 			rs = pstm.executeQuery();
-			
 			while(rs.next()){// (id class lv )
 				 result += rs.getString("id")+"\n"+ rs.getInt("class_id")+"\n"+ rs.getInt("cur_lv")+"\n"+rs.getString("guild")+"\n";
 				count++;

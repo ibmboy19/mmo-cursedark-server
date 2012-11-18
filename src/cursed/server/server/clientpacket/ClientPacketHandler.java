@@ -61,15 +61,14 @@ public class ClientPacketHandler {
 					//Account.updateLastActive(account, ip); // 更新最後一次登入的時間與IP
 					_client.setAccount(account);
 					
-					pc = new PcInstance();//new pc
-					pc.setAccountName(accountName);//設定pc的帳號
-					pc.setNetConnection(_client);//設定pc 的connection
+					pc = new PcInstance();
+					pc.setNetConnection(_client);   // 設定pc 的connection
+					pc.setAccountName(accountName); // 設定pc的帳號
 					_client.setActiveChar(pc);
 					
-					_client.getWr().println(C_Login);
-					_client.getWr().println("true");
+					pc.sendpackets(C_Login);
+					pc.sendpackets("true");
 					System.out.format("帳號: %s 已經登入\n", accountName);
-					
 					
 				} catch (Exception e) {
 					e.getStackTrace();
@@ -95,15 +94,15 @@ public class ClientPacketHandler {
 				_client.getWr().println("true");
 				break;
 			case C_RequestCreateCharacter:
-				// 收到 id
+
+				/** 創角名稱*/
 				String NewName = _client.getBr().readLine();			
 				
 				if(CharacterTable.doesCharNameExist(NewName)){
-					// TODO 名稱已存在
-					// TODO Insert to 資料庫 若success 回傳true 否則傳false
+					// 名稱已存在
+					// Insert to 資料庫 若success 回傳true 否則傳false
 					_client.getWr().println(C_RequestCreateCharacter);
 					_client.getWr().println("false");					
-					
 				} else{
 					// 角色名稱可用
 					pc.setCharID(NewName);
@@ -114,24 +113,23 @@ public class ClientPacketHandler {
 				// 若client 收到true，將會送一次OP_RequestCharacterList；false則不做事
 				break;
 			case C_RequestCharacterList: // op count (id class lv guild)
-				_client.getWr().println(C_RequestCharacterList);//write op
-				String msg = CharacterTable.loadCharacterList(pc.getAccountName());//get msg
-				for(int cnt = 0;cnt<msg.split("\n").length;cnt++){
-					_client.getWr().println(msg.split("\n")[cnt]);//write msg
+				_client.getWr().println(C_RequestCharacterList);
+				String msg = CharacterTable.loadCharacterList(pc.getAccountName());
+				
+				for(String s : msg.split("\n")){
+					_client.getWr().println(s);
 				}
-				// TODO client要求該帳號的角色清單
+				
 				// 回傳給client角色的清單 op, character_id ,character_class, character_lv,guild_name
 				break;
 			case C_RequestCharacterLogin:
-				//載入角色
+				// 載入角色
 				pc = PcInstance.load(_client.getBr().readLine());
-				pc.setNetConnection(_client);
-				
 				_client.setActiveChar(pc);
-				//將角色置入世界裡
+				pc.setNetConnection(_client);
 				CursedWorld.getInstance().StorePlayer(pc);
 								
-				//write pc data to client
+				// write pc data to client
 				_client.getWr().println(C_RequestCharacterLogin);//op
 				_client.getWr().println(pc.getCharID());//id
 				_client.getWr().println(pc.getLevel());//lv
@@ -153,7 +151,7 @@ public class ClientPacketHandler {
 				
 				break;
 			case C_Chat:
-				//String msg = null;				
+				msg = null;				
 				msg = _client.getBr().readLine();
 				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_Chat),_client.getActiveChar().getCharID(), msg);
 				System.out.println(_client.getActiveChar().getCharID() + ": " + msg);
@@ -181,8 +179,7 @@ public class ClientPacketHandler {
 			case C_RequestInventory:
 				break;
 			case C_ChangeTexture:
-				String type,
-				index;
+				String type, index;
 				type = _client.getBr().readLine();
 				index = _client.getBr().readLine();
 				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_ChangeTexture),_client.getActiveChar().getCharID(), type, index);
@@ -198,7 +195,6 @@ public class ClientPacketHandler {
 				LoginController.getInstance().logout(_client);
 				_client.close();
 				break;
-
 			}
 		} catch (NumberFormatException nf) {
 			System.out.println("接收到一個null.");

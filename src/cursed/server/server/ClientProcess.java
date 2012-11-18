@@ -37,7 +37,6 @@ public class ClientProcess implements Runnable {
 	private String _hostname;
 
 	private Socket _csocket;
-	private Character _char;
 
 	//private int _loginStatus = 0;
 
@@ -86,14 +85,14 @@ public class ClientProcess implements Runnable {
 	/**
 	 * 處理玩家斷線
 	 */
-	public void quite(){
+	public void quite() {
 		StreamUtil.close(_in, _out);
 		try {
 			_csocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally{
-		_csocket = null;
+		} finally {
+			_csocket = null;
 		}
 	}
 
