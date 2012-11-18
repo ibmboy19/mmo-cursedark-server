@@ -49,7 +49,7 @@ public class PcInstance extends CharacterObject{
 		_netConnection.getWr().println(s);
 	}
 	
-	public void sendpackets(String s){
+	public void sendpackets(String s){		
 		_netConnection.getWr().println(s);
 	}
 	

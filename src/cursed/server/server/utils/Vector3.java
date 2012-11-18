@@ -37,6 +37,9 @@ public class Vector3 {
 	public void setScene_id(int scene_id) {
 		this.scene_id = scene_id;
 	}
+	public String ToString(){
+		return "("+String.valueOf(x)+","+String.valueOf(y)+","+String.valueOf(z)+")";
+	}
 	//更新角色位置時使用
 	public static Vector3 StringToVectorl(String pos){
 		pos = pos.substring(1, pos.length()-1);

@@ -43,16 +43,11 @@ public class CharacterTable {
 			_charStorage.storeCharacter(pc);
 		}
 	}
-
-	public PcInstance restoreCharacter(String charName) throws Exception {
-		PcInstance pc = _charStorage.loadCharacter(charName);
-		return pc;
-	}
-
+	
 	public PcInstance loadCharacter(String charName) throws Exception {
 		PcInstance pc = null;
 		try {
-			pc = restoreCharacter(charName);
+			pc = _charStorage.loadCharacter(charName);
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
@@ -99,7 +94,7 @@ public class CharacterTable {
 			pc.setY(Float.valueOf(rs.getString("location_y")));
 			pc.setZ(Float.valueOf(rs.getString("location_z")));
 			pc.setScene_id(Integer.valueOf(rs.getString("scene_id")));
-			pc.SetAllData(rs.getString("id"), rs.getString("str"), rs.getString("con"), rs.getString("dex"), rs.getString("luck"), rs.getString("wis"), rs.getString("ws"), rs.getString("color_r"), rs.getString("color_g"), rs.getString("color_b"));
+			
 			pc.setCurrentExp(rs.getInt("cur_exp"));
 			pc.setLevel(rs.getInt("cur_lv"));
 			pc.setCurrentHp(rs.getInt("cur_hp"));
@@ -115,7 +110,7 @@ public class CharacterTable {
 		}
 		return pc;
 	}
-	
+	//Check out 
 	public static boolean doesCharNameExist(String name) {
 		boolean result = true;
 		java.sql.Connection con = null;
@@ -138,6 +133,7 @@ public class CharacterTable {
 		}
 		return result;
 	}
+	//Load All Character From Account
 	public static String loadCharacterList(String accountID){
 		int count = 0;
 		String result = "";

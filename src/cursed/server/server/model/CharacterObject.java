@@ -27,8 +27,11 @@ public class CharacterObject extends Object{
 	//character color
 	private float _colorR,_colorG,_colorB;
 	public float getColorR(){return _colorR;}
+	public void setColorR(float _colorR){this._colorR = _colorR;}
 	public float getColorG(){return _colorG;}
+	public void setColorG(float _colorG){this._colorG = _colorG;}
 	public float getColorB(){return _colorB;}
+	public void setColorB(float _colorB){this._colorB = _colorB;}
 	//level exp...
 	private int _level;
 	public synchronized int getLevel() {
@@ -48,15 +51,13 @@ public class CharacterObject extends Object{
 		return false;
 	}
 	private int _currentExp,_maxExp;
-	public int get_currentExp() {
+	public int getCurrentExp(){
 		return _currentExp;
 	}
 	public void setCurrentExp(int _currentExp) {
 		this._currentExp = _currentExp;
 	}
-	public int getCurrentExp(){
-		return _currentExp;
-	}
+	
 	public int getMaxExp(){
 		return _maxExp;
 	}
@@ -135,6 +136,7 @@ public class CharacterObject extends Object{
 	 * Luck運氣
 	 * Wis智慧
 	 * Ws魔法能量
+	 * Remain剩餘點數
 	 */
 	
 	
@@ -186,6 +188,14 @@ public class CharacterObject extends Object{
 	public void setWs(int _ws){
 		this._ws = _ws;
 	}
+	
+	private int _remain;
+	public int getRemain(){
+		return _remain;
+	}
+	public void setRemain(int _remain){
+		this._remain = _remain;
+	}
 	/////////---------Ability Extras  Region-----------------------////////
 	private int _atk;
 	public int getAtk(){
@@ -217,20 +227,8 @@ public class CharacterObject extends Object{
 	public void setMDef(int value){
 		_mdef = value;
 	}
-	public void SetAllData(String _id,String _str,String _con,String _dex,String _luck,String _wis,
-			String _ws,String _colorR,String _colorG,String _colorB){
-		this._charID = _id;
-		this._str = Integer.valueOf(_str);
-		this._con = Integer.valueOf(_con);
-		this._dex = Integer.valueOf(_dex);
-		this._luck = Integer.valueOf(_luck);
-		this._wis = Integer.valueOf(_wis);
-		this._ws = Integer.valueOf(_ws);
-		this._colorR = Float.valueOf(_colorR);
-		this._colorG = Float.valueOf(_colorG);
-		this._colorB = Float.valueOf(_colorB);
-	}
-	
+
+
 	/////////---------Calculate  Region-----------------------////////
 	//使用於角色能力變化Assign後
 	public void CalcAllAttribite(){

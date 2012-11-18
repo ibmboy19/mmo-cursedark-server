@@ -81,6 +81,7 @@ public class ConsoleProcess extends Thread {
 		else if(cmd.equalsIgnoreCase("dbtestall")){
 			
 			CursedWorld.getInstance().broadcastPacketToAllClient(String.valueOf(C_NewItem), ItemTable.CreateItemAll());
+			
 		}else {
 			System.out.println("error, doesn't have the command.");
 			return;

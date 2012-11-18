@@ -39,6 +39,9 @@ public class CursedWorld {
 			_allPlayers.put(((PcInstance) object).getCharID(), (PcInstance) object);			
 		}
 	}
+	public void StorePlayer(PcInstance pc){
+		_allPlayers.put(pc.getCharID(),  pc);		
+	}
 
 	public void removeObject(Object object) {
 		if (object == null) {
@@ -87,8 +90,6 @@ private Collection<ClientProcess> _allClientValues;
 		for (PcInstance pc : getAllPlayers()) {
 			pc.sendpackets(op);
 			pc.sendpackets(id);
-			//cp.getWr().println(op);
-			//cp.getWr().println(id);
 		}
 	}
 	
@@ -98,15 +99,10 @@ private Collection<ClientProcess> _allClientValues;
 	 * @param message
 	 */
 	public void broadcastPacketToAllClient(String op, String id ,String message) {
-		System.out.println("chat"+ getAllPlayers().size());
 		for (PcInstance pc : getAllPlayers()) {
 			pc.sendpackets(op);
 			pc.sendpackets(id);
 			pc.sendpackets(message);
-			
-			//cp.getWr().println(op);
-			//cp.getWr().println(id);
-			//cp.getWr().println(message);
 		}
 	}
 	

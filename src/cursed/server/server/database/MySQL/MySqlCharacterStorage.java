@@ -30,16 +30,29 @@ public class MySqlCharacterStorage {
 			if (!rs.next()) {
 				return null;
 			}
-			// TODO 完成角色儲存
-			//location_x=? location_y=? location_z=? cur_lv=1 cur_exp=0 cur_hp=1 max_hp=1 cur_mp=1 max_mp=1 inventory=? inventory_shortcut=? bank=? sp_str=0 sp_dex=0 sp_wis=0 sp_con=0 sp_remain=0 account_id=? scene_id=? guild=0"
+			// TODO 角色載入
+			
 			pc = new PcInstance();
-			pc.setAccountName(rs.getString("account_id"));
-			pc.setX(Float.valueOf(rs.getString("location_x")));
-			pc.setY(Float.valueOf(rs.getString("location_y")));
-			pc.setZ(Float.valueOf(rs.getString("location_z")));
-			pc.setLevel(Integer.valueOf(rs.getString("cur_lv")));
-			pc.setCurrentHp(Integer.valueOf(rs.getString("cur_hp")));
-			pc.setAccountName(rs.getString("account_id"));
+			pc.setCharID(charName);//ID
+			pc.setAccountName(rs.getString("account_id"));//Account
+			pc.setLevel(rs.getInt("cur_lv"));//Current LV
+			pc.setCurrentExp(rs.getInt("cur_exp"));//Current EXP
+			pc.setCurrentHp(rs.getInt("cur_hp"));//Current HP
+			pc.setCurrentMp(rs.getInt("cur_mp"));//Current MP
+			pc.setColorR(rs.getFloat("color_r"));//colorR
+			pc.setColorG(rs.getFloat("color_g"));//colorG
+			pc.setColorB(rs.getFloat("color_b"));//colorB
+			pc.setStr(rs.getInt("str"));//Str
+			pc.setCon(rs.getInt("con"));//Con
+			pc.setDex(rs.getInt("dex"));//Dex
+			pc.setLuck(rs.getInt("luck"));//Luck
+			pc.setWis(rs.getInt("wis"));//Wis
+			pc.setWs(rs.getInt("ws"));//Ws
+			pc.setRemain(rs.getInt("remain"));//Remain
+			pc.setScene_id(rs.getInt("scene_id"));//current scene id
+			pc.setX(Float.valueOf(rs.getString("location_x")));//location x
+			pc.setY(Float.valueOf(rs.getString("location_y")));//location y
+			pc.setZ(Float.valueOf(rs.getString("location_z")));//cloation z
 			
 			_log.finest("restored char data: ");
 		} catch (SQLException e) {
@@ -136,12 +149,28 @@ public class MySqlCharacterStorage {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
-			int i = 0;
 			con = DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE char_info SET location_x=?,location_y=?,location_z=?,cur_lv=?,cur_exp=?,cur_hp=?," +
-					"cur_mp=?,color_r=?,color_g=?,color_b=?,inventory=?,inventory_shortcut=?,back=?,fame=?,str =?,con=?,dex=?,luck=?," +
-					"wis=?,ws=?,remain=?,scene_id=?, WHERE id=?");
-			pstm.setInt(++i, pc.getLevel());
+			pstm = con.prepareStatement("UPDATE char_info SET cur_lv=?,cur_exp=?,cur_hp=?,cur_mp=?," +
+					"str=?,con=?,dex=?,luck=?,wis=?,ws=?,remain=?,color_r=?,color_g=?,color_b=?,location_x=?," +
+					"location_y=?,location_z=? WHERE id=?");
+			pstm.setInt(1, pc.getLevel());//lv
+			pstm.setInt(2, pc.getCurrentExp());//exp
+			pstm.setInt(3, pc.getCurrentHp());//hp
+			pstm.setInt(4, pc.getCurrentMp());//mp
+			pstm.setInt(5, pc.getStr());//str
+			pstm.setInt(6, pc.getCon());//con
+			pstm.setInt(7, pc.getDex());//dex
+			pstm.setInt(8, pc.getLuck());//luck
+			pstm.setInt(9, pc.getWis());//wis
+			pstm.setInt(10, pc.getWs());//ws
+			pstm.setInt(11, pc.getRemain());//remain
+			pstm.setFloat(12, pc.getColorR());//color r
+			pstm.setFloat(13, pc.getColorG());//color g
+			pstm.setFloat(14, pc.getColorB());//color b
+			pstm.setFloat(15, pc.getX());//location x
+			pstm.setFloat(16, pc.getY());//location y
+			pstm.setFloat(17, pc.getZ());//location z
+			pstm.setString(18, pc.getCharID());//char ID
 			pstm.execute();
 			_log.finest("stored char data:" + pc.getAccountName());
 		} catch (SQLException e) {
