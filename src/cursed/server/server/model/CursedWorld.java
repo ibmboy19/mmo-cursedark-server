@@ -124,10 +124,9 @@ private Collection<ClientProcess> _allClientValues;
 			pc.sendpackets(pos);
 		}
 	}
-	//error function
 	public void broadcastPacketToClient(String op,String fromID,String toID,String message) {
-		_allPlayers.get(fromID).sendpackets(op);
-		_allPlayers.get(fromID).sendpackets(toID);
-		_allPlayers.get(fromID).sendpackets(message);
+		_allPlayers.get(toID).sendpackets(op);
+		_allPlayers.get(toID).sendpackets(fromID);
+		_allPlayers.get(toID).sendpackets(message);
 	}
 }

@@ -5,6 +5,7 @@ import static cursed.server.server.clientpacket.ClientOpcodes.C_ChangeTexture;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_Chat;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_CreateCharacter;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_KeyBoardWalk;
+import static cursed.server.server.clientpacket.ClientOpcodes.C_RequestCharacterInfo;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_Login;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_Logout;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_Party;
@@ -13,7 +14,6 @@ import static cursed.server.server.clientpacket.ClientOpcodes.C_RequestCharacter
 import static cursed.server.server.clientpacket.ClientOpcodes.C_RequestCharacterLogin;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_RequestCreateCharacter;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_RequestInventory;
-import static cursed.server.server.clientpacket.ClientOpcodes.C_Walk;
 
 import java.io.IOException;
 import java.net.SocketException;
@@ -122,6 +122,9 @@ public class ClientPacketHandler {
 				
 				// 回傳給client角色的清單 op, character_id ,character_class, character_lv,guild_name
 				break;
+			case C_RequestCharacterInfo:
+				
+				break;
 			case C_RequestCharacterLogin:
 				// 載入角色
 				pc = PcInstance.load(_client.getBr().readLine());
@@ -154,20 +157,13 @@ public class ClientPacketHandler {
 				msg = null;				
 				msg = _client.getBr().readLine();
 				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_Chat),_client.getActiveChar().getCharID(), msg);
-				System.out.println(_client.getActiveChar().getCharID() + ": " + msg);
-				break;
-			case C_Walk:
-				String Positoon = _client.getBr().readLine();
-				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_Walk), _client.getActiveChar().getCharID(),Positoon);
-
-				// TODO 儲存角色狀態到DB
-				CharacterTable.saveCharStatus(pc);
-				break;
+				
+				break;			
 			case C_KeyBoardWalk:// op,id,direction,look-direction,position
 				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_KeyBoardWalk),_client.getActiveChar().getCharID(), _client.getBr().readLine(),_client.getBr().readLine(), _client.getBr().readLine());
+		
 				break;
 			case C_Party: // id request
-				// broadcast error
 				CursedWorld.getInstance().broadcastPacketToClient(Integer.toString(C_Party), _client.getActiveChar().getCharID(),_client.getBr().readLine(), _client.getBr().readLine());
 				break;
 			case C_PartyApply:

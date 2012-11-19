@@ -6,7 +6,7 @@ public class ClientOpcodes {
 	public static final int C_CreateCharacter = 2;				// client  傳 op, id , str,con,dex,luck,wis,ws,clr_r,clr_g,clr_b 新增一筆角色資料
 	public static final int C_RequestCreateCharacter = 3;		// send op id
 	public static final int C_Chat = 4;							// client  傳op msg
-	public static final int C_Walk = 5;							// client   傳op, pos
+	public static final int C_RequestCharacterInfo = 5;     // client 傳op id
 	public static final int C_KeyBoardWalk = 6;					// client   傳op,direction,look-direction,position
 	public static final int C_Party = 7;						// client   傳 op,id,request 
 	public static final int C_PartyApply = 8;					// client   傳 op, id , aggrement?

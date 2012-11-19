@@ -54,7 +54,7 @@ public class ConsoleProcess extends Thread {
 			return;
 		}		
 		if (cmd.equalsIgnoreCase("chat")) {// cmd與遊戲內對話功能
-			CursedWorld.getInstance().broadcastPacketToAllClient("系統管理員", line);
+			CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_Chat),"系統管理員", line);
 			System.out.println("[系統管理員]" + line);
 		} else {
 			System.out.println("error, doesn't have the command.");
@@ -92,12 +92,14 @@ public class ConsoleProcess extends Thread {
 	public void run() {
 		while (onStarup && stillrun) {
 			String action = UserInput.nextLine();
+			
 			String word[] = action.split(" ");
 			if (word.length == 1) {
 				execute(word[0]);
 			}
 			if (word.length == 2) {
 				execute(word[0], word[1]);
+				
 			}
 		}
 		System.out.println("→提示: 互動指令聽取中..." + "\n" + ">");
