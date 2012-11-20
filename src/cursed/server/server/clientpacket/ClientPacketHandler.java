@@ -38,42 +38,7 @@ public class ClientPacketHandler {
 		try {
 			switch (op) {
 			case C_Login:
-				String accountName = _client.getBr().readLine();
-				String password = _client.getBr().readLine();
-				String ip = _client.get_ip();
-				Account account = Account.load(accountName);
-				
-
-				if (account == null) {
-					account = Account.create(accountName, password, ip);
-				} else {
-					// 帳號存在
-					
-				}
-				if (!account.validatePassword(password)) {
-					_client.getWr().println(C_Login);
-					_client.getWr().println("false");
-					return;
-				}
-				try {
-					CursedWorld.getInstance().addClient(_client);
-					LoginController.getInstance().login(_client, account);
-					//Account.updateLastActive(account, ip); // 更新最後一次登入的時間與IP
-					_client.setAccount(account);
-					
-					pc = new PcInstance();
-					pc.setNetConnection(_client);   // 設定pc 的connection
-					pc.setAccountName(accountName); // 設定pc的帳號
-					_client.setActiveChar(pc);
-					
-					pc.sendpackets(C_Login);
-					pc.sendpackets("true");
-					System.out.format("帳號: %s 已經登入\n", accountName);
-					
-				} catch (Exception e) {
-					e.getStackTrace();
-					return;
-				}
+				new C_Login(_client);
 				break;
 			case C_CreateCharacter:
 				//收到  str, con,dex,luck,wis,ws,color_r,color_g,color_b
@@ -161,7 +126,7 @@ public class ClientPacketHandler {
 				break;			
 			case C_KeyBoardWalk:// op,id,direction,look-direction,position
 				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_KeyBoardWalk),_client.getActiveChar().getCharID(), _client.getBr().readLine(),_client.getBr().readLine(), _client.getBr().readLine());
-		
+				CharacterTable.saveCharStatus(pc); 
 				break;
 			case C_Party: // id request
 				CursedWorld.getInstance().broadcastPacketToClient(Integer.toString(C_Party), _client.getActiveChar().getCharID(),_client.getBr().readLine(), _client.getBr().readLine());
