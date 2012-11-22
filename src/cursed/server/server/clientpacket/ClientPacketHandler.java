@@ -41,120 +41,43 @@ public class ClientPacketHandler {
 				new C_Login(_client);
 				break;
 			case C_CreateCharacter:
-				//收到  str, con,dex,luck,wis,ws,color_r,color_g,color_b
-				//創造角色
-				pc.setStr(Integer.valueOf(_client.getBr().readLine()));//str
-				pc.setCon(Integer.valueOf(_client.getBr().readLine()));//con
-				pc.setDex(Integer.valueOf(_client.getBr().readLine()));//dex
-				pc.setLuck(Integer.valueOf(_client.getBr().readLine()));//luck
-				pc.setWis(Integer.valueOf(_client.getBr().readLine()));//wis
-				pc.setWs(Integer.valueOf(_client.getBr().readLine()));//ws
-				pc.setColorR(Float.valueOf(_client.getBr().readLine()));//color_r
-				pc.setColorG(Float.valueOf(_client.getBr().readLine()));//color_g
-				pc.setColorB(Float.valueOf(_client.getBr().readLine()));//color_b
-			
-				CharacterTable.getInstance().storeCharacter(pc);
-				
-				_client.getWr().println(C_CreateCharacter);
-				_client.getWr().println("true");
+				new C_CreateCharacter(_client);
 				break;
 			case C_RequestCreateCharacter:
-
-				/** 創角名稱*/
-				String NewName = _client.getBr().readLine();			
-				
-				if(CharacterTable.doesCharNameExist(NewName)){
-					// 名稱已存在
-					// Insert to 資料庫 若success 回傳true 否則傳false
-					_client.getWr().println(C_RequestCreateCharacter);
-					_client.getWr().println("false");					
-				} else{
-					// 角色名稱可用
-					pc.setCharID(NewName);
-					CharacterTable.getInstance().storeNewCharacter(pc);
-					_client.getWr().println(C_RequestCreateCharacter);
-					_client.getWr().println("true");
-				}
-				// 若client 收到true，將會送一次OP_RequestCharacterList；false則不做事
+				new C_RequestCreateCharacter(_client);
 				break;
 			case C_RequestCharacterList: // op count (id class lv guild)
-				_client.getWr().println(C_RequestCharacterList);
-				String msg = CharacterTable.loadCharacterList(pc.getAccountName());
-				
-				for(String s : msg.split("\n")){
-					_client.getWr().println(s);
-				}
-				
-				// 回傳給client角色的清單 op, character_id ,character_class, character_lv,guild_name
+				new C_RequestCharacterList(_client);
 				break;
 			case C_RequestCharacterInfo:
+				/**client 要求角色資訊**/
 				
 				break;
-			case C_RequestCharacterLogin:
-				// 載入角色
-				pc = PcInstance.load(_client.getBr().readLine());
-				_client.setActiveChar(pc);
-				pc.setNetConnection(_client);
-				CursedWorld.getInstance().StorePlayer(pc);
-								
-				// write pc data to client
-				_client.getWr().println(C_RequestCharacterLogin);//op
-				_client.getWr().println(pc.getCharID());//id
-				_client.getWr().println(pc.getLevel());//lv
-				_client.getWr().println(pc.getCurrentExp());//cur exp
-				_client.getWr().println(pc.getCurrentHp());//cur hp
-				_client.getWr().println(pc.getCurrentMp());//cur mp
-				_client.getWr().println(pc.getColorR());//color r
-				_client.getWr().println(pc.getColorG());//color g
-				_client.getWr().println(pc.getColorB());//color b
-				_client.getWr().println(pc.getStr());//str
-				_client.getWr().println(pc.getCon());//con
-				_client.getWr().println(pc.getDex());//dex
-				_client.getWr().println(pc.getLuck());//luck
-				_client.getWr().println(pc.getWis());//wis
-				_client.getWr().println(pc.getWs());//ws
-				_client.getWr().println(pc.getRemain());//remain
-				_client.getWr().println(pc.getScene_id());//scene id
-				_client.getWr().println(pc.getLocation().ToString());//location
-				
+			case C_RequestCharacterLogin:				
+				new C_RequestCharacterLogin(_client);
 				break;
-			case C_Chat:
-				msg = null;				
-				msg = _client.getBr().readLine();
-				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_Chat),_client.getActiveChar().getCharID(), msg);
-				
+			case C_Chat:				
+				new C_Chat(_client);
 				break;			
 			case C_KeyBoardWalk:// op,id,direction,look-direction,position
-				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_KeyBoardWalk),_client.getActiveChar().getCharID(), _client.getBr().readLine(),_client.getBr().readLine(), _client.getBr().readLine());
-				CharacterTable.saveCharStatus(pc); 
+				new C_KeyBoardWalk(_client);
 				break;
 			case C_Party: // id request
-				CursedWorld.getInstance().broadcastPacketToClient(Integer.toString(C_Party), _client.getActiveChar().getCharID(),_client.getBr().readLine(), _client.getBr().readLine());
+				new C_Party(_client);
 				break;
-			case C_PartyApply:
-				// broadcast error
-				String toId = _client.getBr().readLine();
-				msg = _client.getBr().readLine();
-				CursedWorld.getInstance().broadcastPacketToClient(Integer.toString(C_PartyApply),_client.getActiveChar().getCharID(), toId, msg);
+			case C_PartyApply:	
+				new C_PartyApply(_client);
 				break;
 			case C_RequestInventory:
 				break;
 			case C_ChangeTexture:
-				String type, index;
-				type = _client.getBr().readLine();
-				index = _client.getBr().readLine();
-				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_ChangeTexture),_client.getActiveChar().getCharID(), type, index);
+				new C_ChangeTexture(_client);
 				break;
 			case C_ChangeModel:
-				type = _client.getBr().readLine();
-				index = _client.getBr().readLine();
-				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_ChangeModel),_client.getActiveChar().getCharID(), type, index);
+				new C_ChangeModel(_client);
 				break;
 			case C_Logout:
-				CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_Logout), _client.getActiveChar().getCharID());
-				System.out.println(_client.getActiveChar().getCharID() + " 離線");
-				LoginController.getInstance().logout(_client);
-				_client.close();
+				new C_Logout(_client);
 				break;
 			}
 		} catch (NumberFormatException nf) {
