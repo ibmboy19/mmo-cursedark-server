@@ -11,7 +11,7 @@ import cursed.server.server.database.CharacterTable;
 public class C_RequestCharacterList {
 	public C_RequestCharacterList(ClientProcess _client) throws IOException, NoSuchAlgorithmException{
 		_client.getWr().println(C_RequestCharacterList);
-		String msg = CharacterTable.loadCharacterList(_client.getActiveChar().getAccountName());
+		String msg = CharacterTable.loadCharacterList(_client.getAccountName());
 		
 		for(String s : msg.split("\n")){
 			_client.getWr().println(s);

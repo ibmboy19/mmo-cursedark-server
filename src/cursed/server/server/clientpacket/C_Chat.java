@@ -10,8 +10,7 @@ import cursed.server.server.model.CursedWorld;
 
 public class C_Chat {
 	public C_Chat(ClientProcess _client) throws IOException, NoSuchAlgorithmException{
-		String msg = null;				
-		msg = _client.getBr().readLine();
-		CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_Chat),_client.getActiveChar().getCharID(), msg);
+		
+		CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_Chat),_client.getActiveChar().getCharID(), _client.getBr().readLine());
 	}
 }
