@@ -24,12 +24,15 @@ public class C_RequestCreateCharacter {
 		} else{
 			// 角色名稱可用
 			pc.setCharID(NewName);
+			
+			_client.setActiveChar(pc);
 			try {
 				CharacterTable.getInstance().storeNewCharacter(pc);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			_client.getWr().println(C_RequestCreateCharacter);
 			_client.getWr().println("true");
 		}
