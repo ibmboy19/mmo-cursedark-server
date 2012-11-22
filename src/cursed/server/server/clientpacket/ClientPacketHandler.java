@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.net.SocketException;
 
 import cursed.server.LoginController;
-import cursed.server.server.Account;
 import cursed.server.server.ClientProcess;
 import cursed.server.server.database.CharacterTable;
 import cursed.server.server.model.CursedWorld;

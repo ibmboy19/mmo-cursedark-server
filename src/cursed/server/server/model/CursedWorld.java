@@ -129,5 +129,19 @@ private Collection<ClientProcess> _allClientValues;
 		_allPlayers.get(toID).sendpackets(fromID);
 		_allPlayers.get(toID).sendpackets(message);
 	}
-
+	
+	/**
+	 * 廣播給某個地圖
+	 * @param op
+	 * @param scene
+	 * @param message
+	 */
+	public void broadcastPacketToScene(String op, int scene, String message){
+		for (PcInstance pc : getAllPlayers()) {
+			if(pc.getScene_id() == scene){
+				pc.sendpackets(op);
+				pc.sendpackets(message);
+			}
+		}
+	}
 }
