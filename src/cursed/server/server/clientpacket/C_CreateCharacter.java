@@ -26,7 +26,7 @@ public class C_CreateCharacter {
 		pc.setColorB(Float.valueOf(_client.getBr().readLine()));//color_b
 	
 		try {
-			CharacterTable.getInstance().storeNewCharacter(pc);
+			CharacterTable.getInstance().storeCharacter(pc);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
