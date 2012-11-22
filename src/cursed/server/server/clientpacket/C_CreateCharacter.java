@@ -14,7 +14,8 @@ public class C_CreateCharacter {
 		
 		//收到  str, con,dex,luck,wis,ws,color_r,color_g,color_b
 		//創造角色
-		PcInstance pc = new PcInstance();
+		PcInstance pc = _client.getActiveChar();
+		pc.setAccountName(_client.getAccountName());
 		pc.setStr(Integer.valueOf(_client.getBr().readLine()));//str
 		pc.setCon(Integer.valueOf(_client.getBr().readLine()));//con
 		pc.setDex(Integer.valueOf(_client.getBr().readLine()));//dex

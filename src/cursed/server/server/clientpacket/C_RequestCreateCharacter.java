@@ -24,7 +24,7 @@ public class C_RequestCreateCharacter {
 		} else{
 			// 角色名稱可用
 			pc.setCharID(NewName);
-			
+			pc.setAccountName(_client.getAccountName());
 			_client.setActiveChar(pc);
 			try {
 				CharacterTable.getInstance().storeNewCharacter(pc);
