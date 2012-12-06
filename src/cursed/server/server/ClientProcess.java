@@ -16,18 +16,19 @@ import cursed.server.server.model.instance.PcInstance;
 import cursed.server.server.utils.StreamUtil;
 
 public class ClientProcess implements Runnable {
-	private static Logger _log = Logger.getLogger(ClientProcess.class.getName());
+	private static Logger _log = Logger
+			.getLogger(ClientProcess.class.getName());
 
 	private InputStream _in;
 
 	private OutputStream _out;
 
 	private Account _account;
-	
+
 	private PcInstance _activeChar;
 
 	private ClientPacketHandler _handler;
-	
+
 	private BufferedReader br;
 
 	private PrintWriter wr;
@@ -38,7 +39,7 @@ public class ClientProcess implements Runnable {
 
 	private Socket _csocket;
 
-	//private int _loginStatus = 0;
+	// private int _loginStatus = 0;
 
 	protected ClientProcess() {
 	}
@@ -65,23 +66,25 @@ public class ClientProcess implements Runnable {
 	public void run() {
 		_log.info("(" + _hostname + ") 連結到伺服器。");
 		System.out.println("等待客戶端連接...");
-		
+
 		// 背景封包作業
 		while (!_csocket.isClosed()) {
 			int op = 0;
-			try {				
-				op = Integer.valueOf(br.readLine());
-			} catch (NumberFormatException ne){
+			try {
+				while (br.ready()) {
+					op = Integer.valueOf(br.readLine());
+				}
+			} catch (NumberFormatException ne) {
 				continue;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			_handler.handlePacket(op);
-			
+
 		}
 
 	}
-	
+
 	/**
 	 * 處理玩家斷線
 	 */
@@ -114,11 +117,11 @@ public class ClientProcess implements Runnable {
 	public void close() throws IOException {
 		_csocket.close();
 	}
-	
+
 	public Socket get_csocket() {
 		return _csocket;
 	}
-	
+
 	public BufferedReader getBr() {
 		return br;
 	}
@@ -134,7 +137,7 @@ public class ClientProcess implements Runnable {
 	public void setWr(PrintWriter wr) {
 		this.wr = wr;
 	}
-	
+
 	public String get_ip() {
 		return _ip;
 	}
@@ -142,7 +145,7 @@ public class ClientProcess implements Runnable {
 	public void set_ip(String _ip) {
 		this._ip = _ip;
 	}
-	
+
 	public void setActiveChar(PcInstance pc) {
 		_activeChar = pc;
 	}

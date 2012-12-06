@@ -11,6 +11,9 @@ import cursed.server.server.model.CursedWorld;
 
 public class C_KeyBoardWalk {
 	public C_KeyBoardWalk(ClientProcess _client) throws IOException, NoSuchAlgorithmException{
+		if(!_client.getBr().ready()){
+			return;
+		}
 		CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_KeyBoardWalk),_client.getActiveChar().getCharID(), _client.getBr().readLine(),_client.getBr().readLine(), _client.getBr().readLine());
 		CharacterTable.saveCharStatus(_client.getActiveChar()); 
 	}
