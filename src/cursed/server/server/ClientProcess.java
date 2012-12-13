@@ -70,16 +70,20 @@ public class ClientProcess implements Runnable {
 		// 背景封包作業
 		while (!_csocket.isClosed()) {
 			int op = 0;
+			String packet = "";
 			try {
-				while (br.ready()) {
-					op = Integer.valueOf(br.readLine());
-				}
+				packet = br.readLine();
+				op = Integer.valueOf(packet.split("\t")[0]);
+				
+				System.out.println(packet);
+				
 			} catch (NumberFormatException ne) {
 				continue;
 			} catch (IOException e) {
 				e.printStackTrace();
+				quite();
 			}
-			_handler.handlePacket(op);
+			_handler.handlePacket(op,packet);
 
 		}
 

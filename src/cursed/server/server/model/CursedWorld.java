@@ -1,5 +1,7 @@
 package cursed.server.server.model;
 
+import static cursed.server.server.clientpacket.ClientOpcodes.C_PacketSymbol;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -7,6 +9,7 @@ import java.util.Map;
 import cursed.server.server.ClientProcess;
 import cursed.server.server.model.instance.PcInstance;
 import cursed.server.server.utils.collections.Maps;
+
 
 public class CursedWorld {
 	private static CursedWorld _instance;
@@ -79,55 +82,22 @@ private Collection<ClientProcess> _allClientValues;
 		return (vs != null) ? vs : (_allClientValues = Collections.unmodifiableCollection(_allClient.values()));
 	}
 	
-	public void broadcastPacketToAll(String message) {
-		for (PcInstance pc : getAllPlayers()) {
-			
-			pc.sendpackets(message);
-		}
-	}
 	
-	public void broadcastPacketToAllClient(String op, String id) {
-		for (PcInstance pc : getAllPlayers()) {
-			pc.sendpackets(op);
-			pc.sendpackets(id);
-		}
-	}
 	
 	/**
 	 * 世界廣播
 	 * @param id
 	 * @param message
 	 */
-	public void broadcastPacketToAllClient(String op, String id ,String message) {
+	public void broadcastPacketToAllClient(String packet) {
 		for (PcInstance pc : getAllPlayers()) {
-			pc.sendpackets(op);
-			pc.sendpackets(id);
-			pc.sendpackets(message);
+			pc.sendpackets(packet);
 		}
 	}
 	
-	public void broadcastPacketToAllClient(String op, String id ,String type, String index) {
-		for (PcInstance pc : getAllPlayers()) {
-			pc.sendpackets(op);
-			pc.sendpackets(id);
-			pc.sendpackets(type);
-			pc.sendpackets(index);
-		}
-	}
+	public void broadcastPacketToClient(String toID,String packet) {
+		_allPlayers.get(toID).sendpackets(packet);
 
-	public void broadcastPacketToAllClient(String op, String id ,String type, String index, String pos) {
-		for (PcInstance pc : getAllPlayers()) {
-			pc.sendpackets(op);
-			pc.sendpackets(id);
-			pc.sendpackets(type);
-			pc.sendpackets(index);
-			pc.sendpackets(pos);
-		}
-	}
-	public void broadcastPacketToClient(String op,String fromID,String toID,String message) {
-		_allPlayers.get(toID).sendpackets(op);
-		_allPlayers.get(toID).sendpackets(fromID);
-		_allPlayers.get(toID).sendpackets(message);
 	}
 	
 	/**
@@ -136,11 +106,10 @@ private Collection<ClientProcess> _allClientValues;
 	 * @param scene
 	 * @param message
 	 */
-	public void broadcastPacketToScene(String op, int scene, String message){
+	public void broadcastPacketToScene(String op, int scene, String msg){
 		for (PcInstance pc : getAllPlayers()) {
 			if(pc.getScene_id() == scene){
-				pc.sendpackets(op);
-				pc.sendpackets(message);
+				pc.sendpackets(op+C_PacketSymbol+msg);
 			}
 		}
 	}

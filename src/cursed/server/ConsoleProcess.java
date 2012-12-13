@@ -54,7 +54,8 @@ public class ConsoleProcess extends Thread {
 			return;
 		}		
 		if (cmd.equalsIgnoreCase("chat")) {// cmd與遊戲內對話功能
-			CursedWorld.getInstance().broadcastPacketToAllClient(Integer.toString(C_Chat),"系統管理員", line);
+			CursedWorld.getInstance().broadcastPacketToAllClient(
+					Integer.toString(C_Chat)+C_PacketSymbol+"系統管理員"+C_PacketSymbol+ line);
 			System.out.println("[系統管理員]" + line);
 		} else {
 			System.out.println("error, doesn't have the command.");
@@ -80,7 +81,8 @@ public class ConsoleProcess extends Thread {
 		//暫用 - 測試資料庫物品編碼
 		else if(cmd.equalsIgnoreCase("dbtestall")){
 			
-			CursedWorld.getInstance().broadcastPacketToAllClient(String.valueOf(C_NewItem), ItemTable.CreateItemAll());
+			CursedWorld.getInstance().broadcastPacketToAllClient(
+					String.valueOf(C_NewItem)+C_PacketSymbol+ ItemTable.CreateItemAll());
 			
 		}else {
 			System.out.println("error, doesn't have the command.");

@@ -2,6 +2,7 @@ package cursed.server.server.clientpacket;
 
 public class ClientOpcodes {
 
+	public static final String C_PacketSymbol = "\t";
 	public static final int C_Login = 1; 						// client	傳 op id pw 驗證帳號密碼
 	public static final int C_CreateCharacter = 2;				// client  傳 op, id , str,con,dex,luck,wis,ws,clr_r,clr_g,clr_b 新增一筆角色資料
 	public static final int C_RequestCreateCharacter = 3;		// send op id

@@ -1,6 +1,7 @@
 package cursed.server.server.clientpacket;
 
 import static cursed.server.server.clientpacket.ClientOpcodes.C_Login;
+import static cursed.server.server.clientpacket.ClientOpcodes.C_PacketSymbol;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -14,9 +15,9 @@ import cursed.server.server.model.CursedWorld;
  * 處理C_Login封包
  */
 public class C_Login {
-	public C_Login(ClientProcess _client) throws IOException, NoSuchAlgorithmException{
-		String accountName = _client.getBr().readLine();
-		String password = _client.getBr().readLine();
+	public C_Login(ClientProcess _client,String packet) throws IOException, NoSuchAlgorithmException{
+		String accountName = packet.split(C_PacketSymbol)[1];//id
+		String password = packet.split(C_PacketSymbol)[2];//pw
 		String ip = _client.get_ip();
 		Account account = Account.load(accountName);
 		
@@ -26,8 +27,7 @@ public class C_Login {
 			// 帳號存在
 		}
 		if (!account.validatePassword(password)) {
-			_client.getWr().println(C_Login);
-			_client.getWr().println("false");
+			_client.getWr().println(C_Login+C_PacketSymbol+"false");
 			return;
 		}
 		try {
@@ -37,8 +37,7 @@ public class C_Login {
 			_client.setAccount(account);
 
 			
-			_client.getWr().println(C_Login);
-			_client.getWr().println("true");
+			_client.getWr().println(C_Login+C_PacketSymbol+"true");
 			System.out.format("帳號: %s 已經登入\n", accountName);
 			
 		} catch (Exception e) {

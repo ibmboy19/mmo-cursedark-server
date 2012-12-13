@@ -1,7 +1,7 @@
 package cursed.server.server.clientpacket;
 
 import static cursed.server.server.clientpacket.ClientOpcodes.C_RequestCharacterLogin;
-
+import static cursed.server.server.clientpacket.ClientOpcodes.C_PacketSymbol;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
@@ -10,31 +10,32 @@ import cursed.server.server.model.CursedWorld;
 import cursed.server.server.model.instance.PcInstance;
 
 public class C_RequestCharacterLogin {
-	public C_RequestCharacterLogin(ClientProcess _client) throws IOException, NoSuchAlgorithmException{
+	public C_RequestCharacterLogin(ClientProcess _client,String packet) throws IOException, NoSuchAlgorithmException{
 		// 載入角色
-		PcInstance pc = PcInstance.load(_client.getBr().readLine());
+		PcInstance pc = PcInstance.load(packet.split(C_PacketSymbol)[1]);
 		pc.setNetConnection(_client);
 		_client.setActiveChar(pc);
 		CursedWorld.getInstance().StorePlayer(pc);
 						
 		// write pc data to client
-		_client.getWr().println(C_RequestCharacterLogin);//op
-		_client.getWr().println(pc.getCharID());//id
-		_client.getWr().println(pc.getLevel());//lv
-		_client.getWr().println(pc.getCurrentExp());//cur exp
-		_client.getWr().println(pc.getCurrentHp());//cur hp
-		_client.getWr().println(pc.getCurrentMp());//cur mp
-		_client.getWr().println(pc.getColorR());//color r
-		_client.getWr().println(pc.getColorG());//color g
-		_client.getWr().println(pc.getColorB());//color b
-		_client.getWr().println(pc.getStr());//str
-		_client.getWr().println(pc.getCon());//con
-		_client.getWr().println(pc.getDex());//dex
-		_client.getWr().println(pc.getLuck());//luck
-		_client.getWr().println(pc.getWis());//wis
-		_client.getWr().println(pc.getWs());//ws
-		_client.getWr().println(pc.getRemain());//remain
-		_client.getWr().println(pc.getScene_id());//scene id
-		_client.getWr().println(pc.getLocation().ToString());//location
+		_client.getWr().println(
+				C_RequestCharacterLogin+C_PacketSymbol+
+				pc.getCharID()+C_PacketSymbol+
+				pc.getLevel()+C_PacketSymbol+
+				pc.getCurrentExp()+C_PacketSymbol+
+				pc.getCurrentHp()+C_PacketSymbol+
+				pc.getCurrentMp()+C_PacketSymbol+
+				pc.getColorR()+	C_PacketSymbol+
+				pc.getColorG()+C_PacketSymbol+
+				pc.getColorB()+C_PacketSymbol+
+				pc.getStr()+C_PacketSymbol+
+				pc.getCon()+C_PacketSymbol+
+				pc.getDex()+C_PacketSymbol+
+				pc.getLuck()+C_PacketSymbol+
+				pc.getWis()+C_PacketSymbol+
+				pc.getWs()+C_PacketSymbol+
+				pc.getRemain()+C_PacketSymbol+
+				pc.getScene_id()+C_PacketSymbol+
+				pc.getLocation().ToString());
 	}
 }
