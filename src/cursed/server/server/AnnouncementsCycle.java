@@ -20,17 +20,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import cursed.server.server.model.CursedWorld;
-import cursed.server.server.model.instance.PcInstance;
-import cursed.server.server.serverpacket.ServerOpcodes;
-
 import javolution.util.FastList;
-
+import cursed.server.server.model.CursedWorld;
+import cursed.server.server.serverpacket.ServerOpcodes;
+import static cursed.server.server.clientpacket.ClientOpcodes.C_PacketSymbol;
 public class AnnouncementsCycle {
 	private int round = 0;
 	private String line = null;
@@ -129,6 +126,7 @@ public class AnnouncementsCycle {
 				ShowAnnouncementsCycle(list.get(round));
 				round++;
 			}
+			System.out.println("Announcement");
 		}
 	}
 
@@ -136,10 +134,12 @@ public class AnnouncementsCycle {
 	 * 把字串廣播到伺服器上
 	 */
 	private void ShowAnnouncementsCycle(String announcement) {
-		Collection<PcInstance> AllPlayer = CursedWorld.getInstance().getAllPlayers();
+		CursedWorld.getInstance().broadcastPacketToAllClient(String.valueOf(ServerOpcodes.S_announcecycle)+
+				C_PacketSymbol+announcement);
+		/*Collection<PcInstance> AllPlayer = CursedWorld.getInstance().getAllPlayers();
 		for (PcInstance pc : AllPlayer){
 			pc.sendpackets(ServerOpcodes.S_announcecycle);
 			pc.sendpackets(announcement);
-		}
+		}*/
 	}
 }

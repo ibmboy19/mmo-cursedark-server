@@ -13,14 +13,17 @@ import cursed.server.server.utils.collections.Maps;
 
 public class CursedWorld {
 	private static CursedWorld _instance;
-	private final Map<String, PcInstance> _allPlayers;
-	private final Map<String, Object> _allObjects;
+	//private final Map<String, PcInstance> _allPlayers;
+	//private final Map<String, Object> _allObjects;
 	private final Map<String, ClientProcess> _allClient;
+	private final Map<String, CursedScene> _allScene;
 	private boolean _worldChatEnabled = true;
 	
 	private CursedWorld(){
-		_allPlayers = Maps.newConcurrentMap();
-		_allObjects = Maps.newConcurrentMap();
+		//_allPlayers = Maps.newConcurrentMap();
+		//_allObjects = Maps.newConcurrentMap();
+		_allScene = Maps.newConcurrentMap();
+		_allScene.put("1", new CursedScene());
 		_allClient = Maps.newConcurrentMap();
 	}
 	
@@ -33,7 +36,15 @@ public class CursedWorld {
 	public void addClient(ClientProcess cp){
 		_allClient.put(cp.get_ip(), cp);
 	}
-	public void storeObject(Object object) {
+	public void removeObject(Object object) {
+		if (object == null) {
+			throw new NullPointerException();
+		}
+		if (object instanceof PcInstance) {
+			_allScene.get(((PcInstance) object).getScene_id()).removeObject(object);
+		}
+	}
+	/*public void storeObject(Object object) {
 		if (object == null) {
 			throw new NullPointerException();
 		}
@@ -41,8 +52,8 @@ public class CursedWorld {
 		if (object instanceof PcInstance) {
 			_allPlayers.put(((PcInstance) object).getCharID(), (PcInstance) object);			
 		}
-	}
-	public void StorePlayer(PcInstance pc){
+	}*/
+	/*public void StorePlayer(PcInstance pc){
 		_allPlayers.put(pc.getCharID(),  pc);		
 	}
 
@@ -60,8 +71,8 @@ public class CursedWorld {
 	public Object findObject(String oID) {
 		return _allObjects.get(oID);
 	}
-
-	private Collection<Object> _allValues;
+*/
+	/*private Collection<Object> _allValues;
 
 	public Collection<Object> getObject() {
 		Collection<Object> vs = _allValues;
@@ -73,7 +84,7 @@ public class CursedWorld {
 	public Collection<PcInstance> getAllPlayers() {
 		Collection<PcInstance> vs = _allPlayerValues;
 		return (vs != null) ? vs : (_allPlayerValues = Collections.unmodifiableCollection(_allPlayers.values()));
-	}
+	}*/
 	
 private Collection<ClientProcess> _allClientValues;
 	
@@ -81,8 +92,15 @@ private Collection<ClientProcess> _allClientValues;
 		Collection<ClientProcess> vs = _allClientValues;
 		return (vs != null) ? vs : (_allClientValues = Collections.unmodifiableCollection(_allClient.values()));
 	}
+private Collection<CursedScene> _allSceneValues;
 	
-	
+	public Collection<CursedScene> getAllScenes() {
+		Collection<CursedScene> vs = _allSceneValues;
+		return (vs != null) ? vs : (_allSceneValues = Collections.unmodifiableCollection(_allScene.values()));
+	}
+	public void StorePlayer(PcInstance pc){
+		_allScene.get(String.valueOf(pc.getScene_id())).StorePlayer(pc);
+	}
 	
 	/**
 	 * 世界廣播
@@ -90,27 +108,22 @@ private Collection<ClientProcess> _allClientValues;
 	 * @param message
 	 */
 	public void broadcastPacketToAllClient(String packet) {
-		for (PcInstance pc : getAllPlayers()) {
-			pc.sendpackets(packet);
+		for (CursedScene cs : getAllScenes()) {
+			cs.broadcastPacketToScene(packet);
 		}
 	}
 	
 	public void broadcastPacketToClient(String toID,String packet) {
-		_allPlayers.get(toID).sendpackets(packet);
+		//_allPlayers.get(toID).sendpackets(packet);		
 
 	}
 	
 	/**
 	 * 廣播給某個地圖
-	 * @param op
 	 * @param scene
 	 * @param message
 	 */
-	public void broadcastPacketToScene(String op, int scene, String msg){
-		for (PcInstance pc : getAllPlayers()) {
-			if(pc.getScene_id() == scene){
-				pc.sendpackets(op+C_PacketSymbol+msg);
-			}
-		}
+	public void broadcastPacketToScene(int scene, String msg){
+		_allScene.get(scene).broadcastPacketToScene(msg);
 	}
 }
