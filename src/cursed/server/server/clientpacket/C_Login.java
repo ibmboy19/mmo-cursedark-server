@@ -31,7 +31,7 @@ public class C_Login {
 			return;
 		}
 		try {
-			CursedWorld.getInstance().addClient(_client);
+			
 			LoginController.getInstance().login(_client, account);
 			//Account.updateLastActive(account, ip); // 更新最後一次登入的時間與IP
 			_client.setAccount(account);

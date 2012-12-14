@@ -105,7 +105,7 @@ public class AnnouncementsCycle {
 
 	private void cycle() {
 		AnnouncementsCycleTask task = new AnnouncementsCycleTask();
-		GeneralThreadPool.getInstance().scheduleAtFixedRate(task, 100000, 60000 * 10); // 10分鐘公告一次
+		GeneralThreadPool.getInstance().scheduleAtFixedRate(task, 15000, 15000 * 1); // 10分鐘公告一次
 	}
 
 	/**

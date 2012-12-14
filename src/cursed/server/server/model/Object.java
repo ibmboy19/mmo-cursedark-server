@@ -91,10 +91,12 @@ public class Object implements Serializable{
 	public void setLocation(Vector3 loc) {
 		_location.setX(loc.getX());
 		_location.setY(loc.getY());
+		_location.setZ(loc.getY());
 	}
 
-	public void setLocation(int x, int y) {
+	public void setLocation(float x, float y,float z) {
 		_location.setX(x);
 		_location.setY(y);
+		_location.setZ(z);
 	}
 }

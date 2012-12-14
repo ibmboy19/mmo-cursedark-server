@@ -25,7 +25,7 @@ public class PcInstance extends CharacterObject{
 	
 	public void logout() {
 		CursedWorld world = CursedWorld.getInstance();
-		world.removeObject(this);
+		world.RemovePlayer(this);
 		setNetConnection(null);
 	}
 	

@@ -15,6 +15,7 @@ public class ClientOpcodes {
 	public static final int C_RequestInventory = 10;			// client  傳 op ;and server will return all character Inventory that player has
 	public static final int C_ChangeTexture = 11;				// client  傳 op, armor type, armor index;	change cloth texture
 	public static final int C_ChangeModel = 12;					// client   傳 op, weapon type, weapon index ;change weapon model
+	public  static final int C_CastSkill = 13;						//send op , status,id,look direction, position,id
 	public static final int C_RequestCharacterList = 15;		// client  傳 op
 	public static final int C_RequestCharacterLogin = 16;       // 角色進入場景用
 	public static final int C_Logout = 999;						// client  傳 op

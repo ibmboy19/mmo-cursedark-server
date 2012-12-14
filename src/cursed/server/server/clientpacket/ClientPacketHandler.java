@@ -1,5 +1,6 @@
 package cursed.server.server.clientpacket;
 
+import static cursed.server.server.clientpacket.ClientOpcodes.C_CastSkill;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_ChangeModel;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_ChangeTexture;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_Chat;
@@ -45,7 +46,7 @@ public class ClientPacketHandler {
 			case C_RequestCharacterList: // op count (id class lv guild)
 				new C_RequestCharacterList(_client,packet);
 				break;
-			case C_RequestCharacterInfo:
+			case C_RequestCharacterInfo://op id
 				/**client 要求角色資訊**/
 				
 				break;
@@ -71,6 +72,9 @@ public class ClientPacketHandler {
 				break;
 			case C_ChangeModel:
 				new C_ChangeModel(_client,packet);
+				break;
+			case C_CastSkill:
+				new C_CastSkill(_client,packet);
 				break;
 			case C_Logout:
 				new C_Logout(_client,packet);
