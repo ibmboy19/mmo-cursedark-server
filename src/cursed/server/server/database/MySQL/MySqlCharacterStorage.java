@@ -35,10 +35,10 @@ public class MySqlCharacterStorage {
 			pc = new PcInstance();
 			pc.setCharID(charName);//ID
 			pc.setAccountName(rs.getString("account_id"));//Account
-			pc.setLevel(rs.getInt("cur_lv"));//Current LV
+			pc.setLevel(rs.getInt("cur_lv"));//Current LV			
 			pc.setCurrentExp(rs.getInt("cur_exp"));//Current EXP
-			pc.setCurrentHp(rs.getInt("cur_hp"));//Current HP
-			pc.setCurrentMp(rs.getInt("cur_mp"));//Current MP
+			pc.loadCurrentHp(rs.getInt("cur_hp"));//Current HP
+			pc.loadCurrentMp(rs.getInt("cur_mp"));//Current MP				
 			pc.setColorR(rs.getFloat("color_r"));//colorR
 			pc.setColorG(rs.getFloat("color_g"));//colorG
 			pc.setColorB(rs.getFloat("color_b"));//colorB

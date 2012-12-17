@@ -41,7 +41,7 @@ public class Vector3 {
 		return "("+String.valueOf(x)+","+String.valueOf(y)+","+String.valueOf(z)+")";
 	}
 	//更新角色位置時使用
-	public static Vector3 StringToVectorl(String pos){
+	public static Vector3 StringToVectorl(String pos){		
 		pos = pos.substring(1, pos.length()-1);
 		return (new Vector3(Float.valueOf(pos.split(",")[0]),
 				Float.valueOf(pos.split(",")[1]),

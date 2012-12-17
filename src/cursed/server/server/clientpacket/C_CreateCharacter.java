@@ -27,6 +27,11 @@ public class C_CreateCharacter {
 		pc.setColorG(Float.valueOf(packet.split(C_PacketSymbol)[8]));//color_g
 		pc.setColorB(Float.valueOf(packet.split(C_PacketSymbol)[9]));//color_b
 		
+		pc.CalcAllAttribite();
+		pc.setCurrentHp(pc.getMaxHp());
+		pc.setCurrentMp(pc.getMaxMp());
+		
+		
 		try {
 			CharacterTable.getInstance().storeCharacter(pc);
 			

@@ -37,7 +37,7 @@ public class C_Login {
 			_client.setAccount(account);
 
 			
-			_client.getWr().println(C_Login+C_PacketSymbol+"true");
+			_client.getWr().println(C_Login+C_PacketSymbol+"true"+C_PacketSymbol+"20");
 			System.out.format("帳號: %s 已經登入\n", accountName);
 			
 		} catch (Exception e) {

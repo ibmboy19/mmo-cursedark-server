@@ -46,6 +46,9 @@ public class CursedWorld {
 		return (vs != null) ? vs : (_allPlayerValues = Collections.unmodifiableCollection(_allPlayers.values()));
 	}	
 
+	public PcInstance getPlayer(String id){
+		return _allPlayers.get(id);
+	}
 	
 	/**
 	 * 世界廣播

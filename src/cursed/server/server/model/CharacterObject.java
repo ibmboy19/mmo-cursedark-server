@@ -6,7 +6,7 @@ public class CharacterObject extends Object{
 	private static final long serialVersionUID = 1L;
 	
 	public CharacterObject(){
-		
+		_characterClass = new CharacterClass();
 	}
 
 	
@@ -23,6 +23,10 @@ public class CharacterObject extends Object{
 	public CharacterClass getCharacterClass(){
 		return _characterClass;
 	}
+	
+	//alive?
+	private boolean isAlive;
+	public boolean IsAlive(){return isAlive;}
 	
 	//character color
 	private float _colorR,_colorG,_colorB;
@@ -90,6 +94,30 @@ public class CharacterObject extends Object{
 		_currentHp = i;
 		if (_currentHp >= getMaxHp()) {
 			_currentHp = getMaxHp();
+			isAlive = true;
+		}else if(_currentHp<0){
+			_currentHp = 0;
+			isAlive = false; 
+		}
+	}
+	public void adjustCurrentHp(int i) {
+		_currentHp = _currentHp-i;
+		if (_currentHp >= getMaxHp()) {
+			_currentHp = getMaxHp();
+			isAlive = true;
+		}else if(_currentHp<0){
+			_currentHp = 0;
+			isAlive = false;
+		}
+		System.out.println(_currentHp);
+	}
+	
+	public void loadCurrentHp(int i) {
+		_currentHp = i;
+		if(_currentHp>0){
+			isAlive = true;
+		}else {
+			isAlive = false;
 		}
 	}
 	
@@ -115,9 +143,22 @@ public class CharacterObject extends Object{
 		_currentMp = i;
 		if (_currentMp >= getMaxMp()) {
 			_currentMp = getMaxMp();
+		}else if(_currentMp<0){
+			_currentMp = 0;
+		}
+	}
+	public void adjustCurrentMp(int i) {
+		_currentMp = _currentHp-i;
+		if (_currentMp >= getMaxHp()) {
+			_currentMp = getMaxHp();
+		}else if(_currentMp<0){
+			_currentMp = 0;
 		}
 	}
 	
+	public void loadCurrentMp(int i) {
+		_currentMp  = i;
+	}
 
 	public void setMaxMp(int mp) {
 		_maxMp =  mp;
@@ -221,7 +262,7 @@ public class CharacterObject extends Object{
 	}
 	
 	private int _mdef;
-	public int geMtDef(){
+	public int getMDef(){
 		return _mdef;
 	}
 	public void setMDef(int value){
@@ -240,22 +281,22 @@ public class CharacterObject extends Object{
 		CalcMDef();
 	}
 	public void CalcMaxHp(){
-		setMaxHp(Calculator.CalcCharHP());
+		setMaxHp(Calculator.CalcCharHP(this));
 	}
 	public void CalcMaxMp(){
-		setMaxMp(Calculator.CalcCharMP());
+		setMaxMp(Calculator.CalcCharMP(this));
 	}
 	public void CalcAtk(){
-		setAtk(Calculator.CalcCharAtkValue());
+		setAtk(Calculator.CalcCharAtkValue(this));
 	}
 	public void CalcDef(){
-		setDef(Calculator.CalcCharDefValue());
+		setDef(Calculator.CalcCharDefValue(this));
 	}
 	public void CalcMAtk(){
-		setMAtk(Calculator.CalcCharMAtkValue());
+		setMAtk(Calculator.CalcCharMAtkValue(this));
 	}
 	public void CalcMDef(){
-		setMDef(Calculator.CalcCharMDefValue());
+		setMDef(Calculator.CalcCharMDefValue(this));
 	}
 	
 }

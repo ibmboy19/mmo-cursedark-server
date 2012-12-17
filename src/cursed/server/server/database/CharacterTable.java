@@ -59,17 +59,16 @@ public class CharacterTable {
 		return pc;
 	}
 	
-	public static void saveCharStatus(PcInstance pc) {
+	public static void saveCharLocation(PcInstance pc) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
 			con = DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE char_info SET location_x= ?, location_y= ?, location_z= ?, scene_id= ? WHERE id=?");
+			pstm = con.prepareStatement("UPDATE char_info SET location_x= ?, location_y= ?, location_z= ?WHERE id=?");
 			pstm.setFloat(1, pc.getX());
 			pstm.setFloat(2, pc.getY());
 			pstm.setFloat(3, pc.getZ());
-			pstm.setInt(4, pc.getScene_id()); // Scene id 
-			pstm.setString(5, pc.getCharID());
+			pstm.setString(4, pc.getCharID());
 			pstm.execute();
 		}
 		catch (Exception e) {
@@ -80,7 +79,33 @@ public class CharacterTable {
 			SQLUtil.close(con);
 		}
 	}
-	
+	public static void saveCharStatus(PcInstance pc) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("UPDATE char_info SET cur_lv = ?, cur_exp= ?, cur_hp= ?cur_mp= ?str= ?con= ?dex= ?luck= ?wis= ?ws= ?remain = ?WHERE id=?");
+			pstm.setInt(1, pc.getLevel());
+			pstm.setInt(2, pc.getCurrentExp());
+			pstm.setInt(3, pc.getCurrentHp());
+			pstm.setInt(4, pc.getCurrentMp());
+			pstm.setInt(5, pc.getStr());
+			pstm.setInt(6, pc.getCon());
+			pstm.setInt(7, pc.getDex());
+			pstm.setInt(8, pc.getLuck());
+			pstm.setInt(9, pc.getWis());
+			pstm.setInt(10, pc.getWs());
+			pstm.setInt(11, pc.getRemain());
+			pstm.execute();
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		}
+		finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+	}	
 	public static PcInstance loadCharStatus(PcInstance pc) {
 		ResultSet rs = null;
 		Connection con = null;

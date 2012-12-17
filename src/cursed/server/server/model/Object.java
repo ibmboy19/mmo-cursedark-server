@@ -99,4 +99,7 @@ public class Object implements Serializable{
 		_location.setY(y);
 		_location.setZ(z);
 	}
+	public void setLocation(String loc) {
+		_location = Vector3.StringToVectorl(loc);
+	}
 }

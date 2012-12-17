@@ -1,5 +1,6 @@
 package cursed.server.server.clientpacket;
 
+import static cursed.server.server.clientpacket.ClientOpcodes.C_Attack;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_CastSkill;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_ChangeModel;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_ChangeTexture;
@@ -48,9 +49,10 @@ public class ClientPacketHandler {
 				break;
 			case C_RequestCharacterInfo://op id
 				/**client 要求角色資訊**/
-				
+				//System.out.println("return char info");
+				new C_RequestCharacterInfo(_client,packet);
 				break;
-			case C_RequestCharacterLogin:				
+			case C_RequestCharacterLogin:	
 				new C_RequestCharacterLogin(_client,packet);
 				break;
 			case C_Chat:				
@@ -76,6 +78,9 @@ public class ClientPacketHandler {
 			case C_CastSkill:
 				new C_CastSkill(_client,packet);
 				break;
+			case C_Attack:
+				new C_Attack(_client,packet);
+				break;			
 			case C_Logout:
 				new C_Logout(_client,packet);
 				break;
