@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import cursed.server.DatabaseFactory;
+import cursed.server.server.database.ItemTable;
 import cursed.server.server.model.CharacterObject;
 import cursed.server.server.model.instance.PcInstance;
 import cursed.server.server.utils.SQLUtil;
@@ -35,7 +36,8 @@ public class MySqlCharacterStorage {
 			pc = new PcInstance();
 			pc.setCharID(charName);//ID
 			pc.setAccountName(rs.getString("account_id"));//Account
-			pc.setLevel(rs.getInt("cur_lv"));//Current LV			
+			pc.setLevel(rs.getInt("cur_lv"));//Current LV		
+			pc.setCharacterClass(rs.getInt("class_id"));//class id
 			pc.setCurrentExp(rs.getInt("cur_exp"));//Current EXP
 			pc.loadCurrentHp(rs.getInt("cur_hp"));//Current HP
 			pc.loadCurrentMp(rs.getInt("cur_mp"));//Current MP				
@@ -53,7 +55,9 @@ public class MySqlCharacterStorage {
 			pc.setX(Float.valueOf(rs.getString("location_x")));//location x
 			pc.setY(Float.valueOf(rs.getString("location_y")));//location y
 			pc.setZ(Float.valueOf(rs.getString("location_z")));//cloation z
-			
+			pc.setInventory(rs.getString("inventory"));//inventory
+			pc.setEquipSlot(rs.getString("equipment"));//equipment
+			pc.setInvenShort(rs.getString("inventory_shortcut"));//inventory_shortcut
 			_log.finest("restored char data: ");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -152,7 +156,7 @@ public class MySqlCharacterStorage {
 			con = DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("UPDATE char_info SET cur_lv=?,cur_exp=?,class_id=?,cur_hp=?,cur_mp=?," +
 					"str=?,con=?,dex=?,luck=?,wis=?,ws=?,remain=?,color_r=?,color_g=?,color_b=?,location_x=?," +
-					"location_y=?,location_z=? WHERE id=?");
+					"location_y=?,location_z=?,inventory=? WHERE id=?");
 			pstm.setInt(1, pc.getLevel());//lv
 			pstm.setInt(2, pc.getCurrentExp());//exp
 			pstm.setInt(3, pc.getCharacterClass());//class
@@ -171,7 +175,9 @@ public class MySqlCharacterStorage {
 			pstm.setFloat(16, pc.getX());//location x
 			pstm.setFloat(17, pc.getY());//location y
 			pstm.setFloat(18, pc.getZ());//location z
-			pstm.setString(19, pc.getCharID());//char ID
+			pstm.setString(19, ItemTable.CreateItemAll(false));
+			pstm.setString(20, pc.getCharID());//char ID
+			
 			pstm.execute();
 			_log.finest("stored char data:" + pc.getAccountName());
 		} catch (SQLException e) {

@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 
 import cursed.server.server.ClientProcess;
 import cursed.server.server.database.CharacterTable;
+import cursed.server.server.database.ItemTable;
 import cursed.server.server.model.instance.PcInstance;
 
 public class C_CreateCharacter {
@@ -27,6 +28,7 @@ public class C_CreateCharacter {
 		pc.setColorR(Float.valueOf(packet.split(C_PacketSymbol)[8]));//color_r
 		pc.setColorG(Float.valueOf(packet.split(C_PacketSymbol)[9]));//color_g
 		pc.setColorB(Float.valueOf(packet.split(C_PacketSymbol)[10]));//color_b
+		pc.setInventory(ItemTable.CreateItemAll(false));
 		
 		pc.CalcAllAttribite();
 		pc.setCurrentHp(pc.getMaxHp());

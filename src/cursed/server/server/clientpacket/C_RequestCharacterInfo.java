@@ -34,6 +34,7 @@ public class C_RequestCharacterInfo {
 			retPacket += C_PacketSymbol 
 					+type+C_PacketSymbol
 					+ reqPc.getCharID()	+ C_PacketSymbol 
+					+ reqPc.getCharacterClass()	+ C_PacketSymbol 
 					+reqPc.getCurrentHp()	+ C_PacketSymbol 
 					+reqPc.getMaxHp()	+ C_PacketSymbol 
 					+reqPc.getCurrentMp()	+ C_PacketSymbol 

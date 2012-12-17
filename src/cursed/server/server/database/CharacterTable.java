@@ -79,6 +79,26 @@ public class CharacterTable {
 			SQLUtil.close(con);
 		}
 	}
+	public static void saveCharInventory(PcInstance pc) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = DatabaseFactory.getInstance().getConnection();
+			pstm = con.prepareStatement("UPDATE char_info SET inventory= ?,equipment=?,inventory_shortcut=?WHERE id=?");
+			pstm.setString(1, pc.getInventory());
+			pstm.setString(2, pc.getEquipSlot());
+			pstm.setString(3, pc.getInvenShort());
+			pstm.setString(4, pc.getCharID());
+			pstm.execute();
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		}
+		finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+	}
 	public static void saveCharStatus(PcInstance pc) {
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -184,9 +204,10 @@ public class CharacterTable {
 			pstm = con.prepareStatement("SELECT * FROM char_info WHERE account_id=?");
 			pstm.setString(1, accountID);			
 			rs = pstm.executeQuery();
-			while(rs.next()){// (id class lv )
+			while(rs.next()){// (id class lv guild r g b attr6 )
+				
 				 result += rs.getString("id")+"\n"+ rs.getInt("class_id")+"\n"+ rs.getInt("cur_lv")+"\n"+rs.getString("guild")+"\n"+rs.getFloat("color_r")+"\n"+rs.getFloat("color_g")+"\n"+rs.getFloat("color_b")+"\n"
-						 +rs.getInt("str")+"\n"+rs.getInt("con")+"\n"+rs.getInt("dex")+"\n"+rs.getInt("luck")+"\n"+rs.getInt("wis")+"\n"+rs.getInt("ws")+"\n";
+						 +rs.getInt("str")+"\n"+rs.getInt("con")+"\n"+rs.getInt("dex")+"\n"+rs.getInt("luck")+"\n"+rs.getInt("wis")+"\n"+rs.getInt("ws")+"\n"+rs.getString("equipment")+"\n";
 				count++;
 			}
 			return String.valueOf(count)+"\n"+result;

@@ -53,6 +53,9 @@ public class C_RequestCharacterLogin {
 				pc.getWs()+C_PacketSymbol+
 				pc.getRemain()+C_PacketSymbol+
 				pc.getScene_id()+C_PacketSymbol+
-				pc.getLocation().ToString());
+				pc.getLocation().ToString()+C_PacketSymbol+
+				pc.getInventory()+C_PacketSymbol+
+				pc.getEquipSlot()+C_PacketSymbol+
+				pc.getInvenShort());
 	}
 }

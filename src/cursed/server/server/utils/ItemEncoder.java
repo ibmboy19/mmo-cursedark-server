@@ -7,13 +7,14 @@ public class ItemEncoder {
 		return Integer.toHexString(_dec);
 	}
 	//編碼物品
-	public static String EncodingResourceItem(int id,String name,int type,int icon,int values,int weight,
+	public static String EncodingResourceItem(boolean flag,int id,String name,int type,int icon,int values,int weight,
 			int dura,int maxdura,int req_lv,int req_class,
 			int req_str,int req_con,int req_dex,int req_movp,int req_wis,int req_ws){
 		String itemData = "";
 		//name
-		itemData = name+";";
-		
+		if(flag){
+			itemData = name+";";
+		}
 	
 		
 		//encoding - 1
@@ -59,7 +60,9 @@ public class ItemEncoder {
 		//encoding - 7		
 		itemData += MakesUpZero(ToHex(0),8);//初始物品是白的
 		//System.out.println(itemData);
-		itemData += "/";
+		if(flag){
+			itemData += "/";
+		}
 		return itemData;
 	}
 	//補零函式

@@ -1,5 +1,8 @@
 package cursed.server.server.model;
 
+import static cursed.server.server.clientpacket.ClientOpcodes.C_PacketSymbol;
+import static cursed.server.server.clientpacket.ClientOpcodes.C_PartyApply;
+
 import java.util.List;
 
 import cursed.server.server.model.instance.PcInstance;
@@ -16,6 +19,11 @@ public class Team {
 	/** 最大人數*/
 	private int MAX_TEAM_AMOUNT = 6;
 	
+	public Team(){
+		
+		
+	}
+	
 	/**
 	 * 加入新PC到隊伍中
 	 * @param pc
@@ -30,14 +38,17 @@ public class Team {
         // 如果名單為空
 		if (_membersList.isEmpty()) {
 			setLeader(pc);
-		} else{
+		} else {			
 			// 歸類為組員
 		}
-		
-		_membersList.add(pc);
+		//已存在的組員
+		if(!_membersList.contains(pc)){
+			_membersList.add(pc);
+		}
 		pc.setTeam(this);
 		//TODO 險是加入訊息 
 		//TODO 開始更新組員資訊計時器
+		
 	}
 	
 	private void setLeader(PcInstance pc){
@@ -74,6 +85,26 @@ public class Team {
 			// TODO 傳送隊長封包給所有人
 		}
 	}
+	public void broadcastAllMember(String pcID){		
+		for (PcInstance member : getMembers()) {
+			// TODO 傳送所有成員給new member
+			if(pcID != member.getCharID()){
+				CursedWorld.getInstance().broadcastPacketToClient(
+						pcID,//回覆的對象ID
+						Integer.toString(C_PartyApply)+C_PacketSymbol+
+						member.getCharID()+C_PacketSymbol+
+						1);
+				CursedWorld.getInstance().broadcastPacketToClient(
+						member.getCharID(),//回覆的對象ID
+						Integer.toString(C_PartyApply)+C_PacketSymbol+
+						pcID+C_PacketSymbol+
+						1);
+			}
+		}
+		
+		
+	}
+	
 
 	public void leaveMember(PcInstance pc) {
 		// 導致解散的場合

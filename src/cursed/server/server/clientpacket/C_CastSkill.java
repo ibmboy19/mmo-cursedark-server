@@ -16,5 +16,8 @@ public C_CastSkill(ClientProcess _client,String packet) throws IOException, NoSu
 				Integer.toString(C_CastSkill)+C_PacketSymbol+
 				_client.getActiveChar().getCharID()+C_PacketSymbol+
 				packet.substring(packet.indexOf(C_PacketSymbol)+1));
+		
+		
+		
 	}
 }

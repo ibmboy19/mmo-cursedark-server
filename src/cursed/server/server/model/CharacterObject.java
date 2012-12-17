@@ -18,6 +18,31 @@ public class CharacterObject extends Object{
 	public void setCharID(String _charID) {
 		this._charID = _charID;
 	}
+	//inventory
+	private String _inventory;
+	public String getInventory(){
+		return _inventory;
+	}
+	public void setInventory(String _inventory){
+		this._inventory = _inventory;
+	}
+	//equipment slot
+	private String _equipSlot;
+	public String getEquipSlot(){
+		return _equipSlot;
+	}
+	public void setEquipSlot(String _equipSlot){
+		this._equipSlot = _equipSlot;
+	}
+	//Inventory Short
+		private String _invenShort;
+		public String getInvenShort(){
+			return _invenShort;
+		}
+	public void setInvenShort(String _invenShort){
+		this._invenShort = _invenShort;
+	}
+	
 	//class
 	private int _characterClass;
 	public int getCharacterClass(){

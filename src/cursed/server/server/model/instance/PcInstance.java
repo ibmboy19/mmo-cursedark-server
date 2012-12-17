@@ -64,6 +64,15 @@ public class PcInstance extends CharacterObject{
 		this._team = _team;
 	}
 	
+	public void addTeamMembers(PcInstance pc){
+		if(getTeam()==null){
+			_team = new Team();
+			_team.addMember(this);
+		}
+		_team.addMember(pc);
+		_team.broadcastAllMember(pc.getCharID());
+	}
+	
 	public boolean isInTeam(){
 		return getTeam() != null;
 	}

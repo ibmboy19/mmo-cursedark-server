@@ -18,7 +18,7 @@ import cursed.server.server.utils.collections.Maps;
 public class ItemTable {
 	//從資料庫抓物品 編碼
 	//測試用函式
-	public static String CreateItem(int id) {
+	public static String CreateItem(int id,boolean flag) {
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement pstm = null;
@@ -32,7 +32,7 @@ public class ItemTable {
 				return null;
 			}
 			
-			return ItemEncoder.EncodingResourceItem(rs.getInt("id"),rs.getString("name"), rs.getInt("type"), rs.getInt("icon"),
+			return ItemEncoder.EncodingResourceItem(flag,rs.getInt("id"),rs.getString("name"), rs.getInt("type"), rs.getInt("icon"),
 					 rs.getInt("values"),  rs.getInt("weight"),  rs.getInt("durability"), 
 					 rs.getInt("max_durability"),  rs.getInt("request_lv"), rs.getInt("request_class"), 
 					 rs.getInt("request_str"), rs.getInt("request_con"), rs.getInt("request_dex"), 
@@ -52,14 +52,13 @@ public class ItemTable {
 		
 	}
 	//測試用函式
-	public static String CreateItemAll() {
+	public static String CreateItemAll(boolean flag) {
 		String itemData = "";
 		for(int cnt = 1;cnt<25;cnt++){
-			itemData += CreateItem(cnt);
+			itemData += CreateItem(cnt,flag);
 		}
 		return itemData;
-	}
-	
+	}	
 
 
 }

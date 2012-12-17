@@ -35,6 +35,10 @@ public class C_Attack {
 			damage = (int) (_client.getActiveChar().getMAtk()-.2f*targetPC.getMDef()+2);
 			targetPC.adjustCurrentHp(damage);			
 			break;
+		case 2://revive
+			damage = -targetPC.getMaxHp();
+			targetPC.adjustCurrentHp(damage);
+			break;
 		}
 		CursedWorld.getInstance().broadcastPacketToScene(
 				_client.getActiveChar().getScene_id(),

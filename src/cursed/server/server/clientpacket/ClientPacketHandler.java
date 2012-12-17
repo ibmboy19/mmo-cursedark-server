@@ -4,6 +4,7 @@ import static cursed.server.server.clientpacket.ClientOpcodes.C_Attack;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_CastSkill;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_ChangeModel;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_ChangeTexture;
+import static cursed.server.server.clientpacket.ClientOpcodes.C_CharacterItem;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_Chat;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_CreateCharacter;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_KeyBoardWalk;
@@ -68,6 +69,9 @@ public class ClientPacketHandler {
 				new C_PartyApply(_client,packet);
 				break;
 			case C_RequestInventory:
+				break;
+			case C_CharacterItem:
+				new C_CharacterItem(_client,packet);
 				break;
 			case C_ChangeTexture:
 				new C_ChangeTexture(_client,packet);
