@@ -29,17 +29,22 @@ public class C_Attack {
 		switch(type){
 		case 0:
 			damage = (int) (_client.getActiveChar().getAtk()-.5f*targetPC.getDef());
-			targetPC.adjustCurrentHp(damage);			
+			targetPC.adjustCurrentHp(damage);	
+			_client.getActiveChar().AddExp((int)(damage*.3f));
+			_client.getActiveChar().AddExp((int)(Math.abs(damage)*2.4f));
 			break;
 		case 1:
 			damage = (int) (_client.getActiveChar().getMAtk()-.2f*targetPC.getMDef()+2);
-			targetPC.adjustCurrentHp(damage);			
+			targetPC.adjustCurrentHp(damage);	
+			_client.getActiveChar().AddExp((int)(Math.abs(damage)*2.8f));
 			break;
 		case 2://revive
 			damage = -targetPC.getMaxHp();
 			targetPC.adjustCurrentHp(damage);
+			_client.getActiveChar().AddExp((int)(Math.abs(damage)*.3f));
 			break;
 		}
+		
 		CursedWorld.getInstance().broadcastPacketToScene(
 				_client.getActiveChar().getScene_id(),
 				Integer.toString(C_Attack) + C_PacketSymbol

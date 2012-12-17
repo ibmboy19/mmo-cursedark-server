@@ -1,5 +1,6 @@
 package cursed.server.server.model;
 
+import cursed.server.server.GameSetting;
 import cursed.server.server.utils.Calculator;
 //原Character，與java的Character衝突所以Rename
 public class CharacterObject extends Object{
@@ -71,13 +72,17 @@ public class CharacterObject extends Object{
 	}
 	public void LevelUp(){
 		_level++;
+		_remain += _level/5+5;
+		setMaxExp(Integer.valueOf(GameSetting.getInstance().getMaxExp(_level)));
+		CalcAllAttribite();
 	}
 	public synchronized void setLevel(int level) {
 		_level =  level;
+		setMaxExp(Integer.valueOf(GameSetting.getInstance().getMaxExp(_level)));
 	}
 	public boolean CalcIsLevelUp(int exp){
 		if(exp>getMaxExp()){//若經驗值大於最大值
-			LevelUp();			//升級			
+					
 			return true;
 		}
 		return false;
@@ -93,17 +98,17 @@ public class CharacterObject extends Object{
 	public int getMaxExp(){
 		return _maxExp;
 	}
-	public void CalcMaxExp(){
-		//Level Up & Calculate New MaxExp
-		
+	public void setMaxExp(int _maxExp){
+		this._maxExp = _maxExp;
 	}
+	
 	public void AddExp(int exp){
 	
 		int buffExp = getCurrentExp()+exp;	//暫存的exp
 		//升級的迴圈
 		while(CalcIsLevelUp(buffExp)){//計算是否升級
 			buffExp-=getMaxExp();		//扣除經驗
-			CalcMaxExp();//計算升級後的所需最大經驗值
+			LevelUp();			//升級	
 		}
 		_currentExp = buffExp;	
 	}
@@ -117,6 +122,8 @@ public class CharacterObject extends Object{
 	public int getMaxHp() {
 		return _maxHp;
 	}
+	
+	
 	
 	public void setCurrentHp(int i) {
 		_currentHp = i;

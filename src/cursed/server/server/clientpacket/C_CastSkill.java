@@ -12,6 +12,8 @@ import cursed.server.server.model.CursedWorld;
 public class C_CastSkill {
 public C_CastSkill(ClientProcess _client,String packet) throws IOException, NoSuchAlgorithmException{
 		
+		_client.getActiveChar().AddExp(18);
+	
 		CursedWorld.getInstance().broadcastPacketToScene(_client.getActiveChar().getScene_id(),
 				Integer.toString(C_CastSkill)+C_PacketSymbol+
 				_client.getActiveChar().getCharID()+C_PacketSymbol+

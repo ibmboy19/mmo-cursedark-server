@@ -14,6 +14,7 @@ public class CursedWorld {
 	private final Map<String,CursedScene> _allScenes;//
 	private boolean _worldChatEnabled = true;
 	
+	
 	private CursedWorld(){		
 		_allPlayers = Maps.newConcurrentMap();
 		_allScenes = Maps.newConcurrentMap();

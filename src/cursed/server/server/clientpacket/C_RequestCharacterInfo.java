@@ -17,13 +17,16 @@ public class C_RequestCharacterInfo {
 		/**
 		 * 所有要求資訊封包 op 
 		 * type 0:
-		 * 
+		 * 未知的其他玩家
 		 * 
 		 * type 1:
-		 * 
+		 * 未知的自己
 		 * 
 		 * type 2:
+		 * 自身血量魔力
 		 * 
+		 * type 3:
+		 * 其他玩家血量魔力
 		 * */
 		int type = Integer.valueOf(packet.split(C_PacketSymbol)[1]);
 		String retPacket = String.valueOf(C_RequestCharacterInfo);
@@ -50,8 +53,13 @@ public class C_RequestCharacterInfo {
 		case 1:// ReqSelfAll
 			retPacket+= C_PacketSymbol 
 					+type+C_PacketSymbol
+					+_client.getActiveChar().getLevel()+C_PacketSymbol 					
+					+_client.getActiveChar().getMaxExp()+C_PacketSymbol 
+					+_client.getActiveChar().getCurrentExp()+C_PacketSymbol 
+					+_client.getActiveChar().getMaxHp()+C_PacketSymbol 
 					+_client.getActiveChar().getCurrentHp()+C_PacketSymbol 
-					+_client.getActiveChar().getCurrentMp();
+					+_client.getActiveChar().getMaxMp()+C_PacketSymbol 
+					+_client.getActiveChar().getCurrentMp()  ;
 			break;
 		case 2:// ReqSelfHpMp
 			retPacket+= C_PacketSymbol 
@@ -66,6 +74,17 @@ public class C_RequestCharacterInfo {
 					+_client.getActiveChar().getCurrentHp()+C_PacketSymbol 
 					+_client.getActiveChar().getCurrentMp();
 			break;
+		case 4://ReqStatus
+			retPacket+= C_PacketSymbol 
+			+type+C_PacketSymbol+
+			_client.getActiveChar().getStr()+C_PacketSymbol 					
+			+_client.getActiveChar().getCon()+C_PacketSymbol 
+			+_client.getActiveChar().getDex()+C_PacketSymbol 
+			+_client.getActiveChar().getLuck()+C_PacketSymbol 
+			+_client.getActiveChar().getWis()+C_PacketSymbol 
+			+_client.getActiveChar().getWs()+C_PacketSymbol 
+			+_client.getActiveChar().getRemain() ;
+			break;		
 		}
 		_client.getWr().println(retPacket);
 

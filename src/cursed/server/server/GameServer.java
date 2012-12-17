@@ -70,7 +70,9 @@ public class GameServer extends Thread {
 		
 		// 初始化遊戲循環公告
 	    AnnouncementsCycle.getInstance();
-	
+	    
+	    
+	    
 		System.out.println("Server初始化完成。");
 		// cmd互動指令
 		Thread cp = new ConsoleProcess();

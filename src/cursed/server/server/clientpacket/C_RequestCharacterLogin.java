@@ -13,6 +13,7 @@ public class C_RequestCharacterLogin {
 	public C_RequestCharacterLogin(ClientProcess _client,String packet) throws IOException, NoSuchAlgorithmException{
 		// 載入角色
 		PcInstance pc = PcInstance.load(packet.split(C_PacketSymbol)[1]);
+		
 		pc.setNetConnection(_client);
 		_client.setActiveChar(pc);
 		CursedWorld.getInstance().StorePlayer(pc);
