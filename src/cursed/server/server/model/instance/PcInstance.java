@@ -4,10 +4,12 @@ import cursed.server.server.ClientProcess;
 import cursed.server.server.database.CharacterTable;
 import cursed.server.server.model.CharacterObject;
 import cursed.server.server.model.CursedWorld;
+import cursed.server.server.model.Team;
 
 public class PcInstance extends CharacterObject{
 	private static final long serialVersionUID = 1L;
 	private ClientProcess _netConnection;
+	private Team _team;
 	private String _accountName;
 	// 職業
 	public static final int CLASSID_ELECTRIC_GUITARIST = 200;
@@ -53,5 +55,16 @@ public class PcInstance extends CharacterObject{
 		_netConnection.getWr().println(s);
 	}
 	
+	//// 組隊相關 
+	public Team getTeam() {
+		return _team;
+	}
 
+	public void setTeam(Team _team) {
+		this._team = _team;
+	}
+	
+	public boolean isInTeam(){
+		return getTeam() != null;
+	}
 }
