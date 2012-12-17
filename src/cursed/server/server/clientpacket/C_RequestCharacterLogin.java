@@ -34,7 +34,7 @@ public class C_RequestCharacterLogin {
 		_client.getWr().println(
 				C_RequestCharacterLogin+C_PacketSymbol+
 				pc.getCharID()+C_PacketSymbol+			
-				pc.getCharacterClass().getID()+C_PacketSymbol+
+				pc.getCharacterClass()+C_PacketSymbol+
 				pc.getLevel()+C_PacketSymbol+
 				pc.getCurrentExp()+C_PacketSymbol+
 				pc.getMaxExp()+C_PacketSymbol+

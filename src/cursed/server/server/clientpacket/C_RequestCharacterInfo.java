@@ -35,7 +35,9 @@ public class C_RequestCharacterInfo {
 					+type+C_PacketSymbol
 					+ reqPc.getCharID()	+ C_PacketSymbol 
 					+reqPc.getCurrentHp()	+ C_PacketSymbol 
+					+reqPc.getMaxHp()	+ C_PacketSymbol 
 					+reqPc.getCurrentMp()	+ C_PacketSymbol 
+					+reqPc.getMaxMp()	+ C_PacketSymbol 
 					+ reqPc.getColorR() + C_PacketSymbol
 					+ reqPc.getColorG() + C_PacketSymbol
 					+ reqPc.getColorB() + C_PacketSymbol 

@@ -150,27 +150,28 @@ public class MySqlCharacterStorage {
 		PreparedStatement pstm = null;
 		try {
 			con = DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE char_info SET cur_lv=?,cur_exp=?,cur_hp=?,cur_mp=?," +
+			pstm = con.prepareStatement("UPDATE char_info SET cur_lv=?,cur_exp=?,class_id=?,cur_hp=?,cur_mp=?," +
 					"str=?,con=?,dex=?,luck=?,wis=?,ws=?,remain=?,color_r=?,color_g=?,color_b=?,location_x=?," +
 					"location_y=?,location_z=? WHERE id=?");
 			pstm.setInt(1, pc.getLevel());//lv
 			pstm.setInt(2, pc.getCurrentExp());//exp
-			pstm.setInt(3, pc.getCurrentHp());//hp
-			pstm.setInt(4, pc.getCurrentMp());//mp
-			pstm.setInt(5, pc.getStr());//str
-			pstm.setInt(6, pc.getCon());//con
-			pstm.setInt(7, pc.getDex());//dex
-			pstm.setInt(8, pc.getLuck());//luck
-			pstm.setInt(9, pc.getWis());//wis
-			pstm.setInt(10, pc.getWs());//ws
-			pstm.setInt(11, pc.getRemain());//remain
-			pstm.setFloat(12, pc.getColorR());//color r
-			pstm.setFloat(13, pc.getColorG());//color g
-			pstm.setFloat(14, pc.getColorB());//color b
-			pstm.setFloat(15, pc.getX());//location x
-			pstm.setFloat(16, pc.getY());//location y
-			pstm.setFloat(17, pc.getZ());//location z
-			pstm.setString(18, pc.getCharID());//char ID
+			pstm.setInt(3, pc.getCharacterClass());//class
+			pstm.setInt(4, pc.getCurrentHp());//hp
+			pstm.setInt(5, pc.getCurrentMp());//mp
+			pstm.setInt(6, pc.getStr());//str
+			pstm.setInt(7, pc.getCon());//con
+			pstm.setInt(8, pc.getDex());//dex
+			pstm.setInt(9, pc.getLuck());//luck
+			pstm.setInt(10, pc.getWis());//wis
+			pstm.setInt(11, pc.getWs());//ws
+			pstm.setInt(12, pc.getRemain());//remain
+			pstm.setFloat(13, pc.getColorR());//color r
+			pstm.setFloat(14, pc.getColorG());//color g
+			pstm.setFloat(15, pc.getColorB());//color b
+			pstm.setFloat(16, pc.getX());//location x
+			pstm.setFloat(17, pc.getY());//location y
+			pstm.setFloat(18, pc.getZ());//location z
+			pstm.setString(19, pc.getCharID());//char ID
 			pstm.execute();
 			_log.finest("stored char data:" + pc.getAccountName());
 		} catch (SQLException e) {

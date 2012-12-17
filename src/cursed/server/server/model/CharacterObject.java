@@ -6,7 +6,7 @@ public class CharacterObject extends Object{
 	private static final long serialVersionUID = 1L;
 	
 	public CharacterObject(){
-		_characterClass = new CharacterClass();
+		
 	}
 
 	
@@ -19,9 +19,12 @@ public class CharacterObject extends Object{
 		this._charID = _charID;
 	}
 	//class
-	private CharacterClass _characterClass;
-	public CharacterClass getCharacterClass(){
+	private int _characterClass;
+	public int getCharacterClass(){
 		return _characterClass;
+	}
+	public void setCharacterClass(int index){
+		_characterClass = index;
 	}
 	
 	//alive?

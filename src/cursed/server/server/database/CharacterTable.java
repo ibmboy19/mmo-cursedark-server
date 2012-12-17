@@ -185,7 +185,8 @@ public class CharacterTable {
 			pstm.setString(1, accountID);			
 			rs = pstm.executeQuery();
 			while(rs.next()){// (id class lv )
-				 result += rs.getString("id")+"\n"+ rs.getInt("class_id")+"\n"+ rs.getInt("cur_lv")+"\n"+rs.getString("guild")+"\n"+rs.getFloat("color_r")+"\n"+rs.getFloat("color_g")+"\n"+rs.getFloat("color_b")+"\n";
+				 result += rs.getString("id")+"\n"+ rs.getInt("class_id")+"\n"+ rs.getInt("cur_lv")+"\n"+rs.getString("guild")+"\n"+rs.getFloat("color_r")+"\n"+rs.getFloat("color_g")+"\n"+rs.getFloat("color_b")+"\n"
+						 +rs.getInt("str")+"\n"+rs.getInt("con")+"\n"+rs.getInt("dex")+"\n"+rs.getInt("luck")+"\n"+rs.getInt("wis")+"\n"+rs.getInt("ws")+"\n";
 				count++;
 			}
 			return String.valueOf(count)+"\n"+result;
