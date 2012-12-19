@@ -94,10 +94,11 @@ public class ClientProcess implements Runnable {
 	 * 處理玩家斷線
 	 */
 	public void quite() {
-		CursedWorld.getInstance().RemovePlayer(_activeChar);
+		//CursedWorld.getInstance().RemovePlayer(_activeChar);
 		StreamUtil.close(_in, _out);
 		try {
 			_csocket.close();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

@@ -27,6 +27,9 @@ public class C_RequestCharacterInfo {
 		 * 
 		 * type 3:
 		 * 其他玩家血量魔力
+		 * 
+		 * type 5://剛登入
+		 * 所有其他玩家資料
 		 * */
 		int type = Integer.valueOf(packet.split(C_PacketSymbol)[1]);
 		String retPacket = String.valueOf(C_RequestCharacterInfo);
@@ -52,8 +55,8 @@ public class C_RequestCharacterInfo {
 					+reqPc.getLuck() + C_PacketSymbol 
 					+reqPc.getWis() + C_PacketSymbol 
 					+reqPc.getWs() + C_PacketSymbol 
-					+ reqPc.getLocation().ToString() + C_PacketSymbol+
-					reqPc.getEquipSlot();
+					+ reqPc.getLocation().ToString() + C_PacketSymbol
+					+	reqPc.getEquipSlot();
 		
 			break;
 		case 1:// ReqSelfAll
@@ -91,6 +94,36 @@ public class C_RequestCharacterInfo {
 			+_client.getActiveChar().getWs()+C_PacketSymbol 
 			+_client.getActiveChar().getRemain() ;
 			break;		
+		case 5:
+			for(PcInstance _pc : CursedWorld.getInstance().getAllPlayers() ){
+				if(_pc.getCharID() != _client.getActiveChar().getCharID()
+						&& _pc.getScene_id() == _client.getActiveChar().getScene_id()){
+					
+					 retPacket =  String.valueOf(C_RequestCharacterInfo)+C_PacketSymbol 
+							+type+C_PacketSymbol
+							+ _pc.getCharID()	+ C_PacketSymbol 
+							+ _pc.getCharacterClass()	+ C_PacketSymbol 
+							+ _pc.getLevel()	+ C_PacketSymbol 
+							+_pc.getCurrentHp()	+ C_PacketSymbol 
+							+_pc.getMaxHp()	+ C_PacketSymbol 
+							+_pc.getCurrentMp()	+ C_PacketSymbol 
+							+_pc.getMaxMp()	+ C_PacketSymbol 
+							+ _pc.getColorR() + C_PacketSymbol
+							+ _pc.getColorG() + C_PacketSymbol
+							+ _pc.getColorB() + C_PacketSymbol 
+							+_pc.getStr() + C_PacketSymbol 
+							+_pc.getCon() + C_PacketSymbol 
+							+_pc.getDex() + C_PacketSymbol 
+							+_pc.getLuck() + C_PacketSymbol 
+							+_pc.getWis() + C_PacketSymbol 
+							+_pc.getWs() + C_PacketSymbol 
+							+ _pc.getLocation().ToString() + C_PacketSymbol
+							+	_pc.getEquipSlot();
+					
+					_client.getWr().println(retPacket);
+				}
+			}
+			return;
 		}
 		_client.getWr().println(retPacket);
 

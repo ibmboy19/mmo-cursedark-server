@@ -37,8 +37,7 @@ public class C_RequestCharacterLogin {
 		 * InventorySlot
 		 * */
 		
-		CursedWorld.getInstance().broadcastPacketToScene(pc.getScene_id(),
-				C_RequestCharacterLogin+C_PacketSymbol+
+		CursedWorld.getInstance().broadcastPacketToScene(pc.getScene_id(),C_RequestCharacterLogin+C_PacketSymbol+
 				pc.getCharID()+C_PacketSymbol+			
 				pc.getCharacterClass()+C_PacketSymbol+
 				pc.getLevel()+C_PacketSymbol+
@@ -65,4 +64,5 @@ public class C_RequestCharacterLogin {
 				pc.getInvenShort() );
 		
 	}
+	
 }
