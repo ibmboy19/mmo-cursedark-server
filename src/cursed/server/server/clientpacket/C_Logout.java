@@ -16,6 +16,7 @@ public class C_Logout {
 				Integer.toString(C_Logout)+C_PacketSymbol+
 				_client.getActiveChar().getCharID());
 		System.out.println(_client.getActiveChar().getCharID() + " 離線");
+		CursedWorld.getInstance().RemovePlayer(_client.getActiveChar());
 		LoginController.getInstance().logout(_client);
 		_client.close();
 	}

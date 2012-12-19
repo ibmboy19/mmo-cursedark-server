@@ -12,6 +12,7 @@ import java.net.Socket;
 import java.util.logging.Logger;
 
 import cursed.server.server.clientpacket.ClientPacketHandler;
+import cursed.server.server.model.CursedWorld;
 import cursed.server.server.model.instance.PcInstance;
 import cursed.server.server.utils.StreamUtil;
 
@@ -54,6 +55,7 @@ public class ClientProcess implements Runnable {
 			// 輸出入串流
 			br = new BufferedReader(new InputStreamReader(_in, "Unicode"));
 			wr = new PrintWriter(new OutputStreamWriter(_out, "Unicode"), true);
+			
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -74,16 +76,17 @@ public class ClientProcess implements Runnable {
 			try {
 				packet = br.readLine();
 				op = Integer.valueOf(packet.split("\t")[0]);
-				//System.out.println(packet);
+				System.out.println("accept packet "+packet);
 			} catch (NumberFormatException ne) {
 				continue;
 			} catch (IOException e) {
-				e.printStackTrace();
 				quite();
+				e.printStackTrace();
 			}
 			_handler.handlePacket(op,packet);
 
 		}
+		quite();
 
 	}
 
@@ -91,6 +94,7 @@ public class ClientProcess implements Runnable {
 	 * 處理玩家斷線
 	 */
 	public void quite() {
+		CursedWorld.getInstance().RemovePlayer(_activeChar);
 		StreamUtil.close(_in, _out);
 		try {
 			_csocket.close();

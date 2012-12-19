@@ -38,6 +38,7 @@ public class C_RequestCharacterInfo {
 					+type+C_PacketSymbol
 					+ reqPc.getCharID()	+ C_PacketSymbol 
 					+ reqPc.getCharacterClass()	+ C_PacketSymbol 
+					+ reqPc.getLevel()	+ C_PacketSymbol 
 					+reqPc.getCurrentHp()	+ C_PacketSymbol 
 					+reqPc.getMaxHp()	+ C_PacketSymbol 
 					+reqPc.getCurrentMp()	+ C_PacketSymbol 
@@ -45,9 +46,14 @@ public class C_RequestCharacterInfo {
 					+ reqPc.getColorR() + C_PacketSymbol
 					+ reqPc.getColorG() + C_PacketSymbol
 					+ reqPc.getColorB() + C_PacketSymbol 
-					+ reqPc.getX()+ C_PacketSymbol 
-					+ reqPc.getY() + C_PacketSymbol
-					+ reqPc.getZ();
+					+reqPc.getStr() + C_PacketSymbol 
+					+reqPc.getCon() + C_PacketSymbol 
+					+reqPc.getDex() + C_PacketSymbol 
+					+reqPc.getLuck() + C_PacketSymbol 
+					+reqPc.getWis() + C_PacketSymbol 
+					+reqPc.getWs() + C_PacketSymbol 
+					+ reqPc.getLocation().ToString() + C_PacketSymbol+
+					reqPc.getEquipSlot();
 		
 			break;
 		case 1:// ReqSelfAll

@@ -22,6 +22,7 @@ public class C_RequestCharacterLogin {
 		// write pc data to client
 		/**
 		 * op 
+		 * type
 		 * id 
 		 * character_class
 		 * level exp max exp 
@@ -31,8 +32,12 @@ public class C_RequestCharacterLogin {
 		 * str con dex luck wis ws remain 
 		 * scene_id
 		 * location
+		 * Inventory
+		 * Equipment
+		 * InventorySlot
 		 * */
-		_client.getWr().println(
+		
+		CursedWorld.getInstance().broadcastPacketToScene(pc.getScene_id(),
 				C_RequestCharacterLogin+C_PacketSymbol+
 				pc.getCharID()+C_PacketSymbol+			
 				pc.getCharacterClass()+C_PacketSymbol+
@@ -57,6 +62,7 @@ public class C_RequestCharacterLogin {
 				pc.getLocation().ToString()+C_PacketSymbol+
 				pc.getInventory()+C_PacketSymbol+
 				pc.getEquipSlot()+C_PacketSymbol+
-				pc.getInvenShort());
+				pc.getInvenShort() );
+		
 	}
 }

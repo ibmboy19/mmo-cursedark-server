@@ -89,11 +89,11 @@ public class Team {
 		for (PcInstance member : getMembers()) {
 			// TODO 傳送所有成員給new member
 			if(pcID != member.getCharID()){
-				CursedWorld.getInstance().broadcastPacketToClient(
+				/*CursedWorld.getInstance().broadcastPacketToClient(
 						pcID,//回覆的對象ID
 						Integer.toString(C_PartyApply)+C_PacketSymbol+
 						member.getCharID()+C_PacketSymbol+
-						1);
+						1);*/
 				CursedWorld.getInstance().broadcastPacketToClient(
 						member.getCharID(),//回覆的對象ID
 						Integer.toString(C_PartyApply)+C_PacketSymbol+
