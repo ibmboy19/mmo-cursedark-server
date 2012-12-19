@@ -10,21 +10,7 @@ public class Object implements Serializable{
 	
 	public Vector3 _location = new Vector3();
 	
-	private String _id = null;
 
-	public String getId() {
-		return _id;
-	}
-	public void setId(String id) {
-		_id = id;
-	}
-	/**
-	 * 設定對象在世界中唯一的ID
-	 * 
-	 * @param id
-	 *            唯一的ID
-	 */
-	
 	
 	/**
 	 * 取得對象在地圖上的X軸值
@@ -73,10 +59,10 @@ public class Object implements Serializable{
 	}
 	
 	public int getScene_id() {
-		return _location.scene_id;
+		return _location.getScene_id();
 	}
-	public void setScene_id(int scene_id) {
-		_location.scene_id = scene_id;
+	public void setScene_id(int scene_id) {		
+		_location.setScene_id(scene_id);
 	}
 	
 	/**
@@ -89,9 +75,7 @@ public class Object implements Serializable{
 	}
 
 	public void setLocation(Vector3 loc) {
-		_location.setX(loc.getX());
-		_location.setY(loc.getY());
-		_location.setZ(loc.getY());
+		_location = loc;
 	}
 
 	public void setLocation(float x, float y,float z) {
@@ -100,6 +84,9 @@ public class Object implements Serializable{
 		_location.setZ(z);
 	}
 	public void setLocation(String loc) {
-		_location = Vector3.StringToVectorl(loc);
+		loc = loc.substring(1, loc.length()-1);
+		_location.setX(Float.valueOf(loc.split(",")[0]));
+		_location.setY(Float.valueOf(loc.split(",")[1]));
+		_location.setZ(Float.valueOf(loc.split(",")[2]));		
 	}
 }

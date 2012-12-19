@@ -18,8 +18,9 @@ public class ClientOpcodes {
 	public static final int C_CastSkill = 13; // 使用技能
 	public static final int C_RequestCharacterList = 15; // 載入角色列表(依帳號)
 	public static final int C_RequestCharacterLogin = 16; // 載入角色(進遊戲場景)
-	public static final int C_Attack = 20;// 攻擊
+	public static final int C_Attack = 20;// 攻擊	
 	public static final int C_CharacterItem = 21;//腳色物品或裝備
+	public static final int C_Portal = 22;//所有傳送相關(傳送門是一種)
 	public static final int C_Logout = 999; // 角色登出
 
 }

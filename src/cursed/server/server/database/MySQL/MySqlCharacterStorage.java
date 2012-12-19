@@ -58,6 +58,7 @@ public class MySqlCharacterStorage {
 			pc.setInventory(rs.getString("inventory"));//inventory
 			pc.setEquipSlot(rs.getString("equipment"));//equipment
 			pc.setInvenShort(rs.getString("inventory_shortcut"));//inventory_shortcut
+			
 			_log.finest("restored char data: ");
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

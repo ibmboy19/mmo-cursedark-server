@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 
 import cursed.server.server.ClientProcess;
 import cursed.server.server.model.CursedWorld;
+import cursed.server.server.model.Portal;
 import cursed.server.server.model.instance.PcInstance;
 
 public class C_RequestCharacterInfo {
@@ -28,8 +29,18 @@ public class C_RequestCharacterInfo {
 		 * type 3:
 		 * 其他玩家血量魔力
 		 * 
-		 * type 5://剛登入
+		 * type 5:
 		 * 所有其他玩家資料
+		 * 
+		 * type 6://
+		 * 所有傳送門
+		 * 
+		 * type 7:
+		 * 所有NPC
+		 * 
+		 *type 8:
+		 *所有怪物
+		 * 
 		 * */
 		int type = Integer.valueOf(packet.split(C_PacketSymbol)[1]);
 		String retPacket = String.valueOf(C_RequestCharacterInfo);
@@ -123,6 +134,20 @@ public class C_RequestCharacterInfo {
 					_client.getWr().println(retPacket);
 				}
 			}
+			return;
+			case 6:
+				for(Portal _pt : CursedWorld.getInstance().getAllPortals() ){
+					
+					if(_pt.getScene_id() == _client.getActiveChar().getScene_id()){
+						retPacket =  String.valueOf(C_RequestCharacterInfo)+C_PacketSymbol 
+								+type+C_PacketSymbol
+								+_pt.getID()+C_PacketSymbol
+								+_pt.getLocation().ToString();
+						
+						_client.getWr().println(retPacket);
+					}
+					System.out.println("send portal list");
+				}
 			return;
 		}
 		_client.getWr().println(retPacket);

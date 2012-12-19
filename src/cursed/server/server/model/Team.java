@@ -55,6 +55,7 @@ public class Team {
 		_leader = pc;
 	}
 	
+	
 	private PcInstance getLeader(){
 		return _leader;
 	}
@@ -72,7 +73,7 @@ public class Team {
 	}
 	
 	public boolean isLeader(PcInstance pc) {
-		return pc.getId() == _leader.getId();
+		return pc.getCharID() == _leader.getCharID();
 	}
 	
 	/**

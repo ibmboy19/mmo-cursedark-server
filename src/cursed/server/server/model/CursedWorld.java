@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
+import cursed.server.server.database.ObjectTable;
 import cursed.server.server.model.instance.PcInstance;
 import cursed.server.server.utils.collections.Maps;
 
@@ -11,20 +12,33 @@ import cursed.server.server.utils.collections.Maps;
 public class CursedWorld {
         private static CursedWorld _instance;
         private final Map<String, PcInstance> _allPlayers;//玩家
+        private final Map<Integer ,Portal> _allPortals;//傳送門
+        private final Map<Integer ,NPCObject> _allNPCs;//NPC
+        private final Map<Integer ,NPCMonsterObject> _allMonsters;//怪物
         private boolean _worldChatEnabled = true;
         
         
         private CursedWorld(){          
                 _allPlayers = Maps.newConcurrentMap();
+                _allPortals = Maps.newConcurrentMap();//載入所有傳送門
+                _allNPCs = Maps.newConcurrentMap();
+                _allMonsters = Maps.newConcurrentMap();         
+                
         }
-        
+        /**
+         * 
+         * */
         public static CursedWorld getInstance() {
                 if (_instance == null) {
                         _instance = new CursedWorld();
+                        ObjectTable.LoadPortal();
+                        System.out.println("initial world");
                 }
                 return _instance;
         }
-        
+        /**
+         * 玩家相關
+         * */
         public void StorePlayer(PcInstance pc){
                 if(pc == null){
                          throw new NullPointerException();
@@ -48,6 +62,44 @@ public class CursedWorld {
         public PcInstance getPlayer(String id){
                 return _allPlayers.get(id);
         }
+        
+        /**
+         * 傳送門
+         * */
+        public void StorePortal(Portal pt){
+            if(pt == null){
+                     throw new NullPointerException();
+            }
+            if(_allPortals.containsKey(pt.getID())){
+            	return;
+            }
+            _allPortals.put(pt.getID(),  pt);   
+        }
+        public void RemovePortal(Portal pt) {
+        	if (pt == null) {
+            	throw new NullPointerException();
+        		}               
+        	_allPortals.remove(pt);
+        }
+    
+        private Collection<Portal> _allPortalValues;
+    
+        public Collection<Portal> getAllPortals() {
+        	Collection<Portal> vs = _allPortalValues;
+        	return (vs != null) ? vs : (_allPortalValues = Collections.unmodifiableCollection(_allPortals.values()));
+        }
+
+        public Portal getPortal(int id){
+        	return _allPortals.get(id);
+        }
+        /**
+         * NPC
+         * */
+        
+        
+        /**
+         * 怪物
+         * */
         
         /**
          * 世界廣播

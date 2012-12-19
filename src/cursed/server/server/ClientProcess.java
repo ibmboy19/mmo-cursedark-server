@@ -76,7 +76,7 @@ public class ClientProcess implements Runnable {
 			try {
 				packet = br.readLine();
 				op = Integer.valueOf(packet.split("\t")[0]);
-				System.out.println("accept packet "+packet);
+				//System.out.println("accept packet "+packet);
 			} catch (NumberFormatException ne) {
 				continue;
 			} catch (IOException e) {

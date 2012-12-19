@@ -12,6 +12,7 @@ import static cursed.server.server.clientpacket.ClientOpcodes.C_Login;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_Logout;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_Party;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_PartyApply;
+import static cursed.server.server.clientpacket.ClientOpcodes.C_Portal;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_RequestCharacterInfo;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_RequestCharacterList;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_RequestCharacterLogin;
@@ -85,6 +86,9 @@ public class ClientPacketHandler {
 			case C_Attack:
 				new C_Attack(_client,packet);
 				break;			
+			case C_Portal:
+				new C_Portal(_client,packet);
+				break;
 			case C_Logout:
 				new C_Logout(_client,packet);
 				break;
