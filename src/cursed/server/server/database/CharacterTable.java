@@ -64,11 +64,12 @@ public class CharacterTable {
 		PreparedStatement pstm = null;
 		try {
 			con = DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE char_info SET location_x= ?, location_y= ?, location_z= ?WHERE id=?");
+			pstm = con.prepareStatement("UPDATE char_info SET location_x= ?, location_y= ?, location_z= ?,scene_id=? WHERE id=?");
 			pstm.setFloat(1, pc.getX());
 			pstm.setFloat(2, pc.getY());
 			pstm.setFloat(3, pc.getZ());
-			pstm.setString(4, pc.getCharID());
+			pstm.setInt(4, pc.getScene_id());
+			pstm.setString(5, pc.getCharID());
 			pstm.execute();
 		}
 		catch (Exception e) {

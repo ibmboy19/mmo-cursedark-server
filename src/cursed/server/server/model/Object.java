@@ -74,9 +74,6 @@ public class Object implements Serializable{
 		return _location;
 	}
 
-	public void setLocation(Vector3 loc) {
-		_location = loc;
-	}
 
 	public void setLocation(float x, float y,float z) {
 		_location.setX(x);

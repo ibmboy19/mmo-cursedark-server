@@ -1,7 +1,9 @@
 package cursed.server.server.clientpacket;
 
+import static cursed.server.server.clientpacket.ClientOpcodes.C_Logout;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_PacketSymbol;
 import static cursed.server.server.clientpacket.ClientOpcodes.C_Portal;
+import static cursed.server.server.clientpacket.ClientOpcodes.C_RequestCharacterLogin;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -19,23 +21,36 @@ public class C_Portal {
 		 * */	
 		Portal pt = CursedWorld.getInstance().getPortal(Integer.valueOf(packet.split(C_PacketSymbol)[1]));
 		
+		
+		System.out.println("portal : "+pt.getID() +" : "+pt.getTarget().ToString());
 		String retPacket = String.valueOf(C_Portal)+C_PacketSymbol;
 		
 		PcInstance pc = _client.getActiveChar();
 
-		System.out.println(pt.getTarget().ToString());
+		
 		
 		if(pt.getTarget().getScene_id() == pc.getScene_id()){
 			
-			pc.setLocation(pt.getTarget());
+			pc.setLocation(pt.getTarget().ToString());
+			pc.setScene_id(pt.getTarget().getScene_id());
 			CharacterTable.saveCharLocation(pc);
 			
-			retPacket+="0"+C_PacketSymbol+pc.getLocation().ToString();
+			
+			retPacket+="0"+C_PacketSymbol+pc.getCharID()+C_PacketSymbol+pc.getLocation().ToString();
+			CursedWorld.getInstance().broadcastPacketToScene(pc.getScene_id(), retPacket);
+			System.out.println("portal : "+pt.getID() +" : "+pt.getTarget().ToString());
+			
+			
+			
 			
 		}else {
 			
-			pc.setLocation(pt.getTarget());
+
+			
+			pc.setLocation(pt.getTarget().ToString());
+			pc.setScene_id(pt.getTarget().getScene_id());
 			CharacterTable.saveCharLocation(pc);
+						
 			
 			retPacket+="1"+C_PacketSymbol+
 					pc.getCharID()+C_PacketSymbol+			
@@ -63,10 +78,12 @@ public class C_Portal {
 					pc.getEquipSlot()+C_PacketSymbol+
 					pc.getInvenShort() ;
 			
+			CursedWorld.getInstance().broadcastPacketToAllClient( retPacket);
+			//_client.getWr().println(retPacket);
+			
 			
 		}
 		
-		_client.getWr().println(retPacket);
 		
 		
 	}
