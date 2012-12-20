@@ -85,9 +85,9 @@ public class MySqlCharacterStorage {
 			pstm.setString(1, pc.getCharID());//id
 			pstm.setString(2, pc.getAccountName());//account id
 			pstm.setInt(3, 1); // scene id
-			pstm.setFloat(4, 0.0f);//loc x
-			pstm.setFloat(5, 0.0f);//loc y
-			pstm.setFloat(6, 0.0f);//loc z
+			pstm.setFloat(4, 51f);//loc x
+			pstm.setFloat(5, -.3f);//loc y
+			pstm.setFloat(6, 45f);//loc z
 			pstm.setInt(7,1);//lv
 			pstm.setInt(8,0);//exp
 			pstm.setInt(9,1);//hp
@@ -156,8 +156,7 @@ public class MySqlCharacterStorage {
 		try {
 			con = DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("UPDATE char_info SET cur_lv=?,cur_exp=?,class_id=?,cur_hp=?,cur_mp=?," +
-					"str=?,con=?,dex=?,luck=?,wis=?,ws=?,remain=?,color_r=?,color_g=?,color_b=?,location_x=?," +
-					"location_y=?,location_z=?,inventory=? WHERE id=?");
+					"str=?,con=?,dex=?,luck=?,wis=?,ws=?,remain=?,color_r=?,color_g=?,color_b=?,inventory=? WHERE id=?");
 			pstm.setInt(1, pc.getLevel());//lv
 			pstm.setInt(2, pc.getCurrentExp());//exp
 			pstm.setInt(3, pc.getCharacterClass());//class
@@ -173,11 +172,8 @@ public class MySqlCharacterStorage {
 			pstm.setFloat(13, pc.getColorR());//color r
 			pstm.setFloat(14, pc.getColorG());//color g
 			pstm.setFloat(15, pc.getColorB());//color b
-			pstm.setFloat(16, pc.getX());//location x
-			pstm.setFloat(17, pc.getY());//location y
-			pstm.setFloat(18, pc.getZ());//location z
-			pstm.setString(19, ItemTable.CreateItemAll(false));
-			pstm.setString(20, pc.getCharID());//char ID
+			pstm.setString(16, ItemTable.CreateItemAll(false));
+			pstm.setString(17, pc.getCharID());//char ID
 			
 			pstm.execute();
 			_log.finest("stored char data:" + pc.getAccountName());

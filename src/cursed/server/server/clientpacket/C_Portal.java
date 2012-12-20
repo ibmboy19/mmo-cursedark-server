@@ -22,7 +22,7 @@ public class C_Portal {
 		Portal pt = CursedWorld.getInstance().getPortal(Integer.valueOf(packet.split(C_PacketSymbol)[1]));
 		
 		
-		System.out.println("portal : "+pt.getID() +" : "+pt.getTarget().ToString());
+		//System.out.println("portal : "+pt.getID() +" : "+pt.getTarget().ToString());
 		String retPacket = String.valueOf(C_Portal)+C_PacketSymbol;
 		
 		PcInstance pc = _client.getActiveChar();
@@ -31,14 +31,14 @@ public class C_Portal {
 		
 		if(pt.getTarget().getScene_id() == pc.getScene_id()){
 			
-			pc.setLocation(pt.getTarget().ToString());
+			pc.setLocation(pt.getTarget().ToString());			
 			pc.setScene_id(pt.getTarget().getScene_id());
 			CharacterTable.saveCharLocation(pc);
 			
 			
 			retPacket+="0"+C_PacketSymbol+pc.getCharID()+C_PacketSymbol+pc.getLocation().ToString();
 			CursedWorld.getInstance().broadcastPacketToScene(pc.getScene_id(), retPacket);
-			System.out.println("portal : "+pt.getID() +" : "+pt.getTarget().ToString());
+			//System.out.println("portal : "+pt.getID() +" : "+pt.getTarget().ToString());
 			
 			
 			
@@ -47,7 +47,7 @@ public class C_Portal {
 			
 
 			
-			pc.setLocation(pt.getTarget().ToString());
+			pc.setLocation(pt.getTarget().ToString());			
 			pc.setScene_id(pt.getTarget().getScene_id());
 			CharacterTable.saveCharLocation(pc);
 						
