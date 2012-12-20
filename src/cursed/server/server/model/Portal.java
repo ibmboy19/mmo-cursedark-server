@@ -24,6 +24,6 @@ public class Portal extends Object{
 		this.id = id;
 		this._location = loc;
 		this.target = target;
-		System.out.println("initialize portal : "+"location : "+loc.ToString()+"at scene   "+loc.getScene_id()+"     "+target.ToString()+" at scene "+target.getScene_id());
+		//System.out.println("initialize portal : "+"location : "+loc.ToString()+"at scene   "+loc.getScene_id()+"     "+target.ToString()+" at scene "+target.getScene_id());
 	}
 }

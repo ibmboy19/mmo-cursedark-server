@@ -3,21 +3,20 @@ package cursed.server.server.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import cursed.server.DatabaseFactory;
 import cursed.server.server.model.CursedWorld;
+import cursed.server.server.model.NPCMonsterObject;
 import cursed.server.server.model.Portal;
 import cursed.server.server.utils.SQLUtil;
 import cursed.server.server.utils.Vector3;
-import cursed.server.server.utils.collections.Maps;
 
 public class ObjectTable {
 	private static Logger _log = Logger.getLogger(CharacterTable.class.getName());
 	
-	public static void LoadPortal(){
+public static void LoadPortal(){
 		
 		//Map<Integer,Portal> buff = Maps.newConcurrentMap();
 		
@@ -48,4 +47,37 @@ public class ObjectTable {
 		}
 		
 	}
+
+
+	public static void LoadMonster(){
+	
+	//Map<Integer,Portal> buff = Maps.newConcurrentMap();
+	
+	ResultSet rs = null;
+	Connection con = null;
+	PreparedStatement pstm = null;
+	NPCMonsterObject mon = null;
+	
+	try {
+		con = DatabaseFactory.getInstance().getConnection();
+		pstm = con.prepareStatement("SELECT * FROM hunt_spawn_point");
+		
+		rs = pstm.executeQuery();			
+		while(rs.next()){
+			
+			mon = new NPCMonsterObject(rs.getInt("id"),rs.getInt("monster_id"),new Vector3(rs.getFloat("location_x"),rs.getFloat("location_y"),rs.getFloat("location_z"),rs.getInt("scene_id")));
+			CursedWorld.getInstance().StoreMonster(mon);
+			
+		}
+		
+	}catch (Exception e) {
+		_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+	}
+	finally {			
+		SQLUtil.close(pstm);
+		SQLUtil.close(con);
+		
+	}
+	
+}
 }

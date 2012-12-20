@@ -22,8 +22,7 @@ public class CursedWorld {
                 _allPlayers = Maps.newConcurrentMap();
                 _allPortals = Maps.newConcurrentMap();//載入所有傳送門
                 _allNPCs = Maps.newConcurrentMap();
-                _allMonsters = Maps.newConcurrentMap();         
-                
+                _allMonsters = Maps.newConcurrentMap();      
         }
         /**
          * 
@@ -32,6 +31,7 @@ public class CursedWorld {
                 if (_instance == null) {
                         _instance = new CursedWorld();
                         ObjectTable.LoadPortal();
+                        ObjectTable.LoadMonster();                        
                         System.out.println("initial world");
                 }
                 return _instance;
@@ -100,6 +100,33 @@ public class CursedWorld {
         /**
          * 怪物
          * */
+        
+        public void StoreMonster(NPCMonsterObject mon){
+            if(mon == null){
+                     throw new NullPointerException();
+            }
+            if(_allMonsters.containsKey(mon.getID())){
+            	return;
+            }
+            _allMonsters.put(mon.getID(),  mon);
+        }
+        public void RemoveMonster(NPCMonsterObject mon) {
+        	if (mon == null) {
+            	throw new NullPointerException();
+        		}               
+        	_allMonsters.remove(mon);
+        }
+    
+        private Collection<NPCMonsterObject> _allMonsterValues;
+    
+        public Collection<NPCMonsterObject> getAllMonsters() {
+        	Collection<NPCMonsterObject> vs = _allMonsterValues;
+        	return (vs != null) ? vs : (_allMonsterValues = Collections.unmodifiableCollection(_allMonsters.values()));
+        }
+
+        public NPCMonsterObject getMonster(int id){
+        	return _allMonsters.get(id);
+        }
         
         /**
          * 世界廣播

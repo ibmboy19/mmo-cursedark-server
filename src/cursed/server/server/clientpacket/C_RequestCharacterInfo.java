@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 
 import cursed.server.server.ClientProcess;
 import cursed.server.server.model.CursedWorld;
+import cursed.server.server.model.NPCMonsterObject;
 import cursed.server.server.model.Portal;
 import cursed.server.server.model.instance.PcInstance;
 
@@ -149,6 +150,21 @@ public class C_RequestCharacterInfo {
 					System.out.println("send portal list");
 				}
 			return;
+			case 8:
+					for(NPCMonsterObject _mon : CursedWorld.getInstance().getAllMonsters() ){
+					
+					if(_mon.getScene_id() == _client.getActiveChar().getScene_id()){
+						retPacket =  String.valueOf(C_RequestCharacterInfo)+C_PacketSymbol 
+								+type+C_PacketSymbol
+								+_mon.getID()+C_PacketSymbol
+								+_mon.getMonsterID()+C_PacketSymbol
+								+_mon.getLocation().ToString();
+						
+						_client.getWr().println(retPacket);
+					}
+					System.out.println("send monster list");
+				}
+				return;
 		}
 		_client.getWr().println(retPacket);
 

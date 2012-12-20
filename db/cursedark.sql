@@ -16,15 +16,13 @@ DROP TABLE IF EXISTS `hunt_spawn_point`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `hunt_spawn_point` (
   `id` int(11) NOT NULL,
-  `scene_id` int(11) NOT NULL,
   `monster_id` int(11) NOT NULL,
-  `max_count` int(11) DEFAULT NULL,
-  `frequency` int(11) DEFAULT NULL,
-  `type` int(11) DEFAULT NULL,
+  `scene_id` int(11) NOT NULL,
   `location_x` float DEFAULT NULL,
   `location_y` float DEFAULT NULL,
   `location_z` float DEFAULT NULL,
-  `spawn_radius` float DEFAULT NULL,
+  `revive_frequency` int(11) DEFAULT NULL,
+  `ai_type` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_hunt_spawn_point_scene1` (`scene_id`),
   KEY `fk_hunt_spawn_point_hunt_monster1` (`monster_id`),
@@ -34,6 +32,7 @@ CREATE TABLE `hunt_spawn_point` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40000 ALTER TABLE `hunt_spawn_point` DISABLE KEYS */;
+INSERT INTO `hunt_spawn_point` (`id`, `monster_id`, `scene_id`, `location_x`, `location_y`, `location_z`, `revive_frequency`, `ai_type`) VALUES (1,2,2,-7,2.515,-7,3,0),(2,3,2,-7,2.515,-4,3,0),(3,4,2,-5,2.515,-4,3,0),(4,5,2,-3,2.515,-7,3,0),(5,6,2,7,2.515,3,3,0),(6,7,2,6.5,2.515,-2,3,0),(7,8,2,6,2.515,-7,3,0),(8,5,1,46,-0.5,40,3,0),(9,5,1,50,-0.5,37,3,0),(10,5,1,56,-0.5,43,3,0);
 /*!40000 ALTER TABLE `hunt_spawn_point` ENABLE KEYS */;
 DROP TABLE IF EXISTS `account`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -241,6 +240,7 @@ CREATE TABLE `hunt_monster` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40000 ALTER TABLE `hunt_monster` DISABLE KEYS */;
+INSERT INTO `hunt_monster` (`id`, `name`, `name_en`, `lv`, `base_exp`, `move_spd`) VALUES (1,'皇鏡','Queen',20,60,3),(2,'哈乎齁','Piano',1,6,2),(3,'貝可熊','Bear',5,14,2),(4,'麥克幽幽','Mic',7,18,2),(5,'黃金甲','Golden',10,22,2),(6,'獨眼啪擦','Cyclous',15,34,2),(7,'帕奇尼',NULL,12,26,1),(8,'啪啦啪',NULL,18,45,1);
 /*!40000 ALTER TABLE `hunt_monster` ENABLE KEYS */;
 DROP TABLE IF EXISTS `portal`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
